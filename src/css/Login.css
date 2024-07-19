@@ -1,0 +1,49 @@
+.loginDiv {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.headerDiv {
+    height: 22vh;
+}
+
+.formContainer {
+    justify-content: center;
+    border: 1px solid black;
+    border-radius: 10px;
+    padding: 20px;
+    background-color: #fff;
+    width: 20%;
+    margin-top: 15%;
+}
+
+form {
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+}
+
+h2 {
+    text-align: center;
+}
+
+input {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid black;
+    border-radius: 5px;
+    margin-bottom: 10px;
+}
+
+button {
+    width: 100%;
+    align-self: center;
+    padding: 10px;
+    background-color: #78179e;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    margin-top: 20px;
+}

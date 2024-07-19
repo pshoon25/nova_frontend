@@ -1,0 +1,25 @@
+.homeHeader {
+    margin: 30px;
+}
+
+.homeHeaderNav {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.headerLogoDiv {
+    width: 10%;
+}
+
+.headerMenuDiv {
+    display: flex;
+    width: 100%;
+    justify-content: space-evenly
+}
+
+.headerUserDiv {
+    display: flex;
+    width: 10%;
+    justify-content: space-evenly
+}
