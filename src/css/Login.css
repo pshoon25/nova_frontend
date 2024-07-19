@@ -18,17 +18,13 @@
     margin-top: 15%;
 }
 
-form {
+.loginForm {
     display: flex;
     align-items: center;
     flex-direction: column;
 }
 
-h2 {
-    text-align: center;
-}
-
-input {
+.loginInput {
     width: 100%;
     padding: 10px;
     border: 1px solid black;
@@ -36,7 +32,7 @@ input {
     margin-bottom: 10px;
 }
 
-button {
+.loginBtn {
     width: 100%;
     align-self: center;
     padding: 10px;

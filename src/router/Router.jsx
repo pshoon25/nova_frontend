@@ -1,7 +1,7 @@
 import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 import MainLayout from "../component/layout/MainLayout";
 import Login from '../component/login/Login';
-import Home from '../component/home/Home'; // 새로운 자식 컴포넌트 예시
+import MissionManage from "../component/mng/MissionManage";
 
 const Router = () => {
   return (
@@ -9,8 +9,8 @@ const Router = () => {
       <Routes>
         <Route path="/" element={<Navigate to="/login" />} />
         <Route path="/login" element={<Login />} />
-        <Route path="/home" element={<MainLayout />}>
-          <Route index element={<Home />} />
+        <Route path="/main" element={<MainLayout />}>
+          <Route index element={<MissionManage />} />
         </Route>
       </Routes>
     </BrowserRouter>
