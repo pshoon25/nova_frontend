@@ -1,9 +1,21 @@
 import React, { useState } from "react";
-import styles from "../../css/Common.css";
-import styles2 from "../../css/MissionManage.css";
 import { DataGrid } from "@mui/x-data-grid";
+import { useNavigate } from "react-router-dom";
+import "../../css/Common.css";
+import "../../css/MissionManage.css";
 
 const MissionManage = () => {
+  const navigate = useNavigate();
+  const [activeType, setActiveType] = useState("전체");
+
+  const handleTypeClick = (type) => {
+    setActiveType(type);
+  };
+
+  const addMission = () => {
+    navigate("/main/addMission");
+  };
+
   // 샘플 데이터
   const rows = [
     {
@@ -41,68 +53,54 @@ const MissionManage = () => {
     { field: "placeSearchSave", headerName: "플레이스 검색저장", width: 150 },
   ];
 
-  // 상태 정의
-  const [activeType, setActiveType] = useState("전체");
-
-  // 클릭 핸들러
-  const handleTypeClick = (type) => {
-    setActiveType(type);
-  };
-
   return (
     <div className="mainContainerDiv">
       <div className="mainDiv">
         <h2 className="menuTitle">미션관리</h2>
-        <div className="searchContainer">
-          <b>검색어</b>
-          <select>
-            <option>상품명</option>
-            <option>옵션</option>
-            <option>mid</option>
-          </select>
-          <input type="text" />
-          <button>검색</button>
-        </div>
-        <div className="typeContainer">
-          <b>타입</b>
-          <button
-            className={`typeButton ${activeType === "전체" ? "active" : ""}`}
-            onClick={() => handleTypeClick("전체")}
-          >
-            전체
-          </button>
-          <button
-            className={`typeButton ${
-              activeType === "플레이스킵" ? "active" : ""
-            }`}
-            onClick={() => handleTypeClick("플레이스킵")}
-          >
-            플레이스킵
-          </button>
-          <button
-            className={`typeButton ${
-              activeType === "플레이스저장" ? "active" : ""
-            }`}
-            onClick={() => handleTypeClick("플레이스저장")}
-          >
-            플레이스저장
-          </button>
-          <button
-            className={`typeButton ${
-              activeType === "플레이스트래픽" ? "active" : ""
-            }`}
-            onClick={() => handleTypeClick("플레이스트래픽")}
-          >
-            플레이스트래픽
-          </button>
-          <button
-            className={`typeButton ${
-              activeType === "플레이스검색저장" ? "active" : ""
-            }`}
-            onClick={() => handleTypeClick("플레이스검색저장")}
-          >
-            플레이스검색저장
-          </button>
+        <div>
+          <div>
+            <b>검색어</b>
+            <select>
+              <option>상품명</option>
+              <option>옵션</option>
+              <option>mid</option>
+            </select>
+            <input type="text" />
+            <button>검색</button>
+            <div>
+              <b>타입</b>
+              <button
+                className={activeType === "전체" ? "active" : ""}
+                onClick={() => handleTypeClick("전체")}
+              >
+                전체
+              </button>
+              <button
+                className={activeType === "플레이스킵" ? "active" : ""}
+                onClick={() => handleTypeClick("플레이스킵")}
+              >
+                플레이스킵
+              </button>
+              <button
+                className={activeType === "플레이스저장" ? "active" : ""}
+                onClick={() => handleTypeClick("플레이스저장")}
+              >
+                플레이스저장
+              </button>
+              <button
+                className={activeType === "플레이스트래픽" ? "active" : ""}
+                onClick={() => handleTypeClick("플레이스트래픽")}
+              >
+                플레이스트래픽
+              </button>
+              <button
+                className={activeType === "플레이스검색저장" ? "active" : ""}
+                onClick={() => handleTypeClick("플레이스검색저장")}
+              >
+                플레이스검색저장
+              </button>
+            </div>
+          </div>
         </div>
         <div className="missionMngStatusDiv">
           <table>
@@ -126,7 +124,7 @@ const MissionManage = () => {
             </tbody>
           </table>
         </div>
-        <div className="dataGridContainer">
+        <div style={{ height: 400, width: "100%" }}>
           <DataGrid
             rows={rows}
             columns={columns}
@@ -140,7 +138,7 @@ const MissionManage = () => {
           />
         </div>
         <div>
-          <button>추가</button>
+          <button onClick={addMission}>추가</button>
         </div>
       </div>
     </div>

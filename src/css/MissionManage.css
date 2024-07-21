@@ -1,36 +1,11 @@
-/* MissionManage.css */
+/* AddMission.css */
 
-/* 검색어 및 타입 컨테이너 스타일 */
-.searchContainer {
-  margin-bottom: 20px;
-}
-
-.typeContainer {
-  margin-bottom: 20px;
-}
-
-/* 타입 버튼 스타일 */
-.typeButton {
-  background-color: #f5f5f5; /* 기본 배경색 */
-  color: #333; /* 기본 텍스트 색상 */
-  border: 1px solid #ccc; /* 테두리 색상 */
-  padding: 8px 16px; /* 패딩 */
-  margin-right: 10px; /* 버튼 사이의 간격 */
-  cursor: pointer; /* 마우스 포인터 */
-  border-radius: 4px; /* 모서리 둥글게 */
-}
-
-.typeButton.active {
-  background-color: #007bff; /* 활성화된 버튼 배경색 */
-  color: white; /* 활성화된 버튼 텍스트 색상 */
-  border-color: #007bff; /* 활성화된 버튼 테두리 색상 */
-}
-
-/* 테이블 스타일 */
+/* Mission Status Table */
 .missionMngStatusDiv {
   margin-top: 20px;
   border-collapse: collapse;
   width: 100%;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); /* 테이블에 그림자 추가 */
 }
 
 .missionMngStatusDiv th {
@@ -52,4 +27,25 @@
 
 .missionMngStatusDiv tr:nth-child(odd) {
   background-color: #fff;
+}
+
+.missionMngStatusDiv tr:hover {
+  background-color: #f1f1f1; /* 행 마우스 오버 시 배경색 변경 */
+}
+
+/* Add Mission Form */
+.addMissionDiv {
+  margin-top: 20px;
+}
+
+.addMissionDiv .MuiFormControl-root {
+  margin-bottom: 16px; /* 폼 컨트롤 간의 간격 */
+}
+
+.addMissionDiv .MuiBox-root {
+  margin-bottom: 16px; /* 박스 간의 간격 */
+}
+
+.addMissionDiv .MuiButton-root {
+  margin-top: 16px; /* 버튼과 다른 요소 간의 간격 */
 }
