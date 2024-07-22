@@ -15,7 +15,7 @@ function HomeHeader(props) {
   };
 
   const handlePointManage = () => {
-    navigate("/pointManage"); // Ensure this is the correct route for the PointManage page
+    navigate("pointManage"); // Ensure this is the correct route for the PointManage page
   };
 
   return (
