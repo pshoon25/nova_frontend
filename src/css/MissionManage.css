@@ -34,18 +34,12 @@
 }
 
 /* Add Mission Form */
+.addInputDiv {
+  margin-top: 10%;
+}
+
 .addMissionDiv {
   margin-top: 20px;
-}
-
-.addMissionDiv .MuiFormControl-root {
-  margin-bottom: 16px; /* 폼 컨트롤 간의 간격 */
-}
-
-.addMissionDiv .MuiBox-root {
-  margin-bottom: 16px; /* 박스 간의 간격 */
-}
-
-.addMissionDiv .MuiButton-root {
-  margin-top: 16px; /* 버튼과 다른 요소 간의 간격 */
+  display: flex;
+  justify-content: center;
 }

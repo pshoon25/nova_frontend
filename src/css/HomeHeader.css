@@ -1,25 +1,29 @@
 .homeHeader {
-    margin: 30px;
+  margin: 30px;
+}
+
+.homeHeader a {
+  cursor: pointer;
 }
 
 .homeHeaderNav {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
 }
 
 .headerLogoDiv {
-    width: 10%;
+  width: 10%;
 }
 
 .headerMenuDiv {
-    display: flex;
-    width: 100%;
-    justify-content: space-evenly
+  display: flex;
+  width: 100%;
+  justify-content: space-evenly;
 }
 
 .headerUserDiv {
-    display: flex;
-    width: 10%;
-    justify-content: space-evenly
+  display: flex;
+  width: 10%;
+  justify-content: space-evenly;
 }

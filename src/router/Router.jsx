@@ -3,6 +3,7 @@ import MainLayout from "../component/layout/MainLayout";
 import Login from "../component/login/Login";
 import MissionManage from "../component/mng/MissionManage";
 import AddMission from "../component/mng/AddMission";
+import PointManage from "../component/mng/PointManage";
 
 const Router = () => {
   return (
@@ -13,6 +14,7 @@ const Router = () => {
         <Route path="/main" element={<MainLayout />}>
           <Route index element={<MissionManage />} />
           <Route path="addMission" element={<AddMission />} />
+          <Route path="pointManage" element={<PointManage />} />
         </Route>
       </Routes>
     </BrowserRouter>

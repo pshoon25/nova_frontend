@@ -1,19 +1,37 @@
+import React from "react";
+import { useNavigate } from "react-router-dom";
 import "../../css/HomeHeader.css";
 
 function HomeHeader(props) {
+  const navigate = useNavigate();
+
+  const handleLogout = () => {
+    // Add logic for handling logout, e.g., clearing user data, redirecting to login, etc.
+    navigate("/login");
+  };
+
+  const handleMissionManage = () => {
+    navigate("/main"); // Ensure this is the correct route for the MissionManage page
+  };
+
+  const handlePointnManage = () => {
+    navigate("pointManage"); // Ensure this is the correct route for the MissionManage page
+  };
+
   return (
-    <div class="homeHeader">
-      <nav class="homeHeaderNav">
-        <div class="headerLogoDiv">오름미디어</div>
-        <div class="headerMenuDiv">
-          <div>미션관리</div>
-          <div>포인트관리</div>
-          <div>대행사관리</div>
+    <div className="homeHeader">
+      <nav className="homeHeaderNav">
+        <a className="headerLogoDiv" onClick={handleMissionManage}>
+          오름미디어
+        </a>
+        <div className="headerMenuDiv">
+          <a onClick={handleMissionManage}>미션관리</a>
+          <a onClick={handlePointnManage}>포인트관리</a>
+          <a>대행사관리</a>
         </div>
-        123
-        <div class="headerUserDiv">
-          <div>홍길동</div>
-          로그아웃
+        <div className="headerUserDiv">
+          <a>홍길동</a>
+          <a onClick={handleLogout}>로그아웃</a>
         </div>
       </nav>
     </div>
