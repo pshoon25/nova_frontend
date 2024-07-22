@@ -14,24 +14,24 @@ function HomeHeader(props) {
     navigate("/main"); // Ensure this is the correct route for the MissionManage page
   };
 
-  const handlePointnManage = () => {
-    navigate("pointManage"); // Ensure this is the correct route for the MissionManage page
+  const handlePointManage = () => {
+    navigate("/pointManage"); // Ensure this is the correct route for the PointManage page
   };
 
   return (
     <div className="homeHeader">
       <nav className="homeHeaderNav">
-        <a className="headerLogoDiv" onClick={handleMissionManage}>
+        <button className="headerLogoDiv" onClick={handleMissionManage}>
           오름미디어
-        </a>
+        </button>
         <div className="headerMenuDiv">
-          <a onClick={handleMissionManage}>미션관리</a>
-          <a onClick={handlePointnManage}>포인트관리</a>
-          <a>대행사관리</a>
+          <button onClick={handleMissionManage}>미션관리</button>
+          <button onClick={handlePointManage}>포인트관리</button>
+          <button>대행사관리</button>
         </div>
         <div className="headerUserDiv">
-          <a>홍길동</a>
-          <a onClick={handleLogout}>로그아웃</a>
+          <span>홍길동</span>
+          <button onClick={handleLogout}>로그아웃</button>
         </div>
       </nav>
     </div>
