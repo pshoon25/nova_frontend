@@ -10,6 +10,7 @@ function HomeHeader(props) {
           <div>포인트관리</div>
           <div>대행사관리</div>
         </div>
+        123
         <div class="headerUserDiv">
           <div>홍길동</div>
           로그아웃
