@@ -4,6 +4,7 @@ import Login from "../component/login/Login";
 import MissionManage from "../component/mng/MissionManage";
 import AddMission from "../component/mng/AddMission";
 import PointManage from "../component/mng/PointManage";
+import AgencyManage from "../component/mng/AgencyManage";
 
 const Router = () => {
   return (
@@ -15,6 +16,7 @@ const Router = () => {
           <Route index element={<MissionManage />} />
           <Route path="addMission" element={<AddMission />} />
           <Route path="pointManage" element={<PointManage />} />
+          <Route path="agencyManage" element={<AgencyManage />} />
         </Route>
       </Routes>
     </BrowserRouter>

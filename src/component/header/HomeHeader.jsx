@@ -18,6 +18,10 @@ function HomeHeader(props) {
     navigate("pointManage");
   };
 
+  const handleAgencyManage = () => {
+    navigate("agencyManage");
+  }
+
   return (
     <div className="homeHeader">
       <nav className="homeHeaderNav">
@@ -25,6 +29,7 @@ function HomeHeader(props) {
           src={headerLogo}
           alt="headerLogo"
           className="headerLogo"
+          draggable="false"
           onClick={handleMissionManage}
         />
         <div className="headerMenuDiv">
@@ -34,7 +39,8 @@ function HomeHeader(props) {
           <span className="headerMenuItem" onClick={handlePointManage}>
             포인트관리
           </span>
-          <span className="headerMenuItem">대행사관리</span>
+          <span className="headerMenuItem" onClick={handleAgencyManage}>
+            대행사관리</span>
         </div>
         <div className="headerUserDiv">
           <span>홍길동</span>

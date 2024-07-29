@@ -13,12 +13,12 @@ import { AdapterDateFns } from "@mui/x-date-pickers/AdapterDateFns";
 import "../../css/MissionManage.css";
 
 const AddMission = () => {
-  const [type, setType] = useState("");
+  const [type, setType]           = useState("");
   const [startDate, setStartDate] = useState(null);
-  const [endDate, setEndDate] = useState(null);
-  const [mid, setMid] = useState("");
+  const [endDate, setEndDate]     = useState(null);
+  const [mid, setMid]             = useState("");
   const [placeName, setPlaceName] = useState("");
-  const [keyword, setKeyword] = useState("");
+  const [keyword, setKeyword]     = useState("");
   const [dailyWork, setDailyWork] = useState("");
 
   const handleTypeChange = (event) => {
@@ -30,12 +30,11 @@ const AddMission = () => {
   };
 
   const handlePlaceNameFetch = () => {
-    // Implement the logic to fetch place name based on MID
   };
 
   return (
-    <div className="addMissionDiv">
-      <div>
+    <div className="mainContainerDiv">
+      <div className="addMissionDiv">
         <h2 className="menuTitle">미션 추가</h2>
         <div className="missionMngStatusDiv">
           <table>

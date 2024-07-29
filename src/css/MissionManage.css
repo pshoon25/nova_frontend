@@ -2,17 +2,10 @@
   width: 80%;
 }
 
-.searchDiv {
-  display: flex;
-  justify-content: space-around;
-  margin: 5%;
-}
-
 .missionMngStatusDiv {
   border-collapse: collapse;
   width: 100%;
   text-align: -webkit-center;
-  margin: 5%;
 }
 
 .missionMngStatusDiv th {
@@ -48,5 +41,8 @@
 .addMissionDiv {
   margin-top: 20px;
   display: flex;
+  flex-direction: column;
+
+
   justify-content: center;
 }

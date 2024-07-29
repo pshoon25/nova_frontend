@@ -1,4 +1,6 @@
 import { DataGrid } from "@mui/x-data-grid";
+import "../../css/Common.css";
+import "../../css/PointManage.css";
 
 const PointManage = () => {
   // 샘플 데이터
@@ -44,7 +46,20 @@ const PointManage = () => {
   ];
 
   return (
-    <div>
+    <div className="mainContainerDiv">
+      <div className="pointManageDiv">
+      <h2 className="menuTitle">포인트 관리</h2>
+      <div className="searchDiv">
+          <div>
+            <select>
+              <option>상품명</option>
+              <option>옵션</option>
+              <option>mid</option>
+            </select>
+            <input type="text" />
+            <button>검색</button>
+          </div>
+      </div>
       <div style={{ height: 400, width: "100%" }}>
         <DataGrid
           rows={rows}
@@ -57,6 +72,7 @@ const PointManage = () => {
           pageSizeOptions={[5, 10]}
           checkboxSelection
         />
+      </div>
       </div>
     </div>
   );

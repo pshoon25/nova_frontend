@@ -1,6 +1,6 @@
 import "../../css/Login.css";
 import { useNavigate } from "react-router-dom";
-import headerLogo from "../../images/nova_cutout.png";
+import loginLogo from "../../images/nova_cutout.png";
 
 function Login() {
   const navigate = useNavigate();
@@ -11,7 +11,7 @@ function Login() {
 
   return (
     <div class="loginDiv">
-      <img src={headerLogo} alt="headerLogo" className="headerLogo" />
+      <img src={loginLogo} alt="loginLogo" className="loginLogo" draggable="false"/>
       <div class="formContainer">
         <form class="loginForm">
           <h2 class="menuTitle">로그인</h2>
