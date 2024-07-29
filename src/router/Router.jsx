@@ -5,18 +5,20 @@ import MissionManage from "../component/mng/MissionManage";
 import AddMission from "../component/mng/AddMission";
 import PointManage from "../component/mng/PointManage";
 import AgencyManage from "../component/mng/AgencyManage";
+import AddAgency from "../component/mng/AddAgency";
 
 const Router = () => {
   return (
     <BrowserRouter>
       <Routes>
-        <Route path="/" element={<Navigate to="/login" />} />
+        <Route path="/"      element={<Navigate to="/login" />} />
         <Route path="/login" element={<Login />} />
-        <Route path="/main" element={<MainLayout />}>
+        <Route path="/main"  element={<MainLayout />}>
           <Route index element={<MissionManage />} />
-          <Route path="addMission" element={<AddMission />} />
-          <Route path="pointManage" element={<PointManage />} />
+          <Route path="addMission"   element={<AddMission />} />
+          <Route path="pointManage"  element={<PointManage />} />
           <Route path="agencyManage" element={<AgencyManage />} />
+          <Route path="addAgency"    element={<AddAgency />} />
         </Route>
       </Routes>
     </BrowserRouter>

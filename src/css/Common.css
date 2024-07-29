@@ -14,3 +14,9 @@
   justify-content: space-around;
   margin: 5%;
 }
+
+
+/* Data Grid CSS */
+.MuiDataGrid-row.Mui-selected {
+  background-color: #ffcccc !important; /* 클릭된 행의 연한 톤 핑크 */
+}

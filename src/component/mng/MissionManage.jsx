@@ -21,7 +21,7 @@ const MissionManage = () => {
     {
       id: 1,
       currentPoints: "867,250P",
-      placeSkip: "35P",
+      rewardType: "35P",
       placeSave: "25P",
       placeTraffic: "35P",
       placeSearchSave: "45P",
@@ -29,7 +29,7 @@ const MissionManage = () => {
     {
       id: 2,
       currentPoints: "100,000P",
-      placeSkip: "50P",
+      rewardType: "50P",
       placeSave: "30P",
       placeTraffic: "40P",
       placeSearchSave: "60P",
@@ -37,7 +37,7 @@ const MissionManage = () => {
     {
       id: 3,
       currentPoints: "200,000P",
-      placeSkip: "25P",
+      rewardType: "25P",
       placeSave: "20P",
       placeTraffic: "30P",
       placeSearchSave: "40P",
@@ -47,7 +47,7 @@ const MissionManage = () => {
   // 컬럼 정의
   const columns = [
     { field: "currentPoints", headerName: "현재 포인트", width: 150 },
-    { field: "placeSkip", headerName: "플레이스 킵", width: 150 },
+    { field: "rewardType", headerName: "리워드 종류", width: 150 },
     { field: "placeSave", headerName: "플레이스 저장", width: 150 },
     { field: "placeTraffic", headerName: "플레이스 트래픽", width: 150 },
     { field: "placeSearchSave", headerName: "플레이스 검색저장", width: 150 },
@@ -56,7 +56,29 @@ const MissionManage = () => {
   return (
     <div className="mainContainerDiv">
       <div className="missionManageDiv">
-        <h2 className="menuTitle">미션관리</h2>
+        <h2 className="menuTitle">미션 관리</h2>
+        <div className="missionMngStatusDiv">
+          <table>
+            <thead>
+              <tr>
+                <th>현재 포인트</th>
+                <th>플레이스 킵</th>
+                <th>플레이스 저장</th>
+                <th>플레이스 트래픽</th>
+                <th>플레이스 검색저장</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>867,250P</td>
+                <td>35P</td>
+                <td>25P</td>
+                <td>35P</td>
+                <td>45P</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
         <div className="searchDiv">
           <div>
             <select>
@@ -100,44 +122,23 @@ const MissionManage = () => {
             </button>
           </div>
         </div>
-        <div className="missionMngStatusDiv">
-          <table>
-            <thead>
-              <tr>
-                <th>현재 포인트</th>
-                <th>플레이스 킵</th>
-                <th>플레이스 저장</th>
-                <th>플레이스 트래픽</th>
-                <th>플레이스 검색저장</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr>
-                <td>867,250P</td>
-                <td>35P</td>
-                <td>25P</td>
-                <td>35P</td>
-                <td>45P</td>
-              </tr>
-            </tbody>
-          </table>
+
+        <div styleName ="addMissionBtnDiv"> 
+          <button type="button">엑셀 다운로드</button>
+          <button type="button" onClick={addMission}>추가</button>
         </div>
-        <div style={{ height: 400, width: "100%" }}>
-          <DataGrid
-            rows        ={rows}
-            columns     ={columns}
-            initialState={{
-              pagination: {
-                paginationModel: { page: 0, pageSize: 5 },
-              },
-            }}
-            pageSizeOptions={[5, 10]}
-            checkboxSelection
-          />
-        </div>
-        <div>
-          <button onClick={addMission}>추가</button>
-        </div>
+        
+        <DataGrid
+          rows        ={rows}
+          columns     ={columns}
+          initialState={{
+            pagination: {
+              paginationModel: { page: 0, pageSize: 5 },
+            },
+          }}
+          pageSizeOptions={[5, 10]}
+        />
+        
       </div>
     </div>
   );

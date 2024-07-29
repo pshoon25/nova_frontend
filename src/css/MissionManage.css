@@ -6,10 +6,11 @@
   border-collapse: collapse;
   width: 100%;
   text-align: -webkit-center;
+  text-align-last: center;
 }
 
 .missionMngStatusDiv th {
-  background-color: #f2f2f2; /* 헤더 배경색 */
+  background-color: #ffcccc; /* 헤더 배경색 */
   color: #333; /* 헤더 텍스트 색상 */
   padding: 12px 15px; /* 헤더 셀의 패딩 */
   text-align: left; /* 텍스트 정렬 */
@@ -30,7 +31,12 @@
 }
 
 .missionMngStatusDiv tr:hover {
-  background-color: #f1f1f1; /* 행 마우스 오버 시 배경색 변경 */
+  background-color: #f1f1f1;
+}
+
+.addMissionBtnDiv button {
+  text-align: right;
+  margin-bottom: 5%;
 }
 
 /* Add Mission Form */
@@ -39,10 +45,7 @@
 }
 
 .addMissionDiv {
-  margin-top: 20px;
   display: flex;
   flex-direction: column;
-
-
   justify-content: center;
 }
