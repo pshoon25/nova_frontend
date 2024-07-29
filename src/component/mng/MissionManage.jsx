@@ -59,7 +59,6 @@ const MissionManage = () => {
         <h2 className="menuTitle">미션관리</h2>
         <div className="searchDiv">
           <div>
-            <b>검색어</b>
             <select>
               <option>상품명</option>
               <option>옵션</option>
@@ -69,7 +68,6 @@ const MissionManage = () => {
             <button>검색</button>
           </div>
           <div>
-            <b>타입</b>
             <button
               className={activeType === "전체" ? "active" : ""}
               onClick={() => handleTypeClick("전체")}
@@ -126,8 +124,8 @@ const MissionManage = () => {
         </div>
         <div style={{ height: 400, width: "100%" }}>
           <DataGrid
-            rows={rows}
-            columns={columns}
+            rows        ={rows}
+            columns     ={columns}
             initialState={{
               pagination: {
                 paginationModel: { page: 0, pageSize: 5 },
