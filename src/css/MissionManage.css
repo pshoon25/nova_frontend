@@ -1,11 +1,18 @@
-/* AddMission.css */
+.missionManageDiv {
+  width: 80%;
+}
 
-/* Mission Status Table */
+.searchDiv {
+  display: flex;
+  justify-content: space-around;
+  margin: 5%;
+}
+
 .missionMngStatusDiv {
-  margin-top: 20px;
   border-collapse: collapse;
   width: 100%;
-  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); /* 테이블에 그림자 추가 */
+  text-align: -webkit-center;
+  margin: 5%;
 }
 
 .missionMngStatusDiv th {

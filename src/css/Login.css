@@ -1,45 +1,45 @@
 .loginDiv {
-    display: flex;
-    justify-content: center;
-    align-items: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-top: 10%;
 }
 
 .headerDiv {
-    height: 22vh;
+  height: 22vh;
 }
 
 .formContainer {
-    justify-content: center;
-    border: 1px solid black;
-    border-radius: 10px;
-    padding: 20px;
-    background-color: #fff;
-    width: 20%;
-    margin-top: 15%;
+  justify-content: center;
+  border: 1px solid black;
+  border-radius: 10px;
+  padding: 20px;
+  background-color: #fff;
+  width: 20%;
 }
 
 .loginForm {
-    display: flex;
-    align-items: center;
-    flex-direction: column;
+  display: flex;
+  align-items: center;
+  flex-direction: column;
 }
 
 .loginInput {
-    width: 100%;
-    padding: 10px;
-    border: 1px solid black;
-    border-radius: 5px;
-    margin-bottom: 10px;
+  width: 100%;
+  padding: 10px;
+  border: 1px solid black;
+  border-radius: 5px;
+  margin-bottom: 10px;
 }
 
 .loginBtn {
-    width: 100%;
-    align-self: center;
-    padding: 10px;
-    background-color: #78179e;
-    color: white;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    margin-top: 20px;
+  width: 100%;
+  align-self: center;
+  padding: 10px;
+  background-color: #78179e;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  margin-top: 20px;
 }

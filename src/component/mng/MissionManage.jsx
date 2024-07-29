@@ -55,9 +55,9 @@ const MissionManage = () => {
 
   return (
     <div className="mainContainerDiv">
-      <div className="mainDiv">
+      <div className="missionManageDiv">
         <h2 className="menuTitle">미션관리</h2>
-        <div>
+        <div className="searchDiv">
           <div>
             <b>검색어</b>
             <select>
@@ -67,39 +67,39 @@ const MissionManage = () => {
             </select>
             <input type="text" />
             <button>검색</button>
-            <div>
-              <b>타입</b>
-              <button
-                className={activeType === "전체" ? "active" : ""}
-                onClick={() => handleTypeClick("전체")}
-              >
-                전체
-              </button>
-              <button
-                className={activeType === "플레이스킵" ? "active" : ""}
-                onClick={() => handleTypeClick("플레이스킵")}
-              >
-                플레이스킵
-              </button>
-              <button
-                className={activeType === "플레이스저장" ? "active" : ""}
-                onClick={() => handleTypeClick("플레이스저장")}
-              >
-                플레이스저장
-              </button>
-              <button
-                className={activeType === "플레이스트래픽" ? "active" : ""}
-                onClick={() => handleTypeClick("플레이스트래픽")}
-              >
-                플레이스트래픽
-              </button>
-              <button
-                className={activeType === "플레이스검색저장" ? "active" : ""}
-                onClick={() => handleTypeClick("플레이스검색저장")}
-              >
-                플레이스검색저장
-              </button>
-            </div>
+          </div>
+          <div>
+            <b>타입</b>
+            <button
+              className={activeType === "전체" ? "active" : ""}
+              onClick={() => handleTypeClick("전체")}
+            >
+              전체
+            </button>
+            <button
+              className={activeType === "플레이스킵" ? "active" : ""}
+              onClick={() => handleTypeClick("플레이스킵")}
+            >
+              플레이스킵
+            </button>
+            <button
+              className={activeType === "플레이스저장" ? "active" : ""}
+              onClick={() => handleTypeClick("플레이스저장")}
+            >
+              플레이스저장
+            </button>
+            <button
+              className={activeType === "플레이스트래픽" ? "active" : ""}
+              onClick={() => handleTypeClick("플레이스트래픽")}
+            >
+              플레이스트래픽
+            </button>
+            <button
+              className={activeType === "플레이스검색저장" ? "active" : ""}
+              onClick={() => handleTypeClick("플레이스검색저장")}
+            >
+              플레이스검색저장
+            </button>
           </div>
         </div>
         <div className="missionMngStatusDiv">

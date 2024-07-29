@@ -1,9 +1,6 @@
 .homeHeader {
-  margin: 30px;
-}
-
-.homeHeader a {
-  cursor: pointer;
+  margin-left: 10px;
+  margin-right: 10px;
 }
 
 .homeHeaderNav {
@@ -26,4 +23,15 @@
   display: flex;
   width: 10%;
   justify-content: space-evenly;
+}
+
+.headerLogo {
+  width: 10%;
+  height: 10%;
+  margin: -10px;
+  cursor: pointer;
+}
+
+.headerMenuItem {
+  cursor: pointer;
 }

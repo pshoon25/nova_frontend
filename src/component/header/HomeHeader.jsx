@@ -1,37 +1,46 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
 import "../../css/HomeHeader.css";
+import headerLogo from "../../images/nova_cutout.png";
 
 function HomeHeader(props) {
   const navigate = useNavigate();
 
   const handleLogout = () => {
-    // Add logic for handling logout, e.g., clearing user data, redirecting to login, etc.
     navigate("/login");
   };
 
   const handleMissionManage = () => {
-    navigate("/main"); // Ensure this is the correct route for the MissionManage page
+    navigate("/main");
   };
 
   const handlePointManage = () => {
-    navigate("pointManage"); // Ensure this is the correct route for the PointManage page
+    navigate("pointManage");
   };
 
   return (
     <div className="homeHeader">
       <nav className="homeHeaderNav">
-        <button className="headerLogoDiv" onClick={handleMissionManage}>
-          오름미디어
-        </button>
+        <img
+          src={headerLogo}
+          alt="headerLogo"
+          className="headerLogo"
+          onClick={handleMissionManage}
+        />
         <div className="headerMenuDiv">
-          <button onClick={handleMissionManage}>미션관리</button>
-          <button onClick={handlePointManage}>포인트관리</button>
-          <button>대행사관리</button>
+          <span className="headerMenuItem" onClick={handleMissionManage}>
+            미션관리
+          </span>
+          <span className="headerMenuItem" onClick={handlePointManage}>
+            포인트관리
+          </span>
+          <span className="headerMenuItem">대행사관리</span>
         </div>
         <div className="headerUserDiv">
           <span>홍길동</span>
-          <button onClick={handleLogout}>로그아웃</button>
+          <span className="headerMenuItem" onClick={handleLogout}>
+            로그아웃
+          </span>
         </div>
       </nav>
     </div>
