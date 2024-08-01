@@ -34,4 +34,16 @@
 
 .headerMenuItem {
   cursor: pointer;
+  font-weight: normal;
+  border-bottom: 2px solid transparent;
+  padding-bottom: 4px; /* 텍스트 아래 공간 추가 */
+  transition: all 0.3s ease;
+  display: inline-block; /* 밑줄을 텍스트보다 길게 조정하기 위해 사용 */
+}
+
+.headerMenuItem.active {
+  font-weight: bold;
+  border-bottom: 2px solid pink;
+  padding-bottom: 4px;
+  margin-bottom: -2px; /* 밑줄의 길이를 시각적으로 늘리기 위해 추가 */
 }

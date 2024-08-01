@@ -1,26 +1,20 @@
-import React from "react";
+import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import "../../css/HomeHeader.css";
 import headerLogo from "../../images/nova_cutout.png";
 
 function HomeHeader(props) {
+  const [selectedMenu, setSelectedMenu] = useState("미션관리");
   const navigate = useNavigate();
+
+  const handleMenuClick = (menu, path) => {
+    setSelectedMenu(menu);
+    navigate(path);
+  };
 
   const handleLogout = () => {
     navigate("/login");
   };
-
-  const handleMissionManage = () => {
-    navigate("/main");
-  };
-
-  const handlePointManage = () => {
-    navigate("pointManage");
-  };
-
-  const handleAgencyManage = () => {
-    navigate("agencyManage");
-  }
 
   return (
     <div className="homeHeader">
@@ -30,17 +24,48 @@ function HomeHeader(props) {
           alt="headerLogo"
           className="headerLogo"
           draggable="false"
-          onClick={handleMissionManage}
+          onClick={() => handleMenuClick("노바미션관리", "/main")}
         />
         <div className="headerMenuDiv">
-          <span className="headerMenuItem" onClick={handleMissionManage}>
-            미션관리
+          <span
+            className={`headerMenuItem ${
+              selectedMenu === "노바미션관리" ? "active" : ""
+            }`}
+            onClick={() => handleMenuClick("노바미션관리", "/main")}
+          >
+            노바미션관리
           </span>
-          <span className="headerMenuItem" onClick={handlePointManage}>
+          <span
+            className={`headerMenuItem ${
+              selectedMenu === "오락미션관리" ? "active" : ""
+            }`}
+          >
+            오락미션관리
+          </span>
+          <span
+            className={`headerMenuItem ${
+              selectedMenu === "포인트관리" ? "active" : ""
+            }`}
+            onClick={() => handleMenuClick("포인트관리", "pointManage")}
+          >
             포인트관리
           </span>
-          <span className="headerMenuItem" onClick={handleAgencyManage}>
-            대행사관리</span>
+          <span
+            className={`headerMenuItem ${
+              selectedMenu === "대행사관리" ? "active" : ""
+            }`}
+            onClick={() => handleMenuClick("대행사관리", "agencyManage")}
+          >
+            대행사관리
+          </span>
+          <span
+            className={`headerMenuItem ${
+              selectedMenu === "공지사항" ? "active" : ""
+            }`}
+            onClick={() => setSelectedMenu("공지사항")}
+          >
+            공지사항
+          </span>
         </div>
         <div className="headerUserDiv">
           <span>홍길동</span>

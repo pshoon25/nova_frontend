@@ -16,80 +16,91 @@ const MissionManage = () => {
     navigate("/main/addMission");
   };
 
-  // 샘플 데이터
   const rows = [
     {
       id: 1,
-      currentPoints: "867,250P",
-      rewardType: "35P",
-      placeSave: "25P",
-      placeTraffic: "35P",
-      placeSearchSave: "45P",
+      kind: "종류1",
+      type: "유형1",
+      mid: "MID1",
+      adStartDate: "2024-07-31",
+      dailyWorkload: "100P",
+      workDate: "2024-08-01",
+      rankKeyword: "키워드1",
+      searchKeyword: "검색어1",
+      adEndDate: "2024-08-31",
+      placeAddress: "주소1",
+      totalRequests: "200P",
+      missionStatus: "완료",
+      manage: "관리1",
     },
     {
       id: 2,
-      currentPoints: "100,000P",
-      rewardType: "50P",
-      placeSave: "30P",
-      placeTraffic: "40P",
-      placeSearchSave: "60P",
+      kind: "종류2",
+      type: "유형2",
+      mid: "MID2",
+      adStartDate: "2024-07-31",
+      dailyWorkload: "200P",
+      workDate: "2024-08-01",
+      rankKeyword: "키워드2",
+      searchKeyword: "검색어2",
+      adEndDate: "2024-08-31",
+      placeAddress: "주소2",
+      totalRequests: "300P",
+      missionStatus: "진행중",
+      manage: "관리2",
     },
     {
       id: 3,
-      currentPoints: "200,000P",
-      rewardType: "25P",
-      placeSave: "20P",
-      placeTraffic: "30P",
-      placeSearchSave: "40P",
+      kind: "종류3",
+      type: "유형3",
+      mid: "MID3",
+      adStartDate: "2024-07-31",
+      dailyWorkload: "150P",
+      workDate: "2024-08-01",
+      rankKeyword: "키워드3",
+      searchKeyword: "검색어3",
+      adEndDate: "2024-08-31",
+      placeAddress: "주소3",
+      totalRequests: "250P",
+      missionStatus: "대기중",
+      manage: "관리3",
     },
   ];
 
   // 컬럼 정의
   const columns = [
-    { field: "currentPoints", headerName: "현재 포인트", width: 150 },
-    { field: "rewardType", headerName: "리워드 종류", width: 150 },
-    { field: "placeSave", headerName: "플레이스 저장", width: 150 },
-    { field: "placeTraffic", headerName: "플레이스 트래픽", width: 150 },
-    { field: "placeSearchSave", headerName: "플레이스 검색저장", width: 150 },
+    { field: "id", headerName: "No", width: 30 },
+    { field: "kind", headerName: "종류", width: 100 },
+    { field: "type", headerName: "유형", width: 100 },
+    { field: "mid", headerName: "mid", width: 100 },
+    { field: "adStartDate", headerName: "광고시작일", width: 100 },
+    { field: "dailyWorkload", headerName: "1일작업량", width: 100 },
+    { field: "workDate", headerName: "작업일", width: 100 },
+    { field: "rankKeyword", headerName: "순위키워드", width: 100 },
+    { field: "searchKeyword", headerName: "검색키워드", width: 100 },
+    { field: "adEndDate", headerName: "광고종료일", width: 100 },
+    { field: "placeAddress", headerName: "플레이스주소", width: 100 },
+    { field: "totalRequests", headerName: "총요청량", width: 100 },
+    { field: "missionStatus", headerName: "미션상태", width: 70 },
+    { field: "manage", headerName: "관리", width: 70 },
   ];
 
   return (
     <div className="mainContainerDiv">
       <div className="missionManageDiv">
         <h2 className="menuTitle">미션 관리</h2>
-        <div className="missionMngStatusDiv">
-          <table>
-            <thead>
-              <tr>
-                <th>현재 포인트</th>
-                <th>플레이스 킵</th>
-                <th>플레이스 저장</th>
-                <th>플레이스 트래픽</th>
-                <th>플레이스 검색저장</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr>
-                <td>867,250P</td>
-                <td>35P</td>
-                <td>25P</td>
-                <td>35P</td>
-                <td>45P</td>
-              </tr>
-            </tbody>
-          </table>
-        </div>
         <div className="searchDiv">
           <div>
+            <h3>검색어</h3>
             <select>
               <option>상품명</option>
-              <option>옵션</option>
-              <option>mid</option>
+              <option>대행사명</option>
             </select>
             <input type="text" />
             <button>검색</button>
           </div>
           <div>
+            <b>타입</b>
             <button
               className={activeType === "전체" ? "active" : ""}
               onClick={() => handleTypeClick("전체")}
@@ -122,15 +133,39 @@ const MissionManage = () => {
             </button>
           </div>
         </div>
-
-        <div styleName ="addMissionBtnDiv"> 
-          <button type="button">엑셀 다운로드</button>
-          <button type="button" onClick={addMission}>추가</button>
+        <div className="missionMngStatusDiv">
+          <table>
+            <thead>
+              <tr>
+                <th>현재 포인트</th>
+                <th>트래픽</th>
+                <th>트래픽 + 저장하기</th>
+                <th>트래픽 + 저장하기(프리미엄)</th>
+                <th>오락/시럽 트래픽</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>867,250P</td>
+                <td>35P</td>
+                <td>25P</td>
+                <td>35P</td>
+                <td>45P</td>
+              </tr>
+            </tbody>
+          </table>
         </div>
-        
+
+        <div styleName="addMissionBtnDiv">
+          <button type="button">엑셀 다운로드</button>
+          <button type="button" onClick={addMission}>
+            추가
+          </button>
+        </div>
+
         <DataGrid
-          rows        ={rows}
-          columns     ={columns}
+          rows={rows}
+          columns={columns}
           initialState={{
             pagination: {
               paginationModel: { page: 0, pageSize: 5 },
@@ -138,7 +173,6 @@ const MissionManage = () => {
           }}
           pageSizeOptions={[5, 10]}
         />
-        
       </div>
     </div>
   );
