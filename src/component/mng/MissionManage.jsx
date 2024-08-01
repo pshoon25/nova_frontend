@@ -3,6 +3,7 @@ import { DataGrid } from "@mui/x-data-grid";
 import { useNavigate } from "react-router-dom";
 import "../../css/Common.css";
 import "../../css/MissionManage.css";
+import { api } from "../../api/api.js";
 
 const MissionManage = () => {
   const navigate = useNavigate();
@@ -14,6 +15,11 @@ const MissionManage = () => {
 
   const addMission = () => {
     navigate("/main/addMission");
+  };
+
+  const onSubmit = async (e) => {
+    const response = await api("GET", "/mission/test");
+    console.log(response);
   };
 
   const rows = [
@@ -97,7 +103,7 @@ const MissionManage = () => {
               <option>대행사명</option>
             </select>
             <input type="text" />
-            <button>검색</button>
+            <button onClick={onSubmit}>검색</button>
           </div>
           <div>
             <b>타입</b>
