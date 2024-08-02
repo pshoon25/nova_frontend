@@ -39,6 +39,7 @@ function HomeHeader(props) {
             className={`headerMenuItem ${
               selectedMenu === "오락미션관리" ? "active" : ""
             }`}
+            onClick={() => handleMenuClick("오락미션관리", "olockMission")}
           >
             오락미션관리
           </span>

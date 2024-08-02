@@ -5,7 +5,7 @@ import "../../css/Common.css";
 import "../../css/MissionManage.css";
 import { api } from "../../api/api.js";
 
-const MissionManage = () => {
+const NovaMissionManage = () => {
   const navigate = useNavigate();
   const [activeType, setActiveType] = useState("전체");
 
@@ -18,8 +18,8 @@ const MissionManage = () => {
   };
 
   const onSubmit = async (e) => {
-    const response = await api("GET", "/mission/test");
-    console.log(response);
+    // const response = await api("GET", "/mission/test");
+    // console.log(response);
   };
 
   const rows = [
@@ -94,7 +94,7 @@ const MissionManage = () => {
   return (
     <div className="mainContainerDiv">
       <div className="missionManageDiv">
-        <h2 className="menuTitle">미션 관리</h2>
+        <h2 className="menuTitle">노바 미션 관리</h2>
         <div className="searchDiv">
           <div>
             <h3>검색어</h3>
@@ -184,4 +184,4 @@ const MissionManage = () => {
   );
 };
 
-export default MissionManage;
+export default NovaMissionManage;
