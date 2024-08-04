@@ -1,6 +1,6 @@
 import axios from "axios";
 
-axios.defaults.baseURL = "http://localhost:8080";
+axios.defaults.baseURL = "http://172.17.0.3:8080";
 export const api = async (method, url, data) => {
   const response = await axios({
     method,
