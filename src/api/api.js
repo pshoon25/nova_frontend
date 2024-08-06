@@ -5,7 +5,9 @@ axios.defaults.withCredentials = true;
 
 export const api = async (method, url, data) => {
   const headers = {
-    "Content-Type": "application/json",
+    "Content-Type": "application/json;charset=UTF-8",
+    Accept: "application/json",
+    "Access-Control-Allow-Origin": `http://localhost:3000`,
     "Access-Control-Allow-Credentials": "true",
   };
   const response = await axios({
