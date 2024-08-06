@@ -1,20 +1,16 @@
 import axios from "axios";
 
 axios.defaults.baseURL = "http://localhost:8080";
-axios.defaults.withCredentials = true;
+axios.defaults.headers = {
+  "Content-Type": "application/json",
+};
 
 export const api = async (method, url, data = null) => {
   try {
-    const headers = {
-      "Content-Type": "application/json;charset=UTF-8",
-      Accept: "application/json",
-    };
-
     const response = await axios({
       method,
       url,
       data,
-      headers,
     });
 
     return response.data;
