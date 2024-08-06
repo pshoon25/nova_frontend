@@ -24,7 +24,7 @@ const AddAgency = () => {
   const dispatch = useDispatch();
 
   const handleSubmit = async (e) => {
-    e.preventDefault();
+    e.preventDefault(); // 이벤트 객체(e)가 전달되지 않아 생긴 오류 수정
 
     const agencyInfo = {
       LOGIN_ID: loginId,
@@ -39,11 +39,24 @@ const AddAgency = () => {
     };
 
     try {
-      const response = await dispatch(insertAgencyInfo(agencyInfo)).unwrap();
-      console.log("Agency added successfully:", response);
-      // 이후 필요한 동작 추가 (e.g., 폼 리셋, 성공 메시지 표시 등)
-    } catch (err) {
-      console.error("Failed to add agency:", err);
+      const resultAction = await dispatch(insertAgencyInfo(agencyInfo));
+
+      if (insertAgencyInfo.fulfilled.match(resultAction)) {
+        console.log(
+          "Agency information successfully added:",
+          resultAction.payload
+        );
+      } else {
+        console.error(
+          "Failed to add agency information:",
+          resultAction.payload || resultAction.error.message
+        );
+      }
+    } catch (error) {
+      console.error(
+        "An error occurred while adding agency information:",
+        error
+      );
     }
   };
 
