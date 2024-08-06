@@ -18,8 +18,15 @@ const NovaMissionManage = () => {
   };
 
   const onSubmit = async (e) => {
-    const response = await api("GET", "/mission/test");
-    console.log(response.data);
+    try {
+      const response = await api({
+        method: "GET",
+        url: "/mission/test",
+      });
+      console.log(response.data); // 응답 데이터에 접근
+    } catch (error) {
+      console.error("API 호출 중 오류가 발생했습니다:", error);
+    }
   };
 
   const rows = [
