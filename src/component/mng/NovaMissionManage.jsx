@@ -19,7 +19,7 @@ const NovaMissionManage = () => {
 
   const onSubmit = async (e) => {
     const response = await api("GET", "/mission/test");
-    console.log(response);
+    console.log(response.data);
   };
 
   const rows = [
