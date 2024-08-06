@@ -24,7 +24,7 @@ const AddAgency = () => {
   const dispatch = useDispatch();
 
   const handleSubmit = async (e) => {
-    e.preventDefault(); // 이벤트 객체(e)가 전달되지 않아 생긴 오류 수정
+    e.preventDefault();
 
     const agencyInfo = {
       LOGIN_ID: loginId,
@@ -39,24 +39,16 @@ const AddAgency = () => {
     };
 
     try {
+      // API 호출을 Redux Thunk로 디스패치
       const resultAction = await dispatch(insertAgencyInfo(agencyInfo));
 
       if (insertAgencyInfo.fulfilled.match(resultAction)) {
-        console.log(
-          "Agency information successfully added:",
-          resultAction.payload
-        );
+        console.log("Agency info added:", resultAction.payload);
       } else {
-        console.error(
-          "Failed to add agency information:",
-          resultAction.payload || resultAction.error.message
-        );
+        console.error("Failed to add agency info:", resultAction.payload);
       }
     } catch (error) {
-      console.error(
-        "An error occurred while adding agency information:",
-        error
-      );
+      console.error("API 호출 중 오류가 발생했습니다:", error);
     }
   };
 
