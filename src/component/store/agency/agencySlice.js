@@ -7,18 +7,22 @@ const initialState = {
   error: null,
 };
 
+// Thunk 액션 생성기
 export const insertAgencyInfo = createAsyncThunk(
   "/agency/insertAgencyInfo",
   async (agencyInfo, thunkAPI) => {
     try {
-      const response = await api(
-        "POST",
-        "/agency/insertAgencyInfo",
-        agencyInfo
-      );
-      return response.data;
+      const response = await api.post("/agency/insertAgencyInfo", agencyInfo);
+      return response.data; // response 객체에 data 속성이 있는지 확인
     } catch (error) {
-      return thunkAPI.rejectWithValue(error.response.data);
+      // 응답에 data가 없을 경우, 전체 에러 객체를 반환하거나 다른 에러 메시지를 반환
+      if (error.response && error.response.data) {
+        return thunkAPI.rejectWithValue(error.response.data);
+      } else {
+        return thunkAPI.rejectWithValue(
+          error.message || "Something went wrong"
+        );
+      }
     }
   }
 );
