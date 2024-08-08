@@ -2,7 +2,7 @@
 FROM node:14 as build-stage
 
 # 작업 디렉토리 설정
-WORKDIR /app
+WORKDIR /homepage/orummmedia/orummmedia_front
 
 # package.json과 package-lock.json 복사
 COPY package*.json ./
@@ -23,7 +23,7 @@ FROM nginx:alpine as production-stage
 # COPY nginx.conf /etc/nginx/nginx.conf
 
 # Nginx의 기본 루트 디렉토리로 빌드된 파일을 복사
-COPY --from=build-stage /app/build /usr/share/nginx/html
+COPY --from=build-stage /homepage/orummmedia/orummmedia_front/build /usr/share/nginx/html
 
 # Nginx 포트 노출
 EXPOSE 80
