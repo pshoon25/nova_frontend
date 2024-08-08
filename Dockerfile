@@ -20,7 +20,7 @@ RUN npm run build
 FROM nginx:alpine as production-stage
 
 # Nginx 설정 파일 복사 (옵션)
-# COPY nginx.conf /etc/nginx/nginx.conf
+COPY nginx.conf /etc/nginx/nginx.conf
 
 # Nginx의 기본 루트 디렉토리로 빌드된 파일을 복사
 COPY --from=build-stage /homepage/orummmedia/orummmedia_front/build /usr/share/nginx/html
