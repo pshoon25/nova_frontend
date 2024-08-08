@@ -2,7 +2,7 @@
 FROM node:latest as build-stage
 
 # 작업 디렉토리 설정
-WORKDIR /homepage/orummmedia/orummmedia_front
+WORKDIR /app
 
 # package.json과 package-lock.json 복사
 COPY package*.json ./
@@ -15,6 +15,9 @@ COPY . .
 
 # 리액트 앱 빌드
 RUN npm run build
+
+# 빌드된 파일을 특정 폴더에 복사
+RUN mkdir -p /homepage/orummmedia/orummmedia_front/build && cp -r build /homepage/orummmedia/orummmedia_front/build
 
 # 두 번째 스테이지: Nginx를 사용한 배포
 FROM nginx:alpine as production-stage
