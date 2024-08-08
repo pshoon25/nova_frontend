@@ -1,5 +1,5 @@
-# Node.js 기반 이미지 사용
-FROM node:latest
+# 첫 번째 스테이지: Node.js를 사용한 빌드
+FROM node:latest as build-stage
 
 # 작업 디렉토리 설정
 WORKDIR /homepage/orummmedia/orummmedia_front
@@ -16,14 +16,14 @@ COPY . .
 # 리액트 앱 빌드
 RUN npm run build
 
-# Nginx를 이용해 빌드된 파일을 서빙
+# 두 번째 스테이지: Nginx를 사용한 배포
 FROM nginx:alpine as production-stage
 
 # Nginx 설정 파일 복사 (옵션)
 COPY nginx.conf /etc/nginx/nginx.conf
 
-# Nginx의 기본 루트 디렉토리로 빌드된 파일을 복사
-COPY /homepage/orummmedia/orummmedia_front/build /usr/share/nginx/html
+# 빌드된 파일을 Nginx의 기본 루트 디렉토리로 복사
+COPY --from=build-stage /homepage/orummmedia/orummmedia_front/build /usr/share/nginx/html
 
 # Nginx 포트 노출
 EXPOSE 80
