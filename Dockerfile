@@ -25,6 +25,9 @@ COPY nginx.conf /etc/nginx/nginx.conf
 # 빌드된 파일을 Nginx의 기본 루트 디렉토리로 복사
 COPY --from=build-stage /homepage/orummmedia/orummmedia_front/build /usr/share/nginx/html
 
+# 파일 권한 조정
+RUN chmod -R 755 /usr/share/nginx/html
+
 # Nginx 포트 노출
 EXPOSE 80
 
