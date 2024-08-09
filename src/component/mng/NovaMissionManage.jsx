@@ -98,7 +98,7 @@ const NovaMissionManage = () => {
   return (
     <div className="mainContainerDiv">
       <div className="missionManageDiv">
-        <h2 className="menuTitle">노바 미션 관리11</h2>
+        <h2 className="menuTitle">노바 미션 관리1</h2>
         <div className="searchDiv">
           <div>
             <h3>검색어</h3>
