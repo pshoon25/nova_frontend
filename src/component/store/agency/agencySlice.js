@@ -2,12 +2,11 @@ import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import { api } from "../../../api/api"; // API 함수가 정의된 경로
 
 const initialState = {
-  data: {},
+  data: [],
   status: "idle",
   error: null,
 };
 
-// Thunk 액션 생성기
 export const insertAgencyInfo = createAsyncThunk(
   "/agency/insertAgencyInfo",
   async (agencyInfo, thunkAPI) => {
@@ -16,6 +15,24 @@ export const insertAgencyInfo = createAsyncThunk(
       return response.data; // response 객체에 data 속성이 있는지 확인
     } catch (error) {
       // 응답에 data가 없을 경우, 전체 에러 객체를 반환하거나 다른 에러 메시지를 반환
+      if (error.response && error.response.data) {
+        return thunkAPI.rejectWithValue(error.response.data);
+      } else {
+        return thunkAPI.rejectWithValue(
+          error.message || "Something went wrong"
+        );
+      }
+    }
+  }
+);
+
+export const getAgencyList = createAsyncThunk(
+  "/agency/getAgencyList",
+  async (_, thunkAPI) => {
+    try {
+      const response = await api.get("/agency/getAgencyList");
+      return response.data; // response 객체에 data 속성이 있는지 확인
+    } catch (error) {
       if (error.response && error.response.data) {
         return thunkAPI.rejectWithValue(error.response.data);
       } else {
@@ -40,6 +57,17 @@ const agencySlice = createSlice({
         state.data = action.payload;
       })
       .addCase(insertAgencyInfo.rejected, (state, action) => {
+        state.status = "failed";
+        state.error = action.payload || action.error.message;
+      })
+      .addCase(getAgencyList.pending, (state) => {
+        state.status = "loading";
+      })
+      .addCase(getAgencyList.fulfilled, (state, action) => {
+        state.status = "succeeded";
+        state.data = action.payload;
+      })
+      .addCase(getAgencyList.rejected, (state, action) => {
         state.status = "failed";
         state.error = action.payload || action.error.message;
       });

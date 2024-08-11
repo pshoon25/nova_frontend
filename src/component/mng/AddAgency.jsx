@@ -26,21 +26,21 @@ const AddAgency = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    const agencyInfo = {
-      LOGIN_ID: loginId,
-      PASSWORD: password,
-      AGENCY_NAME: agencyName,
-      NAME: manager,
-      PHONE_NUM: phoneNum,
-      PLACE_TRAFFIC: placeTraffic,
-      PLACE_SAVE: placeSave,
-      PLACE_SAVE_PREMIUM: placeSavePremium,
-      RESALE_YN: resaleYn,
-    };
-
     try {
       // API 호출을 Redux Thunk로 디스패치
-      const resultAction = await dispatch(insertAgencyInfo(agencyInfo));
+      const resultAction = await dispatch(
+        insertAgencyInfo({
+          loginId,
+          password,
+          agencyName,
+          manager,
+          phoneNum,
+          placeTraffic,
+          placeSave,
+          placeSavePremium,
+          resaleYn,
+        })
+      );
 
       if (insertAgencyInfo.fulfilled.match(resultAction)) {
         console.log("Agency info added:", resultAction.payload);
