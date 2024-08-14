@@ -17,11 +17,12 @@ const AgencyManage = () => {
   const getAgencyList = async () => {
     setStatus("loading");
     try {
-      const response = await axios.get(
-        "/agency/getAgencyList"
-      );
-      const data = response;
+      const response = await api.get("/agency/getAgencyList");
       console.log(response);
+      console.log(response.data);
+
+
+      const data = response.data;
 
       // API 응답에 맞게 데이터 변환
       const formattedData = data.map((agency) => ({
