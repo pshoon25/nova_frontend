@@ -18,7 +18,7 @@ const AgencyManage = () => {
     setStatus("loading");
     try {
       const response = await axios.get(
-        "http://localhost:8080/agency/getAgencyList"
+        "/agency/getAgencyList"
       );
       const data = response.data;
 
