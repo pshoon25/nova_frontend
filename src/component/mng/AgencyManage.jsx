@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { DataGrid } from "@mui/x-data-grid";
-import axios from "axios";
+import { api } from "../../api/api.js";
 
 const AgencyManage = () => {
   const navigate = useNavigate();
