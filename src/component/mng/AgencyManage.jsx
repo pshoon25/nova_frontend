@@ -21,6 +21,7 @@ const AgencyManage = () => {
         "/agency/getAgencyList"
       );
       const data = response.data;
+      console.log(response.data);
 
       // API 응답에 맞게 데이터 변환
       const formattedData = data.map((agency) => ({
