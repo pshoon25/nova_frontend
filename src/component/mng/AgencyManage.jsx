@@ -7,6 +7,7 @@ import { MenuItem, Select, FormControl, InputLabel } from "@mui/material";
 const AgencyManage = () => {
   const navigate = useNavigate();
   const [rows, setRows] = useState([]);
+  const [constName, setConstName] = useState("");
   const [updatedRows, setUpdatedRows] = useState({});
 
   // 데이터 가져오기
@@ -16,10 +17,11 @@ const AgencyManage = () => {
 
   const getAgencyList = async () => {
     try {
-      const response = await api.get("/agency/getAgencyList");
+      const response = await api.get("/agency/getAgencyList", {
+        params: { agencyName: constName },
+      });
       const data = response.data;
 
-      // API 응답에 맞게 데이터 변환
       const formattedData = data.map((agency) => ({
         id: agency.agencyCode,
         agencyCode: agency.agencyCode || "N/A",
@@ -86,11 +88,9 @@ const AgencyManage = () => {
     }
   };
 
-  // 드롭다운 렌더링 함수
   const renderDropdownEditCell = (params) => {
     return (
       <FormControl fullWidth>
-        <InputLabel>{params.field}</InputLabel>
         <Select
           value={params.value}
           onChange={(event) =>
@@ -156,6 +156,18 @@ const AgencyManage = () => {
     <div className="mainContainerDiv" style={{ height: 600, width: "100%" }}>
       <div className="missionManageDiv">
         <h2 className="menuTitle">대행사 관리</h2>
+        <div className="searchDiv">
+          <div>
+            <input
+              type="text"
+              placeholder="대행사명"
+              id="constName"
+              onChange={(e) => setConstName(e.target.value)}
+              onKeyDown={(e) => e.key === "Enter" && getAgencyList()}
+            />
+            <button onClick={getAgencyList}>검색</button>
+          </div>
+        </div>
 
         <div className="actionBtns">
           <button type="button" onClick={addAgency}>
