@@ -1,78 +1,90 @@
+import React, { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 import { DataGrid } from "@mui/x-data-grid";
-import "../../css/Common.css";
-import "../../css/PointManage.css";
+import { api } from "../../api/api.js";
 
 const PointManage = () => {
-  // 샘플 데이터
-  const rows = [
-    {
-      id: 1,
-      missionNumber: "4896",
-      type: "우아한카운터",
-      points: "315,000",
-      detail: "구글플레이스토어 (등록)",
-      date: "2024-07-15 16:54:15",
-      bug: "차감",
-    },
-    {
-      id: 2,
-      missionNumber: "-",
-      type: "",
-      points: "200,000",
-      detail: "포인트 송신",
-      date: "2024-07-15 15:25:05",
-      bug: "송신",
-    },
-    {
-      id: 3,
-      missionNumber: "4873",
-      type: "밸류블비즈니스",
-      points: "30,000",
-      detail: "네이버 메일인증 (등록)",
-      date: "2024-07-15 11:36:21",
-      bug: "차감",
-    },
-    // Add more rows as needed
-  ];
+  const navigate = useNavigate();
+  const [rows, setRows] = useState([]);
+  const [status, setStatus] = useState("idle");
+  const [error, setError] = useState(null);
+  const [constName, setConstName] = useState("");
+
+  // 데이터 가져오기
+  useEffect(() => {
+    getPointHistoryList();
+  }, []);
+
+  const getPointHistoryList = async () => {
+    setStatus("loading");
+    try {
+      const response = await api.get("/point/getPointHistoryList", {
+        params: { agencyName: constName },
+      });
+      const data = response.data;
+
+      const formattedData = data.map((el) => ({
+        pointHistoryNo: el.pointHistoryNo || "N/A",
+        agencyName: el.agencyName || "N/A",
+        missionNo: el.missionNo || "N/A",
+        content: el.content || "N/A",
+        points: el.points || "N/A",
+        registerDateTime: el.registerDateTime || "N/A",
+        status: el.status || "N/A",
+      }));
+      setRows(formattedData);
+      setStatus("succeeded");
+    } catch (error) {
+      console.error("Error fetching agency data:", error);
+      setError(error.message);
+      setStatus("failed");
+    }
+  };
 
   // 컬럼 정의
   const columns = [
-    { field: "missionNumber", headerName: "미션번호", width: 100 },
-    { field: "type", headerName: "타입", width: 200 },
+    { field: "agencyName", headerName: "대행사명", width: 200 },
+    { field: "missionNo", headerName: "미션번호", width: 100 },
+    { field: "content", headerName: "내역", width: 250 },
     { field: "points", headerName: "포인트", width: 100 },
-    { field: "detail", headerName: "내역", width: 250 },
-    { field: "date", headerName: "사용일", width: 200 },
-    { field: "bug", headerName: "버그", width: 100 },
+    { field: "registerDateTime", headerName: "사용일", width: 200 },
+    { field: "status", headerName: "비고", width: 100 },
   ];
 
   return (
     <div className="mainContainerDiv">
       <div className="pointManageDiv">
-      <h2 className="menuTitle">포인트 관리</h2>
-      <div className="searchDiv">
+        <h2 className="menuTitle">포인트 관리</h2>
+        <div className="searchDiv">
           <div>
-            <select>
-              <option>상품명</option>
-              <option>옵션</option>
-              <option>mid</option>
-            </select>
-            <input type="text" />
-            <button>검색</button>
+            <input
+              type="text"
+              placeholder="대행사명"
+              id="constName"
+              onChange={(e) => setConstName(e.target.value)}
+              onKeyDown={(e) => e.key === "Enter" && getPointHistoryList()}
+            />
+            <button onClick={getPointHistoryList}>검색</button>
           </div>
-      </div>
-      <div style={{ height: 400, width: "100%" }}>
-        <DataGrid
-          rows={rows}
-          columns={columns}
-          initialState={{
-            pagination: {
-              paginationModel: { page: 0, pageSize: 5 },
-            },
-          }}
-          pageSizeOptions={[5, 10]}
-          checkboxSelection
-        />
-      </div>
+        </div>
+        <div className="actionBtns">
+          <button type="button">포인트 충전</button>
+        </div>
+        <div style={{ height: 400, width: "100%" }}>
+          <DataGrid
+            rows={rows}
+            columns={columns}
+            getRowId={(row) => row.pointHistoryNo}
+            initialState={{
+              pagination: {
+                paginationModel: { page: 0, pageSize: 5 },
+              },
+            }}
+            pageSizeOptions={[5, 10]}
+            style={{ height: 600 }}
+            checkboxSelection
+          />
+        </div>
       </div>
     </div>
   );

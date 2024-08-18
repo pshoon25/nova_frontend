@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import "../../css/HomeHeader.css";
-import headerLogo from "../../images/nova_cutout.png";
+import headerLogo from "../../images/nova_text.png";
 
 function HomeHeader(props) {
   const [selectedMenu, setSelectedMenu] = useState("미션관리");
@@ -58,14 +58,6 @@ function HomeHeader(props) {
             onClick={() => handleMenuClick("대행사관리", "agencyManage")}
           >
             대행사관리
-          </span>
-          <span
-            className={`headerMenuItem ${
-              selectedMenu === "공지사항" ? "active" : ""
-            }`}
-            onClick={() => setSelectedMenu("공지사항")}
-          >
-            공지사항
           </span>
         </div>
         <div className="headerUserDiv">
