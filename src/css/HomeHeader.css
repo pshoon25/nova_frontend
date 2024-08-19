@@ -1,7 +1,10 @@
 .homeHeader {
-  /* margin-left: 10px; */
-  /* margin-right: 10px; */
-  margin: 10px;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: calc(100% - 20px); /* 전체 너비에서 양쪽 여백을 뺀 값으로 설정 */
+  margin: 20px;
+  z-index: 1000;
 }
 
 .homeHeaderNav {
@@ -29,7 +32,6 @@
 .headerLogo {
   width: 7%;
   height: 7%;
-  /* margin: -10px; */
   cursor: pointer;
 }
 

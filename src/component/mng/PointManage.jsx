@@ -2,12 +2,18 @@ import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { DataGrid } from "@mui/x-data-grid";
 import { api } from "../../api/api.js";
+import {
+  MenuItem,
+  Select,
+  FormControl,
+  InputLabel,
+  TextField,
+} from "@mui/material";
 
 const PointManage = () => {
   const navigate = useNavigate();
   const [rows, setRows] = useState([]);
-  const [status, setStatus] = useState("idle");
-  const [error, setError] = useState(null);
+  const [statusFilter, setstatusFilter] = useState("All");
   const [constName, setConstName] = useState("");
 
   // 데이터 가져오기
@@ -16,11 +22,14 @@ const PointManage = () => {
   }, []);
 
   const getPointHistoryList = async () => {
-    setStatus("loading");
     try {
-      const response = await api.get("/point/getPointHistoryList", {
-        params: { agencyName: constName },
-      });
+      const params = {
+        agencyName: constName,
+        status: statusFilter !== "All" ? statusFilter : undefined,
+      };
+
+      const response = await api.get("/point/getPointHistoryList", { params });
+
       const data = response.data;
 
       const formattedData = data.map((el) => ({
@@ -30,14 +39,11 @@ const PointManage = () => {
         content: el.content || "N/A",
         points: el.points || "N/A",
         registerDateTime: el.registerDateTime || "N/A",
-        status: el.status || "N/A",
+        status: formatStatus(el.status),
       }));
       setRows(formattedData);
-      setStatus("succeeded");
     } catch (error) {
-      console.error("Error fetching agency data:", error);
-      setError(error.message);
-      setStatus("failed");
+      console.error("Error:", error);
     }
   };
 
@@ -51,24 +57,67 @@ const PointManage = () => {
     { field: "status", headerName: "비고", width: 100 },
   ];
 
+  const formatStatus = (status) => {
+    switch (status) {
+      case "request":
+        return "충전요청";
+      case "recharge":
+        return "충전";
+      case "deduction":
+        return "차감";
+      case "refund":
+        return "환급";
+      default:
+        return "N/A";
+    }
+  };
+
   return (
     <div className="mainContainerDiv">
       <div className="pointManageDiv">
         <h2 className="menuTitle">포인트 관리</h2>
-        <div className="searchDiv">
-          <div>
-            <input
-              type="text"
-              placeholder="대행사명"
-              id="constName"
+        <div className="actionBtns">
+          <div className="searchDiv">
+            <TextField
+              className="textField"
+              label="대행사명"
+              variant="outlined"
+              size="small"
+              value={constName}
               onChange={(e) => setConstName(e.target.value)}
               onKeyDown={(e) => e.key === "Enter" && getPointHistoryList()}
             />
-            <button onClick={getPointHistoryList}>검색</button>
+
+            <FormControl
+              className="formControl"
+              variant="outlined"
+              size="small"
+            >
+              <InputLabel>상태</InputLabel>
+              <Select
+                value={statusFilter}
+                onChange={(e) => setstatusFilter(e.target.value)}
+                label="상태"
+              >
+                <MenuItem value="All">All</MenuItem>
+                <MenuItem value="request">충전요청</MenuItem>
+                <MenuItem value="recharge">충전</MenuItem>
+                <MenuItem value="deduction">차감</MenuItem>
+                <MenuItem value="refund">환급</MenuItem>
+              </Select>
+            </FormControl>
+            <button className="searchButton" onClick={getPointHistoryList}>
+              검색
+            </button>
           </div>
-        </div>
-        <div className="actionBtns">
-          <button type="button">포인트 충전</button>
+          <div className="actionBtns">
+            <button type="button" className="addButton">
+              포인트 충전
+            </button>
+            <button type="button" className="saveButton">
+              충전 승인
+            </button>
+          </div>
         </div>
         <div style={{ height: 400, width: "100%" }}>
           <DataGrid
