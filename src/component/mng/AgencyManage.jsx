@@ -223,7 +223,6 @@ const AgencyManage = () => {
             <button className="saveButton" onClick={agencySave}>
               저장
             </button>
-            <button className="downloadButton">엑셀 다운로드</button>
           </div>
         </div>
         <DataGrid

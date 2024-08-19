@@ -3,35 +3,45 @@
 }
 
 .missionMngStatusDiv {
-  border-collapse: collapse;
+  border-collapse: separate;
+  border-spacing: 0;
   width: 100%;
   text-align: -webkit-center;
   text-align-last: center;
 }
 
+.missionMngStatusDiv th,
+.missionMngStatusDiv td {
+  background: #ffffff; /* 배경 색상 */
+  box-shadow: 6px 6px 12px rgba(0, 0, 0, 0.1),
+    -6px -6px 12px rgba(255, 255, 255, 0.7); /* 뉴모피즘 음영 효과 */
+  padding: 12px 15px; /* 패딩 */
+  transition: all 0.3s ease; /* 부드러운 전환 효과 */
+}
+
 .missionMngStatusDiv th {
-  background-color: #ffcccc; /* 헤더 배경색 */
+  background: #f0f0f0; /* 헤더 배경색 */
   color: #333; /* 헤더 텍스트 색상 */
-  padding: 12px 15px; /* 헤더 셀의 패딩 */
-  text-align: left; /* 텍스트 정렬 */
-  border-bottom: 2px solid #ddd; /* 헤더 하단에 선 추가 */
+  border-bottom: 1px solid #ddd; /* 헤더 하단에 선 추가 */
+  font-weight: bold; /* 폰트 굵게 */
 }
 
 .missionMngStatusDiv td {
-  padding: 10px 15px; /* 셀의 패딩 */
   border-bottom: 1px solid #ddd; /* 셀 하단에 선 추가 */
 }
 
-.missionMngStatusDiv tr:nth-child(even) {
-  background-color: #f9f9f9;
+.missionMngStatusDiv tr:nth-child(even) td {
+  background: #f9f9f9; /* 짝수 행 배경 색상 */
 }
 
-.missionMngStatusDiv tr:nth-child(odd) {
-  background-color: #fff;
+.missionMngStatusDiv tr:nth-child(odd) td {
+  background: #fff; /* 홀수 행 배경 색상 */
 }
 
-.missionMngStatusDiv tr:hover {
-  background-color: #f1f1f1;
+.missionMngStatusDiv tr:hover td {
+  background: #f1f1f1; /* 호버 시 배경 색상 */
+  box-shadow: 6px 6px 12px rgba(0, 0, 0, 0.1),
+    -6px -6px 12px rgba(255, 255, 255, 0.7); /* 뉴모피즘 음영 효과 */
 }
 
 .addMissionBtnDiv button {

@@ -5,6 +5,7 @@
   width: calc(100% - 20px); /* 전체 너비에서 양쪽 여백을 뺀 값으로 설정 */
   margin: 20px;
   z-index: 1000;
+  background-color: #ffffff;
 }
 
 .homeHeaderNav {
@@ -38,15 +39,18 @@
 .headerMenuItem {
   cursor: pointer;
   font-weight: normal;
-  border-bottom: 2px solid transparent;
-  padding-bottom: 4px; /* 텍스트 아래 공간 추가 */
+  padding: 10px 20px; /* 버튼 안쪽 여백 */
   transition: all 0.3s ease;
-  display: inline-block; /* 밑줄을 텍스트보다 길게 조정하기 위해 사용 */
+  display: inline-block; /* 인라인 블록으로 공간 조정 */
+  position: relative; /* 하위 요소의 위치를 기준으로 설정 */
 }
 
+/* active 상태 */
 .headerMenuItem.active {
   font-weight: bold;
-  border-bottom: 2px solid pink;
-  padding-bottom: 4px;
-  margin-bottom: -2px; /* 밑줄의 길이를 시각적으로 늘리기 위해 추가 */
+  color: #000; /* 텍스트 색상 */
+  background: #ffffff; /* 배경 색상 */
+  border-radius: 12px; /* 모서리 둥글기 */
+  box-shadow: inset 4px 4px 8px rgba(0, 0, 0, 0.2),
+    inset -4px -4px 8px rgba(255, 255, 255, 0.5); /* 뉴모피즘 음영 효과 */
 }
