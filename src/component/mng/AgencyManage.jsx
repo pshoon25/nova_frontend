@@ -2,11 +2,20 @@ import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { DataGrid } from "@mui/x-data-grid";
 import { api } from "../../api/api.js";
-import { MenuItem, Select, FormControl, InputLabel } from "@mui/material";
+import {
+  MenuItem,
+  Select,
+  FormControl,
+  InputLabel,
+  TextField,
+} from "@mui/material";
 
 const AgencyManage = () => {
   const navigate = useNavigate();
   const [rows, setRows] = useState([]);
+  const [constName, setConstName] = useState("");
+  const [resaleFilter, setResaleFilter] = useState("All");
+  const [useFilter, setUseFilter] = useState("All");
   const [updatedRows, setUpdatedRows] = useState({});
 
   // 데이터 가져오기
@@ -16,10 +25,15 @@ const AgencyManage = () => {
 
   const getAgencyList = async () => {
     try {
-      const response = await api.get("/agency/getAgencyList");
+      const params = {
+        agencyName: constName,
+        resaleYn: resaleFilter !== "All" ? resaleFilter : undefined,
+        useYn: useFilter !== "All" ? useFilter : undefined,
+      };
+
+      const response = await api.get("/agency/getAgencyList", { params });
       const data = response.data;
 
-      // API 응답에 맞게 데이터 변환
       const formattedData = data.map((agency) => ({
         id: agency.agencyCode,
         agencyCode: agency.agencyCode || "N/A",
@@ -86,11 +100,9 @@ const AgencyManage = () => {
     }
   };
 
-  // 드롭다운 렌더링 함수
   const renderDropdownEditCell = (params) => {
     return (
       <FormControl fullWidth>
-        <InputLabel>{params.field}</InputLabel>
         <Select
           value={params.value}
           onChange={(event) =>
@@ -153,18 +165,66 @@ const AgencyManage = () => {
   };
 
   return (
-    <div className="mainContainerDiv" style={{ height: 600, width: "100%" }}>
+    <div className="mainContainerDiv">
       <div className="missionManageDiv">
         <h2 className="menuTitle">대행사 관리</h2>
 
         <div className="actionBtns">
-          <button type="button" onClick={addAgency}>
-            New
-          </button>
-          <button type="button" onClick={agencySave}>
-            Save
-          </button>
-          <button type="button">Excel</button>
+          <div className="searchDiv">
+            <TextField
+              className="textField"
+              label="대행사명"
+              variant="outlined"
+              size="small"
+              value={constName}
+              onChange={(e) => setConstName(e.target.value)}
+              onKeyDown={(e) => e.key === "Enter" && getAgencyList()}
+            />
+            <FormControl
+              className="formControl"
+              variant="outlined"
+              size="small"
+            >
+              <InputLabel>재판매 여부</InputLabel>
+              <Select
+                value={resaleFilter}
+                onChange={(e) => setResaleFilter(e.target.value)}
+                label="재판매 여부"
+              >
+                <MenuItem value="All">All</MenuItem>
+                <MenuItem value="Y">Y</MenuItem>
+                <MenuItem value="N">N</MenuItem>
+              </Select>
+            </FormControl>
+            <FormControl
+              className="formControl"
+              variant="outlined"
+              size="small"
+            >
+              <InputLabel>사용 여부</InputLabel>
+              <Select
+                value={useFilter}
+                onChange={(e) => setUseFilter(e.target.value)}
+                label="사용 여부"
+              >
+                <MenuItem value="All">All</MenuItem>
+                <MenuItem value="Y">Y</MenuItem>
+                <MenuItem value="N">N</MenuItem>
+              </Select>
+            </FormControl>
+            <button className="searchButton" onClick={getAgencyList}>
+              검색
+            </button>
+          </div>
+          <div className="btnsDiv">
+            <button className="addButton" onClick={addAgency}>
+              대행사 추가
+            </button>
+            <button className="saveButton" onClick={agencySave}>
+              저장
+            </button>
+            <button className="downloadButton">엑셀 다운로드</button>
+          </div>
         </div>
         <DataGrid
           rows={rows}
@@ -177,7 +237,7 @@ const AgencyManage = () => {
             },
           }}
           pageSizeOptions={[5, 10]}
-          style={{ height: 600 }} // DataGrid의 높이 설정
+          className="dataGrid" // DataGrid의 클래스 이름 설정
         />
       </div>
     </div>

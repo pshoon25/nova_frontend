@@ -161,7 +161,7 @@ const NovaMissionManage = () => {
                 <th>트래픽</th>
                 <th>트래픽 + 저장하기</th>
                 <th>트래픽 + 저장하기(프리미엄)</th>
-                <th>오락/시럽 트래픽</th>
+                {/* <th>오락/시럽 트래픽</th> */}
               </tr>
             </thead>
             <tbody>
@@ -170,7 +170,7 @@ const NovaMissionManage = () => {
                 <td>{pointsData.placeTraffic}P</td>
                 <td>{pointsData.placeSave}P</td>
                 <td>{pointsData.placeSavePremium}P</td>
-                <td>{pointsData.placeTrafficPremium}P</td>
+                {/* <td>{pointsData.placeTrafficPremium}P</td> */}
               </tr>
             </tbody>
           </table>

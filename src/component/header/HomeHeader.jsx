@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import "../../css/HomeHeader.css";
 import headerLogo from "../../images/nova_text.png";
@@ -7,12 +7,22 @@ function HomeHeader(props) {
   const [selectedMenu, setSelectedMenu] = useState("미션관리");
   const navigate = useNavigate();
 
+  // 컴포넌트가 마운트될 때 로컬 스토리지에서 메뉴 선택 상태를 불러오기
+  useEffect(() => {
+    const savedMenu = localStorage.getItem("selectedMenu");
+    if (savedMenu) {
+      setSelectedMenu(savedMenu);
+    }
+  }, []);
+
   const handleMenuClick = (menu, path) => {
     setSelectedMenu(menu);
+    localStorage.setItem("selectedMenu", menu); // 메뉴 선택 상태를 로컬 스토리지에 저장
     navigate(path);
   };
 
   const handleLogout = () => {
+    localStorage.removeItem("selectedMenu"); // 로그아웃 시 메뉴 선택 상태 초기화
     navigate("/login");
   };
 
