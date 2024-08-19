@@ -4,6 +4,13 @@ import { useNavigate } from "react-router-dom";
 import "../../css/Common.css";
 import "../../css/MissionManage.css";
 import { api } from "../../api/api.js";
+import {
+  MenuItem,
+  Select,
+  FormControl,
+  InputLabel,
+  TextField,
+} from "@mui/material";
 
 const NovaMissionManage = () => {
   const navigate = useNavigate();
@@ -14,7 +21,6 @@ const NovaMissionManage = () => {
     placeTraffic: 0,
     placeSave: 0,
     placeSavePremium: 0,
-    placeTrafficPremium: 0,
   });
 
   const [constName, setConstName] = useState("");
@@ -105,54 +111,6 @@ const NovaMissionManage = () => {
     <div className="mainContainerDiv">
       <div className="missionManageDiv">
         <h2 className="menuTitle">노바 미션 관리</h2>
-        <div className="searchDiv">
-          <div>
-            <h3>검색어</h3>
-            <input
-              type="text"
-              id="constName"
-              placeholder="대행사명"
-              onChange={(e) => setConstName(e.target.value)}
-              onKeyDown={(e) =>
-                e.key === "Enter" && getAgencyMissionListByAgencyName()
-              }
-            />
-            <button onClick={getAgencyMissionListByAgencyName}>검색</button>
-          </div>
-          <div>
-            <b>타입</b>
-            <button
-              className={activeType === "전체" ? "active" : ""}
-              onClick={() => handleTypeClick("전체")}
-            >
-              전체
-            </button>
-            <button
-              className={activeType === "플레이스킵" ? "active" : ""}
-              onClick={() => handleTypeClick("플레이스킵")}
-            >
-              플레이스킵
-            </button>
-            <button
-              className={activeType === "플레이스저장" ? "active" : ""}
-              onClick={() => handleTypeClick("플레이스저장")}
-            >
-              플레이스저장
-            </button>
-            <button
-              className={activeType === "플레이스트래픽" ? "active" : ""}
-              onClick={() => handleTypeClick("플레이스트래픽")}
-            >
-              플레이스트래픽
-            </button>
-            <button
-              className={activeType === "플레이스검색저장" ? "active" : ""}
-              onClick={() => handleTypeClick("플레이스검색저장")}
-            >
-              플레이스검색저장
-            </button>
-          </div>
-        </div>
         <div className="missionMngStatusDiv">
           <table>
             <thead>
@@ -161,7 +119,6 @@ const NovaMissionManage = () => {
                 <th>트래픽</th>
                 <th>트래픽 + 저장하기</th>
                 <th>트래픽 + 저장하기(프리미엄)</th>
-                {/* <th>오락/시럽 트래픽</th> */}
               </tr>
             </thead>
             <tbody>
@@ -170,17 +127,78 @@ const NovaMissionManage = () => {
                 <td>{pointsData.placeTraffic}P</td>
                 <td>{pointsData.placeSave}P</td>
                 <td>{pointsData.placeSavePremium}P</td>
-                {/* <td>{pointsData.placeTrafficPremium}P</td> */}
               </tr>
             </tbody>
           </table>
         </div>
 
         <div className="actionBtns">
-          <button type="button" onClick={addMission}>
-            미션 추가
-          </button>
-          <button type="button">엑셀 다운로드</button>
+          <div className="searchDiv">
+            <div>
+              <TextField
+                className="textField"
+                label="대행사명"
+                variant="outlined"
+                size="small"
+                value={constName}
+                onChange={(e) => setConstName(e.target.value)}
+                onKeyDown={(e) =>
+                  e.key === "Enter" && getAgencyMissionListByAgencyName()
+                }
+              />
+              <button
+                className="searchButton"
+                onClick={getAgencyMissionListByAgencyName}
+              >
+                검색
+              </button>
+            </div>
+            <div className="typeButtons">
+              <b>타입</b>
+              <button
+                className={`typeButton ${
+                  activeType === "전체" ? "active" : ""
+                }`}
+                onClick={() => handleTypeClick("전체")}
+              >
+                전체
+              </button>
+              <button
+                className={`typeButton ${
+                  activeType === "트래픽" ? "active" : ""
+                }`}
+                onClick={() => handleTypeClick("트래픽")}
+              >
+                트래픽
+              </button>
+              <button
+                className={`typeButton ${
+                  activeType === "저장하기" ? "active" : ""
+                }`}
+                onClick={() => handleTypeClick("저장하기")}
+              >
+                저장하기
+              </button>
+
+              <button
+                className={`typeButton ${
+                  activeType === "저장하기(프리미엄)" ? "active" : ""
+                }`}
+                onClick={() => handleTypeClick("저장하기(프리미엄)")}
+              >
+                저장하기(프리미엄)
+              </button>
+            </div>
+          </div>
+
+          <div className="actionBtns">
+            <button type="button" className="addButton" onClick={addMission}>
+              미션 추가
+            </button>
+            <button type="button" className="downloadButton">
+              엑셀 다운로드
+            </button>
+          </div>
         </div>
 
         <DataGrid
