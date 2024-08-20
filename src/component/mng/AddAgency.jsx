@@ -1,13 +1,7 @@
 import React, { useState } from "react";
 import { useDispatch } from "react-redux";
 import { insertAgencyInfo } from "../store/agency/agencySlice";
-import {
-  Select,
-  MenuItem,
-  TextField,
-  FormControl,
-  Button,
-} from "@mui/material";
+import { Select, MenuItem, TextField, FormControl } from "@mui/material";
 import "../../css/Agency.css";
 
 const AddAgency = () => {
@@ -27,7 +21,6 @@ const AddAgency = () => {
     e.preventDefault();
 
     try {
-      // API 호출을 Redux Thunk로 디스패치
       const resultAction = await dispatch(
         insertAgencyInfo({
           loginId,
@@ -97,28 +90,6 @@ const AddAgency = () => {
             fullWidth
             required
           />
-
-          <b>플레이스 트래픽</b>
-          <TextField
-            value={placeTraffic}
-            onChange={(e) => setPlaceTraffic(e.target.value)}
-            fullWidth
-          />
-
-          <b>플레이스 저장</b>
-          <TextField
-            value={placeSave}
-            onChange={(e) => setPlaceSave(e.target.value)}
-            fullWidth
-          />
-
-          <b>플레이스 저장 프리미엄</b>
-          <TextField
-            value={placeSavePremium}
-            onChange={(e) => setPlaceSavePremium(e.target.value)}
-            fullWidth
-          />
-
           <b>재판매 여부</b>
           <FormControl fullWidth>
             <Select
@@ -129,11 +100,66 @@ const AddAgency = () => {
               <MenuItem value="N">No</MenuItem>
             </Select>
           </FormControl>
+          <div className="itemPriceDiv">
+            <div className="novaItemDiv itemDiv">
+              <h3>Nova</h3>
+              <b>플레이스 검색</b>
+              <TextField
+                value={placeTraffic}
+                onChange={(e) => setPlaceTraffic(e.target.value)}
+                fullWidth
+              />
 
-          <Button type="submit" variant="contained" color="primary">
-            추가하기
-          </Button>
+              <b>플레이스 검색 + 저장</b>
+              <TextField
+                value={placeSave}
+                onChange={(e) => setPlaceSave(e.target.value)}
+                fullWidth
+              />
+
+              <b>플레이스 검색 + 저장(프리미엄)</b>
+              <TextField
+                value={placeSavePremium}
+                onChange={(e) => setPlaceSavePremium(e.target.value)}
+                fullWidth
+              />
+
+              <b>플레이스 KEEP</b>
+              <TextField
+                value={placeSavePremium}
+                onChange={(e) => setPlaceSavePremium(e.target.value)}
+                fullWidth
+              />
+
+              <b>스마트스토어 검색</b>
+              <TextField
+                value={placeSavePremium}
+                onChange={(e) => setPlaceSavePremium(e.target.value)}
+                fullWidth
+              />
+            </div>
+            <div className="olockItemDiv itemDiv">
+              <h3>Olock</h3>
+              <b>플레이스 검색</b>
+              <TextField
+                value={placeTraffic}
+                onChange={(e) => setPlaceTraffic(e.target.value)}
+                fullWidth
+              />
+              <b>플레이스 검색+저장</b>
+              <TextField
+                value={placeSave}
+                onChange={(e) => setPlaceSave(e.target.value)}
+                fullWidth
+              />
+            </div>
+          </div>
         </form>
+      </div>
+      <div className="addAgencyBtnDiv">
+        <button type="button" className="saveButton">
+          추가하기
+        </button>
       </div>
     </div>
   );
