@@ -6,6 +6,8 @@ import headerLogo from "../../images/nova_text.png";
 function HomeHeader(props) {
   const [selectedMenu, setSelectedMenu] = useState("미션관리");
   const navigate = useNavigate();
+  const loginInfo = JSON.parse(localStorage.getItem('loginInfo'));
+  const userType  = loginInfo ? loginInfo.userType  : null;
 
   // 컴포넌트가 마운트될 때 로컬 스토리지에서 메뉴 선택 상태를 불러오기
   useEffect(() => {

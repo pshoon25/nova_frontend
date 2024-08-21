@@ -3,7 +3,8 @@ import { Route, Navigate, useNavigate } from 'react-router-dom';
 
 const PrivateRoute = ({ element, ...rest }) => {
   const navigate = useNavigate();
-  const agencyCode = localStorage.getItem('agencyCode');
+  const loginInfo = JSON.parse(localStorage.getItem('loginInfo'));
+  const agencyCode = loginInfo ? loginInfo.agencyCode  : null;
 
   if (!agencyCode) {
     // 경고 메시지 표시

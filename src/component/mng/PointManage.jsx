@@ -15,6 +15,8 @@ const PointManage = () => {
   const [rows, setRows] = useState([]);
   const [statusFilter, setstatusFilter] = useState("All");
   const [constName, setConstName] = useState("");
+  const loginInfo = JSON.parse(localStorage.getItem('loginInfo'));
+  const userType  = loginInfo ? loginInfo.userType  : null;
 
   // 데이터 가져오기
   useEffect(() => {
@@ -34,6 +36,7 @@ const PointManage = () => {
 
       const formattedData = data.map((el) => ({
         pointHistoryNo: el.pointHistoryNo || "N/A",
+        reward: el.reward || "N/A",
         agencyName: el.agencyName || "N/A",
         missionNo: el.missionNo || "N/A",
         content: el.content || "N/A",
@@ -50,6 +53,7 @@ const PointManage = () => {
   // 컬럼 정의
   const columns = [
     { field: "agencyName", headerName: "대행사명", width: 200 },
+    { field: "reward", headerName: "리워드", width: 200 },
     { field: "missionNo", headerName: "미션번호", width: 100 },
     { field: "content", headerName: "내역", width: 250 },
     { field: "points", headerName: "포인트", width: 100 },

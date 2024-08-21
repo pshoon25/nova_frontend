@@ -51,10 +51,10 @@ function Login() {
 const loginSuccess = (response) => {
     // 로그인 성공 후 정보 Local Storage에 저장
     const loginInfo = {};
-    loginInfo.agencyCode = response.cusMngCode;
-    loginInfo.name = response.name;
+    loginInfo.agencyCode = response.agencyCode;
+    loginInfo.agencyName = response.agencyName;
+    loginInfo.userType = response.userType;
     loginInfo.accessToken = response.accessToken;
-    loginInfo.userAuth = response.userAuth;
 
     localStorage.setItem('loginInfo', JSON.stringify(loginInfo));
 
