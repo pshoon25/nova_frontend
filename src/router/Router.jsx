@@ -14,7 +14,7 @@ const Router = () => {
       <Routes>
         <Route path="/"      element={<Navigate to="/login" />} />
         <Route path="/login" element={<Login />} />
-        <Route path="/main"  element={<MainLayout />}>
+        <Route path="/main"  element={<PrivateRoute element={<MainLayout />} />}>
           <Route path="/main"        element={<Navigate to="novaMission" />} />
           <Route path="novaMission"  element={<NovaMissionManage />} />
           <Route path="olockMission" element={<OlockMissionManage />} />
