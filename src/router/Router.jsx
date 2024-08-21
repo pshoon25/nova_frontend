@@ -7,6 +7,7 @@ import PointManage from "../component/mng/PointManage";
 import AgencyManage from "../component/mng/AgencyManage";
 import AddAgency from "../component/mng/AddAgency";
 import OlockMissionManage from "../component/mng/OlockMissionManage";
+import PrivateRoute from "./PrivateRoute";
 
 const Router = () => {
   return (

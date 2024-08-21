@@ -28,6 +28,10 @@ function Login() {
    // 로그인
    const Login_checkLoginIdPw = async () => {
     try {
+      const params = {
+        loginId : loginId,
+        password : password,
+      }
       const response = await api.get("/login", params);
 
       // 로그인 실패
