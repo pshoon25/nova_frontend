@@ -56,6 +56,7 @@ function Login() {
   };
 
   const loginSuccess = (response) => {
+    console.log(response);
     // 로그인 성공 후 정보 Local Storage에 저장
     const loginInfo = {};
     loginInfo.agencyCode = response.agencyCode;
