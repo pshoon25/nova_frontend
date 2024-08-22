@@ -9,8 +9,8 @@ function Login() {
   const [password, setPassword] = useState('');
   const navigate = useNavigate();
 
-   // Validation Check
-   const login_validationCheck = (e) => {
+  // Validation Check
+  const login_validationCheck = (e) => {
     e.preventDefault();
 
     if (!loginId) {
@@ -25,36 +25,37 @@ function Login() {
     Login_checkLoginIdPw();
   };
 
-   // 로그인
-   const Login_checkLoginIdPw = async () => {
+  // 로그인
+  const Login_checkLoginIdPw = async () => {
     try {
-      const params = {
-        loginId : loginId,
-        password : password,
-      }
-      const response = await api.get("/login", params);
+      const response = await api.get("/login", {
+        params: {
+          loginId: loginId,
+          password: password
+        }
+      });
 
       // 로그인 실패
-      if (response.failed) {
-        if (response.failed === 'Id Failed') {
+      if (response.data.failed) {
+        if (response.data.failed === 'Id Failed') {
           alert("사용자 아이디가 존재하지 않습니다.");
-        } else if (response.failed === 'Pw Failed') {
+        } else if (response.data.failed === 'Pw Failed') {
           alert("비밀번호가 일치하지 않습니다. 다시한번 확인 바랍니다.");
-        } else if (response.failed === 'Stop Using') {
+        } else if (response.data.failed === 'Stop Using') {
           alert("사용이 정지된 계정입니다. 담당자에게 문의 바랍니다.");
-        } else if (response.failed === 'Delete User') {
+        } else if (response.data.failed === 'Delete User') {
           alert("삭제된 계정입니다. 담당자에게 문의 바랍니다.");
         }
       } else {
         // 로그인 성공
-        loginSuccess(response);
+        loginSuccess(response.data);
       }
     } catch (error) {
       console.error('Error:', error);
     }
   };
 
-const loginSuccess = (response) => {
+  const loginSuccess = (response) => {
     // 로그인 성공 후 정보 Local Storage에 저장
     const loginInfo = {};
     loginInfo.agencyCode = response.agencyCode;
@@ -68,18 +69,17 @@ const loginSuccess = (response) => {
     navigate("/main");
   };
 
-
   return (
-    <div class="loginDiv">
+    <div className="loginDiv">
       <img
         src={loginLogo}
         alt="loginLogo"
         className="loginLogo"
         draggable="false"
       />
-      <div class="formContainer">
-        <form class="loginForm">
-          <h2 class="menuTitle">로그인</h2>
+      <div className="formContainer">
+        <form className="loginForm" onSubmit={login_validationCheck}>
+          <h2 className="menuTitle">로그인</h2>
           <p>아이디</p>
           <input
             className="loginInput"
@@ -94,7 +94,7 @@ const loginSuccess = (response) => {
             value={password}
             onChange={(e) => setPassword(e.target.value)}
           />
-          <button class="loginBtn" onClick={login_validationCheck}>
+          <button className="loginBtn" type="submit">
             로그인
           </button>
         </form>
