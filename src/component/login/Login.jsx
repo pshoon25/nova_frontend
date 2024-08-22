@@ -57,17 +57,17 @@ function Login() {
 
   const loginSuccess = (response) => {
     console.log(response);
-    // 로그인 성공 후 정보 Local Storage에 저장
-    const loginInfo = {};
-    loginInfo.agencyCode = response.agencyCode;
-    loginInfo.agencyName = response.agencyName;
-    loginInfo.userType = response.userType;
-    loginInfo.accessToken = response.accessToken;
+    // // 로그인 성공 후 정보 Local Storage에 저장
+    // const loginInfo = {};
+    // loginInfo.agencyCode = response.agencyCode;
+    // loginInfo.agencyName = response.agencyName;
+    // loginInfo.userType = response.userType;
+    // loginInfo.accessToken = response.accessToken;
 
-    localStorage.setItem('loginInfo', JSON.stringify(loginInfo));
+    // localStorage.setItem('loginInfo', JSON.stringify(loginInfo));
 
-    // 페이지 이동
-    navigate("/main");
+    // // 페이지 이동
+    // navigate("/main");
   };
 
   return (
