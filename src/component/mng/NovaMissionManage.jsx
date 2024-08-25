@@ -16,21 +16,26 @@ const NovaMissionManage = () => {
   const navigate = useNavigate();
   const [activeType, setActiveType] = useState("전체");
   const [rows, setRows] = useState([]);
+  const [constName, setConstName] = useState("");
   const [pointsData, setPointsData] = useState({
-    currentPoints: 0,
-    placeTraffic: 0,
-    placeSave: 0,
-    placeSavePremium: 0,
+    availablePoints: 0,
+    novaPlaceSearch: 0,
+    novaPlaceSearchSave: 0,
+    novaPlaceSearchSavePremium: 0,
+    novaPlaceKeep: 0,
+    novaSmartstoreSearch: 0,
   });
 
-  const [constName, setConstName] = useState("");
+  const loginInfo = JSON.parse(localStorage.getItem("loginInfo"));
+  const agencyCode = loginInfo ? loginInfo.agencyCode : null;
+  const userType = loginInfo ? loginInfo.userType : null;
 
   const handleTypeClick = (type) => {
     setActiveType(type);
   };
 
   const addMission = () => {
-    navigate("/main/addMission");
+    navigate("/main/addNovaMission", { state: { pointsData } });
   };
 
   const getAgencyMissionListByAgencyName = async () => {
@@ -66,6 +71,14 @@ const NovaMissionManage = () => {
     }
   };
 
+  const getAgencyPoint = () => {
+    if (userType === "ADMIN") {
+      getAgencyPointByAgencyName();
+    } else if (userType) {
+      getAgencyPointByAgencyCode();
+    }
+  };
+
   const getAgencyPointByAgencyName = async () => {
     try {
       const response = await api.get("/point/getAgencyPointByAgencyName", {
@@ -75,18 +88,45 @@ const NovaMissionManage = () => {
       const data = response.data[0];
 
       setPointsData({
-        currentPoints: response.data.length > 1 ? 0 : data.availablePoints,
-        placeTraffic: response.data.length > 1 ? 0 : data.placeTraffic,
-        placeSave: response.data.length > 1 ? 0 : data.placeSave,
-        placeSavePremium: response.data.length > 1 ? 0 : data.placeSavePremium,
+        availablePoints: response.data.length > 1 ? 0 : data.availablePoints,
+        novaPlaceSearch: response.data.length > 1 ? 0 : data.novaPlaceSearch,
+        novaPlaceSearchSave:
+          response.data.length > 1 ? 0 : data.novaPlaceSearchSave,
+        novaPlaceSearchSavePremium:
+          response.data.length > 1 ? 0 : data.novaPlaceSearchSavePremium,
+        novaPlaceKeep: response.data.length > 1 ? 0 : data.novaPlaceKeep,
+        novaSmartstoreSearch:
+          response.data.length > 1 ? 0 : data.novaSmartstoreSearch,
       });
     } catch (error) {
       console.error("error:", error);
     }
   };
 
+  const getAgencyPointByAgencyCode = async () => {
+    try {
+      const response = await api.get("/point/getAgencyPointByAgencyCode", {
+        params: { agencyCode: agencyCode },
+      });
+
+      const data = response.data;
+
+      setPointsData({
+        availablePoints: data.availablePoints || 0,
+        novaPlaceSearch: data.novaPlaceSearch || 0,
+        novaPlaceSearchSave: data.novaPlaceSearchSave || 0,
+        novaPlaceSearchSavePremium: data.novaPlaceSearchSavePremium || 0,
+        novaPlaceKeep: data.novaPlaceKeep || 0,
+        novaSmartstoreSearch: data.novaSmartstoreSearch || 0,
+      });
+    } catch (error) {
+      console.error("Error :", error);
+    }
+  };
+
   useEffect(() => {
     getAgencyMissionListByAgencyName();
+    getAgencyPoint();
   }, []);
 
   const columns = [
@@ -116,17 +156,21 @@ const NovaMissionManage = () => {
             <thead>
               <tr>
                 <th>현재 포인트</th>
-                <th>트래픽</th>
-                <th>트래픽 + 저장하기</th>
-                <th>트래픽 + 저장하기(프리미엄)</th>
+                <th>플레이스 검색</th>
+                <th>플레이스 검색 + 저장</th>
+                <th>플레이스 검색 + 저장(프리미엄)</th>
+                <th>플레이스 킵</th>
+                <th>스마트스토어 검색</th>
               </tr>
             </thead>
             <tbody>
               <tr>
-                <td>{pointsData.currentPoints}P</td>
-                <td>{pointsData.placeTraffic}P</td>
-                <td>{pointsData.placeSave}P</td>
-                <td>{pointsData.placeSavePremium}P</td>
+                <td>{pointsData.availablePoints}P</td>
+                <td>{pointsData.novaPlaceSearch}P</td>
+                <td>{pointsData.novaPlaceSearchSave}P</td>
+                <td>{pointsData.novaPlaceSearchSavePremium}P</td>
+                <td>{pointsData.novaPlaceKeep}P</td>
+                <td>{pointsData.novaSmartstoreSearch}P</td>
               </tr>
             </tbody>
           </table>
@@ -165,26 +209,48 @@ const NovaMissionManage = () => {
               </button>
               <button
                 className={`typeButton ${
-                  activeType === "트래픽" ? "active" : ""
+                  activeType === "플레이스 검색" ? "active" : ""
                 }`}
-                onClick={() => handleTypeClick("트래픽")}
+                onClick={() => handleTypeClick("플레이스 검색")}
               >
                 트래픽
               </button>
               <button
                 className={`typeButton ${
-                  activeType === "저장하기" ? "active" : ""
+                  activeType === "플레이스 검색 + 저장" ? "active" : ""
                 }`}
-                onClick={() => handleTypeClick("저장하기")}
+                onClick={() => handleTypeClick("플레이스 검색 + 저장")}
               >
                 저장하기
               </button>
 
               <button
                 className={`typeButton ${
-                  activeType === "저장하기(프리미엄)" ? "active" : ""
+                  activeType === "플레이스 검색 + 저장(프리미엄)"
+                    ? "active"
+                    : ""
                 }`}
-                onClick={() => handleTypeClick("저장하기(프리미엄)")}
+                onClick={() =>
+                  handleTypeClick("플레이스 검색 + 저장(프리미엄)")
+                }
+              >
+                저장하기(프리미엄)
+              </button>
+
+              <button
+                className={`typeButton ${
+                  activeType === "플레이스 킵" ? "active" : ""
+                }`}
+                onClick={() => handleTypeClick("플레이스 킵")}
+              >
+                저장하기(프리미엄)
+              </button>
+
+              <button
+                className={`typeButton ${
+                  activeType === "스마트스토어 검색" ? "active" : ""
+                }`}
+                onClick={() => handleTypeClick("스마트스토어 검색")}
               >
                 저장하기(프리미엄)
               </button>

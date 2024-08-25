@@ -5,8 +5,8 @@ import { api } from "../../api/api.js";
 import React, { useState } from "react";
 
 function Login() {
-  const [loginId, setLoginId] = useState('');
-  const [password, setPassword] = useState('');
+  const [loginId, setLoginId] = useState("");
+  const [password, setPassword] = useState("");
   const navigate = useNavigate();
 
   // Validation Check
@@ -31,19 +31,19 @@ function Login() {
       const response = await api.get("/login", {
         params: {
           loginId: loginId,
-          password: password
-        }
+          password: password,
+        },
       });
 
       // 로그인 실패
       if (response.data.failed) {
-        if (response.data.failed === 'Id Failed') {
+        if (response.data.failed === "Id Failed") {
           alert("사용자 아이디가 존재하지 않습니다.");
-        } else if (response.data.failed === 'Pw Failed') {
+        } else if (response.data.failed === "Pw Failed") {
           alert("비밀번호가 일치하지 않습니다. 다시한번 확인 바랍니다.");
-        } else if (response.data.failed === 'Stop Using') {
+        } else if (response.data.failed === "Stop Using") {
           alert("사용이 정지된 계정입니다. 담당자에게 문의 바랍니다.");
-        } else if (response.data.failed === 'Delete User') {
+        } else if (response.data.failed === "Delete User") {
           alert("삭제된 계정입니다. 담당자에게 문의 바랍니다.");
         }
       } else {
@@ -51,23 +51,21 @@ function Login() {
         loginSuccess(response.data);
       }
     } catch (error) {
-      console.error('Error:', error);
+      console.error("Error:", error);
     }
   };
 
   const loginSuccess = (response) => {
-    console.log(response);
-    // // 로그인 성공 후 정보 Local Storage에 저장
-    // const loginInfo = {};
-    // loginInfo.agencyCode = response.agencyCode;
-    // loginInfo.agencyName = response.agencyName;
-    // loginInfo.userType = response.userType;
-    // loginInfo.accessToken = response.accessToken;
+    // 로그인 성공 후 정보 Local Storage에 저장
+    const loginInfo = {};
+    loginInfo.agencyCode = response.agencyCode;
+    loginInfo.agencyName = response.agencyName;
+    loginInfo.userType = response.userType;
 
-    // localStorage.setItem('loginInfo', JSON.stringify(loginInfo));
+    localStorage.setItem("loginInfo", JSON.stringify(loginInfo));
 
-    // // 페이지 이동
-    // navigate("/main");
+    // 페이지 이동
+    navigate("/main");
   };
 
   return (

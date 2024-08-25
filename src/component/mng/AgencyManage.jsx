@@ -36,24 +36,27 @@ const AgencyManage = () => {
 
       const formattedData = data.map((agency) => ({
         id: agency.agencyCode,
-        agencyCode: agency.agencyCode || "N/A",
-        loginId: agency.loginId || "N/A",
-        password: agency.password || "N/A",
-        agencyName: agency.agencyName || "N/A",
-        name: agency.name || "N/A",
-        phoneNum: agency.phoneNum || "N/A",
-        placeTraffic: agency.placeTraffic ? `${agency.placeTraffic}` : "N/A",
-        placeSave: agency.placeSave ? `${agency.placeSave}` : "N/A",
-        placeSavePremium: agency.placeSavePremium
-          ? `${agency.placeSavePremium}`
-          : "N/A",
+        agencyCode: agency.agencyCode || "",
+        loginId: agency.loginId || "",
+        password: agency.password || "",
+        agencyName: agency.agencyName || "",
+        name: agency.name || "",
+        phoneNum: agency.phoneNum || "",
+        novaPlaceSearch: agency.novaPlaceSearch || 0,
+        novaPlaceSearchSave: agency.novaPlaceSearchSave || 0,
+        novaPlaceSearchSavePremium: agency.novaPlaceSearchSavePremium || 0,
+        novaPlaceKeep: agency.novaPlaceKeep || 0,
+        novaSmartstoreSearch: agency.novaSmartstoreSearch || 0,
+        olockPlaceSearch: agency.olockPlaceSearch || 0,
+        olockPlaceSearchSave: agency.olockPlaceSearchSave || 0,
         resaleYn: agency.resaleYn || "N/A",
         userType: agency.userType || "N/A",
         useYn: agency.useYn || "N/A",
         registerDateTime: agency.registerDateTime
           ? agency.registerDateTime.toString()
-          : "N/A",
+          : "",
       }));
+
       setRows(formattedData);
     } catch (error) {
       console.error("Error:", error);
@@ -91,6 +94,7 @@ const AgencyManage = () => {
 
   const agencySaveApi = async (updatedData) => {
     try {
+      console.log(updatedData);
       await api.put("/agency/updateAgencyInfo", updatedData);
       alert("저장되었습니다.");
       getAgencyList();
@@ -122,26 +126,50 @@ const AgencyManage = () => {
 
   // 컬럼 정의
   const columns = [
-    { field: "loginId", headerName: "로그인 아이디", width: 170 },
-    { field: "agencyName", headerName: "대행사명", width: 170, editable: true },
-    { field: "name", headerName: "담당자", width: 150, editable: true },
-    { field: "phoneNum", headerName: "연락처", width: 150, editable: true },
+    { field: "loginId", headerName: "로그인 아이디", width: 120 },
+    { field: "agencyName", headerName: "대행사명", width: 120, editable: true },
+    { field: "name", headerName: "담당자", width: 100, editable: true },
+    { field: "phoneNum", headerName: "연락처", width: 120, editable: true },
     {
-      field: "placeTraffic",
-      headerName: "플레이스 트래픽",
-      width: 130,
+      field: "novaPlaceSearch",
+      headerName: "노바 플레이스 검색",
+      width: 150,
       editable: true,
     },
     {
-      field: "placeSave",
-      headerName: "플레이스 저장",
-      width: 130,
+      field: "novaPlaceSearchSave",
+      headerName: "노바 플레이스 저장",
+      width: 150,
       editable: true,
     },
     {
-      field: "placeSavePremium",
-      headerName: "플레이스 저장 프리미엄",
-      width: 130,
+      field: "novaPlaceSearchSavePremium",
+      headerName: "노바 플레이스 저장 프리미엄",
+      width: 150,
+      editable: true,
+    },
+    {
+      field: "novaPlaceKeep",
+      headerName: "노바 킵 플레이스",
+      width: 150,
+      editable: true,
+    },
+    {
+      field: "novaSmartstoreSearch",
+      headerName: "노바 스마트스토어 검색",
+      width: 150,
+      editable: true,
+    },
+    {
+      field: "olockPlaceSearch",
+      headerName: "오락 플레이스 검색",
+      width: 150,
+      editable: true,
+    },
+    {
+      field: "olockPlaceSearchSave",
+      headerName: "오락 플레이스 저장",
+      width: 150,
       editable: true,
     },
     {
