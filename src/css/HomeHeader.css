@@ -26,8 +26,9 @@
 
 .headerUserDiv {
   display: flex;
-  width: 10%;
-  justify-content: space-evenly;
+  width: 15%;
+  justify-content: flex-end;
+  align-items: center;
 }
 
 .headerLogo {

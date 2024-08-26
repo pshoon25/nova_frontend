@@ -9,6 +9,7 @@ function HomeHeader(props) {
   const navigate = useNavigate();
   const loginInfo = JSON.parse(localStorage.getItem("loginInfo"));
   const agencyCode = loginInfo ? loginInfo.agencyCode : null;
+  const agencyName = loginInfo ? loginInfo.agencyName : null;
   const userType = loginInfo ? loginInfo.userType : null;
 
   // 컴포넌트가 마운트될 때 로컬 스토리지에서 메뉴 선택 상태를 불러오기
@@ -94,7 +95,7 @@ function HomeHeader(props) {
           )}
         </div>
         <div className="headerUserDiv">
-          <span>홍길동</span>
+          <span>{agencyName}</span>
           <span className="headerMenuItem" onClick={handleLogout}>
             로그아웃
           </span>
