@@ -29,12 +29,8 @@ const NovaMissionManage = () => {
     setActiveType(type);
   };
 
-  useEffect(() => {
-    getAgencyMissionList();
-  }, [activeType]);
-
   const addMission = () => {
-    navigate("/addNovaMission", { state: { pointsData } });
+    navigate("/main/addNovaMission", { state: { pointsData } });
   };
 
   const getAgencyMissionList = () => {
@@ -213,6 +209,10 @@ const NovaMissionManage = () => {
     getAgencyMissionList();
     getAgencyPoint();
   }, []);
+
+  useEffect(() => {
+    getAgencyMissionList();
+  }, [activeType]);
 
   const columns = [
     { field: "id", headerName: "No", width: 30 },

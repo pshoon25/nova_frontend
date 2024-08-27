@@ -145,8 +145,12 @@ const AddNovaMission = () => {
                   value={adStartDate}
                   onChange={(newValue) => {
                     setAdStartDate(newValue);
+                    if (newValue && adEndDate && newValue > adEndDate) {
+                      setAdEndDate(null);
+                    }
                   }}
                   renderInput={(params) => <TextField {...params} fullWidth />}
+                  disablePast
                 />
               </LocalizationProvider>
               <LocalizationProvider dateAdapter={AdapterDateFns}>
@@ -157,6 +161,7 @@ const AddNovaMission = () => {
                     setAdEndDate(newValue);
                   }}
                   renderInput={(params) => <TextField {...params} fullWidth />}
+                  minDate={adStartDate || new Date()}
                 />
               </LocalizationProvider>
             </Box>
@@ -216,6 +221,7 @@ const AddNovaMission = () => {
                 value={dailyWorkload}
                 onChange={(e) => setDailyWorkload(e.target.value)}
                 fullWidth
+                type="number"
               />
             )}
             <button className="addButton" type="button" onClick={addMission}>

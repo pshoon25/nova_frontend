@@ -18,11 +18,6 @@ const PointManage = () => {
   const loginInfo = JSON.parse(localStorage.getItem('loginInfo'));
   const userType  = loginInfo ? loginInfo.userType  : null;
 
-  // 데이터 가져오기
-  useEffect(() => {
-    getPointHistoryList();
-  }, []);
-
   const getPointHistoryList = async () => {
     try {
       const params = {
@@ -52,7 +47,9 @@ const PointManage = () => {
 
   // 컬럼 정의
   const columns = [
-    { field: "agencyName", headerName: "대행사명", width: 200 },
+    ...(userType === "ADMIN"
+      ? [{ field: "agencyName", headerName: "대행사명", width: 200 }]
+      : []),
     { field: "reward", headerName: "리워드", width: 200 },
     { field: "missionNo", headerName: "미션번호", width: 100 },
     { field: "content", headerName: "내역", width: 250 },
@@ -76,22 +73,37 @@ const PointManage = () => {
     }
   };
 
+  // 데이터 가져오기
+  useEffect(() => {
+    getPointHistoryList();
+  }, []);
+
+  useEffect(() => {
+    getAgencyMissionList();
+  }, [statusFilter]);
+
   return (
     <div className="mainContainerDiv">
       <div className="pointManageDiv">
         <h2 className="menuTitle">포인트 관리</h2>
         <div className="actionBtns">
           <div className="searchDiv">
-            <TextField
-              className="textField"
-              label="대행사명"
-              variant="outlined"
-              size="small"
-              value={constName}
-              onChange={(e) => setConstName(e.target.value)}
-              onKeyDown={(e) => e.key === "Enter" && getPointHistoryList()}
-            />
-
+            {userType === "ADMIN" && (
+              <TextField
+                className="textField"
+                label="대행사명"
+                variant="outlined"
+                size="small"
+                value={constName}
+                onChange={(e) => setConstName(e.target.value)}
+                onKeyDown={(e) => e.key === "Enter" && getPointHistoryList()}
+              />
+            )}
+            {userType === "ADMIN" && (
+              <button className="searchButton" onClick={getPointHistoryList}>
+                검색
+              </button>
+            )}
             <FormControl
               className="formControl"
               variant="outlined"
@@ -110,17 +122,18 @@ const PointManage = () => {
                 <MenuItem value="refund">환급</MenuItem>
               </Select>
             </FormControl>
-            <button className="searchButton" onClick={getPointHistoryList}>
-              검색
-            </button>
           </div>
           <div className="actionBtns">
-            <button type="button" className="addButton">
-              포인트 충전
-            </button>
-            <button type="button" className="saveButton">
-              충전 승인
-            </button>
+            {userType === "ADMIN" && (
+              <button type="button" className="addButton">
+                포인트 충전
+              </button>
+            )}
+            {userType === "AGENCY" && (
+              <button type="button" className="saveButton">
+                충전 승인
+              </button>
+            )}
           </div>
         </div>
         <div style={{ height: 400, width: "100%" }}>
