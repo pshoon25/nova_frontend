@@ -15,8 +15,8 @@ const PointManage = () => {
   const [rows, setRows] = useState([]);
   const [statusFilter, setstatusFilter] = useState("All");
   const [constName, setConstName] = useState("");
-  const loginInfo = JSON.parse(localStorage.getItem('loginInfo'));
-  const userType  = loginInfo ? loginInfo.userType  : null;
+  const loginInfo = JSON.parse(localStorage.getItem("loginInfo"));
+  const userType = loginInfo ? loginInfo.userType : null;
 
   const getPointHistoryList = async () => {
     try {
@@ -28,6 +28,8 @@ const PointManage = () => {
       const response = await api.get("/point/getPointHistoryList", { params });
 
       const data = response.data;
+
+      console.log(data);
 
       const formattedData = data.map((el) => ({
         pointHistoryNo: el.pointHistoryNo || "N/A",
@@ -50,8 +52,8 @@ const PointManage = () => {
     ...(userType === "ADMIN"
       ? [{ field: "agencyName", headerName: "대행사명", width: 200 }]
       : []),
-    { field: "reward", headerName: "리워드", width: 200 },
-    { field: "missionNo", headerName: "미션번호", width: 100 },
+    { field: "reward", headerName: "리워드", width: 100 },
+    { field: "missionNo", headerName: "미션번호", width: 200 },
     { field: "content", headerName: "내역", width: 250 },
     { field: "points", headerName: "포인트", width: 100 },
     { field: "registerDateTime", headerName: "사용일", width: 200 },
@@ -60,16 +62,16 @@ const PointManage = () => {
 
   const formatStatus = (status) => {
     switch (status) {
-      case "request":
+      case "REQUEST":
         return "충전요청";
-      case "recharge":
+      case "RECHARGE":
         return "충전";
-      case "deduction":
+      case "DEDUCTION":
         return "차감";
-      case "refund":
+      case "REFUND":
         return "환급";
       default:
-        return "N/A";
+        return "";
     }
   };
 
@@ -116,20 +118,20 @@ const PointManage = () => {
                 label="상태"
               >
                 <MenuItem value="All">All</MenuItem>
-                <MenuItem value="request">충전요청</MenuItem>
-                <MenuItem value="recharge">충전</MenuItem>
-                <MenuItem value="deduction">차감</MenuItem>
-                <MenuItem value="refund">환급</MenuItem>
+                <MenuItem value="REQUEST">충전요청</MenuItem>
+                <MenuItem value="RECHARGE">충전</MenuItem>
+                <MenuItem value="DEDUCTION">차감</MenuItem>
+                <MenuItem value="REFUND">환급</MenuItem>
               </Select>
             </FormControl>
           </div>
           <div className="actionBtns">
-            {userType === "ADMIN" && (
+            {userType === "AGENCY" && (
               <button type="button" className="addButton">
                 포인트 충전
               </button>
             )}
-            {userType === "AGENCY" && (
+            {userType === "ADMIN" && (
               <button type="button" className="saveButton">
                 충전 승인
               </button>
@@ -143,12 +145,13 @@ const PointManage = () => {
             getRowId={(row) => row.pointHistoryNo}
             initialState={{
               pagination: {
-                paginationModel: { page: 0, pageSize: 5 },
+                paginationModel: { page: 0, pageSize: 10 },
               },
             }}
             pageSizeOptions={[5, 10]}
             style={{ height: 600 }}
             checkboxSelection
+            autoHeight
           />
         </div>
       </div>

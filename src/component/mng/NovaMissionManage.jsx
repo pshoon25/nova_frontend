@@ -4,7 +4,7 @@ import { useNavigate } from "react-router-dom";
 import "../../css/Common.css";
 import "../../css/MissionManage.css";
 import { api } from "../../api/api.js";
-import { TextField } from "@mui/material";
+import { TextField, Select, MenuItem } from "@mui/material";
 
 const NovaMissionManage = () => {
   const navigate = useNavigate();
@@ -20,6 +20,7 @@ const NovaMissionManage = () => {
     novaPlaceKeep: 0,
     novaSmartstoreSearch: 0,
   });
+  const [changedRows, setChangedRows] = useState({});
 
   const loginInfo = JSON.parse(localStorage.getItem("loginInfo"));
   const agencyCode = loginInfo ? loginInfo.agencyCode : null;
@@ -54,41 +55,53 @@ const NovaMissionManage = () => {
         }
       );
       const data = response.data;
-      const formattedData = data.map((el, index) => ({
-        id: index + 1,
-        reward: el.reward || "",
-        agencyName: el.agencyName || "",
-        itemName:
-          el.itemName === "PLACE_SEARCH"
-            ? "플레이스 검색"
-            : el.itemName === "PLACE_SEARCH_SAVE"
-            ? "플레이스 검색 + 저장"
-            : el.itemName === "PLACE_SEARCH_SAVE_PREMIUM"
-            ? "플레이스 검색 + 저장(프리미엄)"
-            : el.itemName === "PLACE_KEEP"
-            ? "플레이스 킵"
-            : el.itemName === "SMARTSTORE_SEARCH"
-            ? "스마트스토어 검색"
+
+      console.log(data);
+
+      const formattedData = data.map((el, index) => {
+        const adStartDate = new Date(el.adStartDate);
+        const adEndDate = new Date(el.adEndDate);
+        const totalWorkdays = Math.ceil(
+          (adEndDate - adStartDate) / (1000 * 60 * 60 * 24)
+        );
+
+        return {
+          id: index + 1,
+          missionNo: el.missionNo || "",
+          reward: el.reward || "",
+          agencyName: el.agencyName || "",
+          itemName:
+            el.itemName === "PLACE_SEARCH"
+              ? "플레이스 검색"
+              : el.itemName === "PLACE_SEARCH_SAVE"
+              ? "플레이스 검색 + 저장"
+              : el.itemName === "PLACE_SEARCH_SAVE_PREMIUM"
+              ? "플레이스 검색 + 저장(프리미엄)"
+              : el.itemName === "PLACE_KEEP"
+              ? "플레이스 킵"
+              : el.itemName === "SMARTSTORE_SEARCH"
+              ? "스마트스토어 검색"
+              : "",
+          type: el.itemName.startsWith("PLACE")
+            ? "PLACE"
+            : el.itemName.startsWith("SMARTSTORE")
+            ? "SMARTSTORE"
             : "",
-        type: el.itemName.startsWith("PLACE")
-          ? "PLACE"
-          : el.itemName.startsWith("SMARTSTORE")
-          ? "SMARTSTORE"
-          : "",
-        mid: el.mid || "",
-        priceComparisonId: el.priceComparisonId || "",
-        adStartDate: el.adStartDate || "",
-        dailyWorkload: el.dailyWorkload || "",
-        totalWorkdays: el.totalWorkdays || "",
-        placeName: el.placeName || "",
-        rankKeyword: el.rankKeyword || "",
-        mainSearchKeyword: el.mainSearchKeyword || "",
-        subSearchKeyword: el.subSearchKeyword || "",
-        adEndDate: el.adEndDate || "",
-        placeUrl: el.placeUrl || "",
-        totalRequest: el.totalRequest || "",
-        missionStatus: el.missionStatus || "",
-      }));
+          mid: el.mid || "",
+          priceComparisonId: el.priceComparisonId || "",
+          adStartDate: el.adStartDate || "",
+          dailyWorkload: el.dailyWorkload || "",
+          totalWorkdays: totalWorkdays || "",
+          placeName: el.placeName || "",
+          rankKeyword: el.rankKeyword || "",
+          mainSearchKeyword: el.mainSearchKeyword || "",
+          subSearchKeyword: el.subSearchKeyword || "",
+          adEndDate: el.adEndDate || "",
+          placeUrl: el.placeUrl || "",
+          totalRequest: el.totalRequest || "",
+          missionStatus: el.missionStatus || "",
+        };
+      });
       setRows(formattedData);
       // 대행사 포인트 조회
       getAgencyPointByAgencyName();
@@ -112,44 +125,61 @@ const NovaMissionManage = () => {
       );
       const data = response.data;
 
-      const formattedData = data.map((el, index) => ({
-        id: index + 1,
-        agencyName: el.agencyName || "",
-        itemName:
-          el.itemName === "PLACE_SEARCH"
-            ? "플레이스 검색"
-            : el.itemName === "PLACE_SEARCH_SAVE"
-            ? "플레이스 검색 + 저장"
-            : el.itemName === "PLACE_SEARCH_SAVE_PREMIUM"
-            ? "플레이스 검색 + 저장(프리미엄)"
-            : el.itemName === "PLACE_KEEP"
-            ? "플레이스 킵"
-            : el.itemName === "SMARTSTORE_SEARCH"
-            ? "스마트스토어 검색"
+      const formattedData = data.map((el, index) => {
+        const adStartDate = new Date(el.adStartDate);
+        const adEndDate = new Date(el.adEndDate);
+        const totalWorkdays = Math.ceil(
+          (adEndDate - adStartDate) / (1000 * 60 * 60 * 24)
+        );
+
+        return {
+          id: index + 1,
+          missionNo: el.missionNo || "",
+          agencyName: el.agencyName || "",
+          itemName:
+            el.itemName === "PLACE_SEARCH"
+              ? "플레이스 검색"
+              : el.itemName === "PLACE_SEARCH_SAVE"
+              ? "플레이스 검색 + 저장"
+              : el.itemName === "PLACE_SEARCH_SAVE_PREMIUM"
+              ? "플레이스 검색 + 저장(프리미엄)"
+              : el.itemName === "PLACE_KEEP"
+              ? "플레이스 킵"
+              : el.itemName === "SMARTSTORE_SEARCH"
+              ? "스마트스토어 검색"
+              : "",
+          type: el.itemName.startsWith("PLACE")
+            ? "PLACE"
+            : el.itemName.startsWith("SMARTSTORE")
+            ? "SMARTSTORE"
             : "",
-        type: el.itemName.startsWith("PLACE")
-          ? "PLACE"
-          : el.itemName.startsWith("SMARTSTORE")
-          ? "SMARTSTORE"
+          mid: el.mid || "",
+          priceComparisonId: el.priceComparisonId || "",
+          adStartDate: el.adStartDate || "",
+          dailyWorkload: el.dailyWorkload || "",
+          totalWorkdays: totalWorkdays || "",
+          placeName: el.placeName || "",
+          rankKeyword: el.rankKeyword || "",
+          mainSearchKeyword: el.mainSearchKeyword || "",
+          subSearchKeyword: el.subSearchKeyword || "",
+          adEndDate: el.adEndDate || "",
+          placeUrl: el.placeUrl || "",
+          totalRequest: el.totalRequest || "",
+          missionStatus: el.missionStatus === "WATING"
+          ? "대기중"
+          : el.missionStatus === "PROGRESS"
+          ? "진행중"
+          : el.missionStatus === "COMPLETED"
+          ? "완료"
+          : el.missionStatus === "CANCEL"
+          ? "중단"
           : "",
-        mid: el.mid || "",
-        priceComparisonId: el.priceComparisonId || "",
-        adStartDate: el.adStartDate || "",
-        dailyWorkload: el.dailyWorkload || "",
-        totalWorkdays: el.totalWorkdays || "",
-        placeName: el.placeName || "",
-        rankKeyword: el.rankKeyword || "",
-        mainSearchKeyword: el.mainSearchKeyword || "",
-        subSearchKeyword: el.subSearchKeyword || "",
-        adEndDate: el.adEndDate || "",
-        placeUrl: el.placeUrl || "",
-        totalRequest: el.totalRequest || "",
-        missionStatus: el.missionStatus || "",
-      }));
+        };
+      });
 
       setRows(formattedData);
       // 대행사 포인트 조회
-      getAgencyPointByAgencyName();
+      getAgencyPointByAgencyCode();
     } catch (error) {
       console.error("API 호출 중 오류가 발생했습니다:", error);
     }
@@ -205,6 +235,27 @@ const NovaMissionManage = () => {
     }
   };
 
+  const saveNovaMissionStatus = async () => {
+    const missionsToSave = Object.values(changedRows);
+
+    try {
+      const response = await api.post(
+        "/mission/saveNovaMissionStatus",
+        missionsToSave
+      );
+
+      if (response.status === 200) {
+        alert("미션 상태가 성공적으로 저장되었습니다.");
+        getAgencyMissionList();
+      } else {
+        alert("미션 상태 저장에 실패했습니다.");
+      }
+    } catch (error) {
+      console.error("Error saving mission info:", error);
+      alert("미션 상태 저장 중 오류가 발생했습니다.");
+    }
+  };
+
   useEffect(() => {
     getAgencyMissionList();
     getAgencyPoint();
@@ -214,12 +265,21 @@ const NovaMissionManage = () => {
     getAgencyMissionList();
   }, [activeType]);
 
+  const handleMissionStatusChange = (id, newStatus) => {
+    setRows((prevRows) =>
+      prevRows.map((row) =>
+        row.id === id ? { ...row, missionStatus: newStatus } : row
+      )
+    );
+  };
+
   const columns = [
     { field: "id", headerName: "No", width: 30 },
     ...(userType === "ADMIN"
       ? [{ field: "agencyName", headerName: "대행사", width: 50 }]
       : []),
-    { field: "itemName", headerName: "종류", width: 100 },
+    { field: "missionNo", headerName: "미션번호", width: 150 },
+    { field: "itemName", headerName: "종류", width: 200 },
     { field: "type", headerName: "유형", width: 100 },
     { field: "mid", headerName: "mid", width: 100 },
     { field: "priceComparisonId", headerName: "가격비교 ID", width: 100 },
@@ -237,7 +297,43 @@ const NovaMissionManage = () => {
     { field: "adEndDate", headerName: "광고종료일", width: 100 },
     { field: "placeUrl", headerName: "플레이스주소", width: 100 },
     { field: "totalRequest", headerName: "총요청량", width: 100 },
-    { field: "missionStatus", headerName: "미션상태", width: 70 },
+    ...(userType === "ADMIN"
+      ? [
+          {
+            field: "missionStatus",
+            headerName: "미션상태",
+            width: 150,
+            renderCell: (params) => (
+              <Select
+                value={params.value || ""}
+                onChange={(e) => {
+                  const newValue = e.target.value;
+                  const id = params.row.id;
+                  const newRows = [...rows];
+                  newRows[id - 1] = {
+                    ...newRows[id - 1],
+                    missionStatus: newValue,
+                  };
+                  setRows(newRows);
+
+                  setChangedRows((prevChangedRows) => ({
+                    ...prevChangedRows,
+                    [id]: {
+                      missionNo: newRows[id - 1].missionNo,
+                      missionStatus: newValue,
+                    },
+                  }));
+                }}
+              >
+                <MenuItem value="WATING">대기</MenuItem>
+                <MenuItem value="PROGRESS">진행중</MenuItem>
+                <MenuItem value="COMPLETED">완료</MenuItem>
+                <MenuItem value="CANCEL">취소</MenuItem>
+              </Select>
+            ),
+          },
+        ]
+      : [{ field: "missionStatus", headerName: "상태", width: 150 }]),
     { field: "manage", headerName: "관리", width: 70 },
   ];
 
@@ -364,6 +460,15 @@ const NovaMissionManage = () => {
                 엑셀 다운로드
               </button>
             )}
+            {userType === "ADMIN" && (
+              <button
+                type="button"
+                className="saveButton"
+                onClick={saveNovaMissionStatus}
+              >
+                저장
+              </button>
+            )}
           </div>
         </div>
 
@@ -372,10 +477,11 @@ const NovaMissionManage = () => {
           columns={columns}
           initialState={{
             pagination: {
-              paginationModel: { page: 0, pageSize: 5 },
+              paginationModel: { page: 0, pageSize: 10 },
             },
           }}
           pageSizeOptions={[5, 10]}
+          autoHeight
         />
       </div>
     </div>

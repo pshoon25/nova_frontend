@@ -265,6 +265,7 @@ const AgencyManage = () => {
           }}
           pageSizeOptions={[5, 10]}
           className="dataGrid" // DataGrid의 클래스 이름 설정
+          autoHeight
         />
       </div>
     </div>

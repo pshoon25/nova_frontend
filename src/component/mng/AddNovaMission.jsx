@@ -51,16 +51,16 @@ const AddNovaMission = () => {
       agencyCode,
       reward: "NOVA",
       itemName,
-      adStartDate: adStartDate ? adStartDate.toISOString().split("T")[0] : null,
-      adEndDate: adEndDate ? adEndDate.toISOString().split("T")[0] : null,
+      adStartDate: adStartDate ? adStartDate.toISOString().split("T")[0] : "",
+      adEndDate: adEndDate ? adEndDate.toISOString().split("T")[0] : "",
       mid,
-      placeName: !isSmartstoreSearch ? placeName : null,
-      placeUrl: !isSmartstoreSearch ? placeUrl : null,
-      priceComparisonId: isSmartstoreSearch ? priceComparisonId : null,
+      placeName: !isSmartstoreSearch ? placeName : "",
+      placeUrl: !isSmartstoreSearch ? placeUrl : "",
+      priceComparisonId: isSmartstoreSearch ? priceComparisonId : "",
       mainSearchKeywords,
       rankKeywords,
-      subSearchKeywords: isSmartstoreSearch ? subSearchKeywords : null,
-      dailyWorkload: !isSmartstoreSearch ? dailyWorkload : null,
+      subSearchKeywords: isSmartstoreSearch ? subSearchKeywords : "",
+      dailyWorkload: !isSmartstoreSearch ? dailyWorkload : 0,
     };
 
     try {
