@@ -79,7 +79,7 @@ const PointManage = () => {
   }, []);
 
   useEffect(() => {
-    getAgencyMissionList();
+    getPointHistoryList();
   }, [statusFilter]);
 
   return (
