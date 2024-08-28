@@ -22,11 +22,11 @@ api.interceptors.request.use(
     const refreshToken = localStorage.getItem("RefreshToken");
 
     if (accessToken) {
-      config.headers["AccessToken"] = accessToken;
+      config.headers["Access-Token"] = accessToken;
     }
 
     if (refreshToken) {
-      config.headers["RefreshToken"] = refreshToken;
+      config.headers["Refresh-Token"] = refreshToken;
     }
 
     return config;
