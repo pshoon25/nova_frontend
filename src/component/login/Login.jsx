@@ -10,33 +10,33 @@ function Login() {
   const navigate = useNavigate();
   const loginInfo = JSON.parse(localStorage.getItem("loginInfo"));
 
-  useEffect(() => {
-    // 로그인 정보가 남아 있는지 확인하고, 있으면 토큰 체크 진행
-    if (loginInfo) {
-      const validateToken = async () => {
-        try {
-          const params = {
-            agencyCode: loginInfo.agencyCode,
-          };
+  // useEffect(() => {
+  //   // 로그인 정보가 남아 있는지 확인하고, 있으면 토큰 체크 진행
+  //   if (loginInfo) {
+  //     const validateToken = async () => {
+  //       try {
+  //         const params = {
+  //           agencyCode: loginInfo.agencyCode,
+  //         };
 
-          const response = await api.post("/jwtCheck", params);
+  //         const response = await api.post("/jwtCheck", params);
 
-          if (response && response.result !== "Logout") {
-            // 토큰이 유효하면 메인 페이지로 리다이렉트
-            navigate("/main");
-          } else {
-            // 토큰이 만료되었거나 유효하지 않으면 로그인 정보 삭제
-            localStorage.removeItem("loginInfo");
-          }
-        } catch (error) {
-          console.error("Error:", error);
-          localStorage.removeItem("loginInfo");
-        }
-      };
+  //         if (response && response.result !== "Logout") {
+  //           // 토큰이 유효하면 메인 페이지로 리다이렉트
+  //           navigate("/main");
+  //         } else {
+  //           // 토큰이 만료되었거나 유효하지 않으면 로그인 정보 삭제
+  //           localStorage.removeItem("loginInfo");
+  //         }
+  //       } catch (error) {
+  //         console.error("Error:", error);
+  //         localStorage.removeItem("loginInfo");
+  //       }
+  //     };
 
-      validateToken();
-    }
-  }, [loginInfo, navigate]);
+  //     validateToken();
+  //   }
+  // }, [loginInfo, navigate]);
 
   // Validation Check
   const login_validationCheck = (e) => {
