@@ -14,7 +14,7 @@ import "../../css/MissionManage.css";
 import { api } from "../../api/api.js";
 import { useNavigate } from "react-router-dom";
 
-const AddNovaMission = () => {
+const AddOlockMission = () => {
   const navigate = useNavigate();
   const [itemName, setItemName] = useState("");
   const [adStartDate, setAdStartDate] = useState(null);
@@ -22,19 +22,14 @@ const AddNovaMission = () => {
   const [mid, setMid] = useState("");
   const [placeName, setPlaceName] = useState("");
   const [placeUrl, setPlaceUrl] = useState("");
-  const [priceComparisonId, setPriceComparisonId] = useState("");
   const [mainSearchKeywords, setMainSearchKeywords] = useState("");
-  const [rankKeywords, setRankKeywords] = useState("");
-  const [subSearchKeywords, setSubSearchKeywords] = useState("");
+  const [correctAnswer, setCorrectAnswer] = useState("");
   const [dailyWorkload, setDailyWorkload] = useState("");
   const location = useLocation();
   const pointsData = location.state?.pointsData || {
     availablePoints: 0,
-    novaPlaceSearch: 0,
-    novaPlaceSearchSave: 0,
-    novaPlaceSearchSavePremium: 0,
-    novaPlaceKeep: 0,
-    novaSmartstoreSearch: 0,
+    olockPlaceSearch: 0,
+    olockPlaceSearchSave: 0,
   };
 
   const loginInfo = JSON.parse(localStorage.getItem("loginInfo"));
@@ -44,23 +39,19 @@ const AddNovaMission = () => {
     setItemName(event.target.value);
   };
 
-  const isSmartstoreSearch = itemName === "SMARTSTORE_SEARCH";
-
   const addMission = async () => {
     const missionData = {
       agencyCode,
-      reward: "NOVA",
+      reward: "OLOCK",
       itemName,
       adStartDate: adStartDate ? adStartDate.toISOString().split("T")[0] : "",
       adEndDate: adEndDate ? adEndDate.toISOString().split("T")[0] : "",
       mid,
-      placeName: !isSmartstoreSearch ? placeName : "",
-      placeUrl: !isSmartstoreSearch ? placeUrl : "",
-      priceComparisonId: isSmartstoreSearch ? priceComparisonId : "",
+      placeName: placeName,
+      placeUrl: placeUrl,
       mainSearchKeywords,
-      rankKeywords,
-      subSearchKeywords: isSmartstoreSearch ? subSearchKeywords : "",
-      dailyWorkload: !isSmartstoreSearch ? dailyWorkload : 0,
+      setCorrectAnswer,
+      dailyWorkload: dailyWorkload,
     };
 
     try {
@@ -74,7 +65,7 @@ const AddNovaMission = () => {
         // 성공 메시지 표시
         alert("등록에 성공하였습니다.");
         // 페이지 이동
-        navigate("/main/novaMission");
+        navigate("/main/olockMission");
       } else if (data === "NO POINTS") {
         alert("보유 포인트가 부족합니다.");
       } else {
@@ -96,19 +87,13 @@ const AddNovaMission = () => {
                 <th>현재 포인트</th>
                 <th>플레이스 검색</th>
                 <th>플레이스 검색 + 저장</th>
-                <th>플레이스 검색 + 저장(프리미엄)</th>
-                <th>플레이스 킵</th>
-                <th>스마트스토어 검색</th>
               </tr>
             </thead>
             <tbody>
               <tr>
                 <td>{pointsData.availablePoints}P</td>
-                <td>{pointsData.novaPlaceSearch}P</td>
-                <td>{pointsData.novaPlaceSearchSave}P</td>
-                <td>{pointsData.novaPlaceSearchSavePremium}P</td>
-                <td>{pointsData.novaPlaceKeep}P</td>
-                <td>{pointsData.novaSmartstoreSearch}P</td>
+                <td>{pointsData.olockPlaceSearch}P</td>
+                <td>{pointsData.olockPlaceSearchSave}P</td>
               </tr>
             </tbody>
           </table>
@@ -131,11 +116,6 @@ const AddNovaMission = () => {
                 <MenuItem value="PLACE_SEARCH_SAVE">
                   플레이스 검색 + 저장
                 </MenuItem>
-                <MenuItem value="PLACE_SEARCH_SAVE_PREMIUM">
-                  플레이스 검색 + 저장(프리미엄)
-                </MenuItem>
-                <MenuItem value="PLCAE_KEEP">플레이스 킵</MenuItem>
-                <MenuItem value="SMARTSTORE_SEARCH">스마트스토어 검색</MenuItem>
               </Select>
             </FormControl>
             <Box
@@ -174,34 +154,16 @@ const AddNovaMission = () => {
               onChange={(e) => setMid(e.target.value)}
               fullWidth
             />
-            {!isSmartstoreSearch && (
-              <TextField
-                label="플레이스명"
-                value={placeName}
-                onChange={(e) => setPlaceName(e.target.value)}
-                fullWidth
-              />
-            )}
-            {!isSmartstoreSearch && (
-              <TextField
-                label="플레이스 주소"
-                value={placeUrl}
-                onChange={(e) => setPlaceUrl(e.target.value)}
-                fullWidth
-              />
-            )}
-            {isSmartstoreSearch && (
-              <TextField
-                label="가격비교 ID"
-                value={priceComparisonId}
-                onChange={(e) => setPriceComparisonId(e.target.value)}
-                fullWidth
-              />
-            )}
             <TextField
-              label="순위 키워드"
-              value={rankKeywords}
-              onChange={(e) => setRankKeywords(e.target.value)}
+              label="플레이스명"
+              value={placeName}
+              onChange={(e) => setPlaceName(e.target.value)}
+              fullWidth
+            />
+            <TextField
+              label="플레이스 주소"
+              value={placeUrl}
+              onChange={(e) => setPlaceUrl(e.target.value)}
               fullWidth
             />
             <TextField
@@ -210,23 +172,20 @@ const AddNovaMission = () => {
               onChange={(e) => setMainSearchKeywords(e.target.value)}
               fullWidth
             />
-            {isSmartstoreSearch && (
-              <TextField
-                label="3위이내 검색 키워드"
-                value={subSearchKeywords}
-                onChange={(e) => setSubSearchKeywords(e.target.value)}
-                fullWidth
-              />
-            )}
-            {!isSmartstoreSearch && (
-              <TextField
-                label="1일 작업량"
-                value={dailyWorkload}
-                onChange={(e) => setDailyWorkload(e.target.value)}
-                fullWidth
-                type="number"
-              />
-            )}
+            <TextField
+              label="주변- 명소 1번째 정답은? "
+              value={correctAnswer}
+              onChange={(e) => setCorrectAnswer(e.target.value)}
+              fullWidth
+            />
+
+            <TextField
+              label="1일 작업량"
+              value={dailyWorkload}
+              onChange={(e) => setDailyWorkload(e.target.value)}
+              fullWidth
+              type="number"
+            />
             <button className="addButton" type="button" onClick={addMission}>
               추가
             </button>
@@ -237,4 +196,4 @@ const AddNovaMission = () => {
   );
 };
 
-export default AddNovaMission;
+export default AddOlockMission;

@@ -5,6 +5,7 @@ import "../../css/Common.css";
 import "../../css/MissionManage.css";
 import { api } from "../../api/api.js";
 import { TextField, Select, MenuItem } from "@mui/material";
+import * as XLSX from "xlsx";
 
 const NovaMissionManage = () => {
   const navigate = useNavigate();
@@ -55,8 +56,6 @@ const NovaMissionManage = () => {
         }
       );
       const data = response.data;
-
-      console.log(data);
 
       const formattedData = data.map((el, index) => {
         const adStartDate = new Date(el.adStartDate);
@@ -165,15 +164,16 @@ const NovaMissionManage = () => {
           adEndDate: el.adEndDate || "",
           placeUrl: el.placeUrl || "",
           totalRequest: el.totalRequest || "",
-          missionStatus: el.missionStatus === "WATING"
-          ? "대기중"
-          : el.missionStatus === "PROGRESS"
-          ? "진행중"
-          : el.missionStatus === "COMPLETED"
-          ? "완료"
-          : el.missionStatus === "CANCEL"
-          ? "중단"
-          : "",
+          missionStatus:
+            el.missionStatus === "WATING"
+              ? "대기중"
+              : el.missionStatus === "PROGRESS"
+              ? "진행중"
+              : el.missionStatus === "COMPLETED"
+              ? "완료"
+              : el.missionStatus === "CANCEL"
+              ? "중단"
+              : "",
         };
       });
 
@@ -337,6 +337,45 @@ const NovaMissionManage = () => {
     { field: "manage", headerName: "관리", width: 70 },
   ];
 
+  const missionExcelDownload = async (agencyName, reward, itemName) => {
+    try {
+      const response = await api.get("/mission/missionExcelDownload", {
+        params: {
+          agencyName: agencyName,
+          reward: "NOVA",
+          itemName: itemName,
+        },
+        responseType: "blob",
+      });
+
+      // 응답 헤더에서 파일 이름을 추출하기
+      const contentDisposition = response.headers["content-disposition"];
+      const filename = contentDisposition
+        ? contentDisposition.split("filename=")[1]
+        : "mission_list.xlsx";
+
+      // 브라우저에서 파일을 다운로드하게 만드는 Blob 생성
+      const blob = new Blob([response.data], {
+        type: "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+      });
+      const url = window.URL.createObjectURL(blob);
+
+      // 임시 링크를 만들어서 파일 다운로드 실행
+      const link = document.createElement("a");
+      link.href = url;
+      link.setAttribute("download", filename);
+      document.body.appendChild(link);
+      link.click();
+
+      // 메모리 정리
+      link.parentNode.removeChild(link);
+      window.URL.revokeObjectURL(url);
+    } catch (error) {
+      console.error("Error downloading the Excel file:", error);
+      alert("Failed to download Excel file. Please try again.");
+    }
+  };
+
   return (
     <div className="mainContainerDiv">
       <div className="missionManageDiv">
@@ -456,7 +495,11 @@ const NovaMissionManage = () => {
               </button>
             )}
             {userType === "ADMIN" && (
-              <button type="button" className="downloadButton">
+              <button
+                type="button"
+                className="downloadButton"
+                onClick={missionExcelDownload}
+              >
                 엑셀 다운로드
               </button>
             )}

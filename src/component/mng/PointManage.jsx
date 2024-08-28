@@ -18,14 +18,15 @@ import {
 const PointManage = () => {
   const navigate = useNavigate();
   const [rows, setRows] = useState([]);
-  const [statusFilter, setstatusFilter] = useState("All");
+  const [statusFilter, setStatusFilter] = useState("All");
   const [constName, setConstName] = useState("");
   const [open, setOpen] = useState(false);
   const [pointAmount, setPointAmount] = useState("");
   const [depositorName, setDepositorName] = useState("");
-  const [agencyName, setAgencyName] = useState("");
+  const [selectedRows, setSelectedRows] = useState([]);
   const loginInfo = JSON.parse(localStorage.getItem("loginInfo"));
   const userType = loginInfo ? loginInfo.userType : null;
+  const agencyCode = loginInfo ? loginInfo.agencyCode : null;
 
   const getPointHistoryList = async () => {
     try {
@@ -35,20 +36,18 @@ const PointManage = () => {
       };
 
       const response = await api.get("/point/getPointHistoryList", { params });
-
       const data = response.data;
 
-      console.log(data);
-
       const formattedData = data.map((el) => ({
-        pointHistoryNo: el.pointHistoryNo || "N/A",
-        reward: el.reward || "N/A",
-        agencyName: el.agencyName || "N/A",
-        missionNo: el.missionNo || "N/A",
-        content: el.content || "N/A",
-        points: el.points || "N/A",
-        registerDateTime: el.registerDateTime || "N/A",
+        pointHistoryNo: el.pointHistoryNo || "",
+        reward: el.reward || "",
+        agencyName: el.agencyName || "",
+        missionNo: el.missionNo || "",
+        content: el.content || "",
+        points: el.points || "",
+        registerDateTime: el.registerDateTime || "",
         status: formatStatus(el.status),
+        depositor: el.depositor || "",
       }));
       setRows(formattedData);
     } catch (error) {
@@ -56,17 +55,20 @@ const PointManage = () => {
     }
   };
 
-  // 컬럼 정의
   const columns = [
     ...(userType === "ADMIN"
       ? [{ field: "agencyName", headerName: "대행사명", width: 200 }]
       : []),
+    { field: "pointHistoryNo", headerName: "이력번호", width: 200 },
     { field: "reward", headerName: "리워드", width: 100 },
     { field: "missionNo", headerName: "미션번호", width: 200 },
     { field: "content", headerName: "내역", width: 250 },
     { field: "points", headerName: "포인트", width: 100 },
-    { field: "registerDateTime", headerName: "사용일", width: 200 },
+    { field: "registerDateTime", headerName: "일자", width: 200 },
     { field: "status", headerName: "비고", width: 100 },
+    ...(userType === "ADMIN"
+      ? [{ field: "depositor", headerName: "입금자명", width: 200 }]
+      : []),
   ];
 
   const formatStatus = (status) => {
@@ -84,26 +86,61 @@ const PointManage = () => {
     }
   };
 
-  // 팝업 열기
   const handleClickOpen = () => {
     setOpen(true);
   };
 
-  // 팝업 닫기
   const handleClose = () => {
     setOpen(false);
   };
 
-  // 포인트 충전 핸들러 (이 부분은 실제 로직에 따라 구현 필요)
-  const handlePointCharge = () => {
-    console.log("Point Amount:", pointAmount);
-    console.log("Depositor Name:", depositorName);
-    console.log("Agency Name:", agencyName);
-    // 여기에 실제 API 호출 등의 로직 추가
-    handleClose();
+  const requestPointRecharge = async () => {
+    try {
+      await api.post("/point/requestPointRecharge", {
+        agencyCode: agencyCode,
+        points: pointAmount,
+        depositorName: depositorName,
+      });
+
+      handleClose();
+      getPointHistoryList();
+    } catch (error) {
+      console.error("Error :", error);
+    }
   };
 
-  // 데이터 가져오기
+  const approvalRecharge = async () => {
+    try {
+      if (selectedRows.length === 0) {
+        alert("선택된 항목이 없습니다.");
+        return;
+      }
+
+      const approvalPromises = selectedRows.map(async (row) => {
+        try {
+          const response = await api.post("/point/approveRecharge", {
+            pointHistoryNo: row.pointHistoryNo,
+          });
+          return response.data;
+        } catch (error) {
+          console.error(
+            `Error approving recharge for row: ${row.pointHistoryNo}`,
+            error
+          );
+          throw error;
+        }
+      });
+
+      await Promise.all(approvalPromises);
+
+      console.log("All selected rows have been successfully approved.");
+      getPointHistoryList();
+      setSelectedRows([]);
+    } catch (error) {
+      console.error("Failed to approve recharge for selected rows:", error);
+    }
+  };
+
   useEffect(() => {
     getPointHistoryList();
   }, []);
@@ -142,7 +179,7 @@ const PointManage = () => {
               <InputLabel>상태</InputLabel>
               <Select
                 value={statusFilter}
-                onChange={(e) => setstatusFilter(e.target.value)}
+                onChange={(e) => setStatusFilter(e.target.value)}
                 label="상태"
               >
                 <MenuItem value="All">All</MenuItem>
@@ -155,12 +192,20 @@ const PointManage = () => {
           </div>
           <div className="actionBtns">
             {userType === "AGENCY" && (
-              <button type="button" className="addButton" onClick={handleClickOpen}>
+              <button
+                type="button"
+                className="addButton"
+                onClick={handleClickOpen}
+              >
                 포인트 충전
               </button>
             )}
             {userType === "ADMIN" && (
-              <button type="button" className="saveButton">
+              <button
+                type="button"
+                className="saveButton"
+                onClick={approvalRecharge}
+              >
                 충전 승인
               </button>
             )}
@@ -180,6 +225,17 @@ const PointManage = () => {
             style={{ height: 600 }}
             checkboxSelection
             autoHeight
+            isRowSelectable={(params) => params.row.status === "충전요청"}
+            onRowSelectionModelChange={(newSelection) => {
+              const selectedIds = new Set(newSelection);
+              const selectedRows = rows.filter((row) =>
+                selectedIds.has(row.pointHistoryNo)
+              );
+              setSelectedRows(selectedRows);
+
+              // 선택된 항목 로깅
+              console.log("Selected rows: ", selectedRows);
+            }}
           />
         </div>
       </div>
@@ -206,19 +262,14 @@ const PointManage = () => {
             value={depositorName}
             onChange={(e) => setDepositorName(e.target.value)}
           />
-          <TextField
-            margin="dense"
-            label="대행사명"
-            type="text"
-            fullWidth
-            variant="outlined"
-            value={agencyName}
-            onChange={(e) => setAgencyName(e.target.value)}
-          />
         </DialogContent>
         <DialogActions>
-          <Button onClick={handlePointCharge}>충전</Button>
-          <Button onClick={handleClose}>취소</Button>
+          <button className="addButton" onClick={requestPointRecharge}>
+            충전
+          </button>
+          <button className="addButton" onClick={handleClose}>
+            취소
+          </button>
         </DialogActions>
       </Dialog>
     </div>

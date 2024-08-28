@@ -16,9 +16,10 @@ function HomeHeader(props) {
   useEffect(() => {
     const pathToMenuMap = {
       "/main": "노바미션관리",
-      "/olockMission": "오락미션관리",
-      "/pointManage": "포인트관리",
-      "/agencyManage": "대행사관리",
+      "/main/novaMission": "노바미션관리",
+      "/main/olockMission": "오락미션관리",
+      "/main/pointManage": "포인트관리",
+      "/main/agencyManage": "대행사관리",
     };
 
     // URL 경로에 따라 selectedMenu 설정
@@ -78,7 +79,9 @@ function HomeHeader(props) {
             className={`headerMenuItem ${
               selectedMenu === "오락미션관리" ? "active" : ""
             }`}
-            onClick={() => handleMenuClick("오락미션관리", "/olockMission")}
+            onClick={() =>
+              handleMenuClick("오락미션관리", "/main/olockMission")
+            }
           >
             오락미션관리
           </span>
@@ -86,7 +89,7 @@ function HomeHeader(props) {
             className={`headerMenuItem ${
               selectedMenu === "포인트관리" ? "active" : ""
             }`}
-            onClick={() => handleMenuClick("포인트관리", "/pointManage")}
+            onClick={() => handleMenuClick("포인트관리", "/main/pointManage")}
           >
             포인트관리
           </span>
@@ -95,7 +98,9 @@ function HomeHeader(props) {
               className={`headerMenuItem ${
                 selectedMenu === "대행사관리" ? "active" : ""
               }`}
-              onClick={() => handleMenuClick("대행사관리", "/agencyManage")}
+              onClick={() =>
+                handleMenuClick("대행사관리", "/main/agencyManage")
+              }
             >
               대행사관리
             </span>

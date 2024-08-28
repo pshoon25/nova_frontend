@@ -7,6 +7,7 @@ import PointManage from "../component/mng/PointManage";
 import AgencyManage from "../component/mng/AgencyManage";
 import AddAgency from "../component/mng/AddAgency";
 import OlockMissionManage from "../component/mng/OlockMissionManage";
+import AddOlockMission from "../component/mng/AddOlockMission";
 import PrivateRoute from "./PrivateRoute";
 
 const Router = () => {
@@ -20,6 +21,7 @@ const Router = () => {
           <Route path="novaMission" element={<NovaMissionManage />} />
           <Route path="olockMission" element={<OlockMissionManage />} />
           <Route path="addNovaMission" element={<AddNovaMission />} />
+          <Route path="addOlockMission" element={<AddOlockMission />} />
           <Route path="pointManage" element={<PointManage />} />
           <Route path="agencyManage" element={<AgencyManage />} />
           <Route path="addAgency" element={<AddAgency />} />

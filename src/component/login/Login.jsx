@@ -16,11 +16,10 @@ function Login() {
       const validateToken = async () => {
         try {
           const params = {
-            url: "/int/user/jwtCheck.do",
-            userMngCode: loginInfo.userMngCode,
+            agencyCode: loginInfo.agencyCode,
           };
 
-          const response = await api.post("/common/queryExecute", params);
+          const response = await api.post("/jwtCheck", params);
 
           if (response && response.result !== "Logout") {
             // 토큰이 유효하면 메인 페이지로 리다이렉트
