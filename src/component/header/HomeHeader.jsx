@@ -1,33 +1,40 @@
 import React, { useState, useEffect } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 import "../../css/HomeHeader.css";
 import headerLogo from "../../images/nova_text.png";
 import { api } from "../../api/api.js";
 
 function HomeHeader(props) {
-  const [selectedMenu, setSelectedMenu] = useState("미션관리");
+  const [selectedMenu, setSelectedMenu] = useState("");
   const navigate = useNavigate();
+  const location = useLocation(); // 현재 URL 경로를 가져오기 위해 useLocation 사용
   const loginInfo = JSON.parse(localStorage.getItem("loginInfo"));
   const agencyCode = loginInfo ? loginInfo.agencyCode : null;
   const agencyName = loginInfo ? loginInfo.agencyName : null;
   const userType = loginInfo ? loginInfo.userType : null;
 
-  // 컴포넌트가 마운트될 때 로컬 스토리지에서 메뉴 선택 상태를 불러오기
   useEffect(() => {
-    const savedMenu = localStorage.getItem("selectedMenu");
-    if (savedMenu) {
-      setSelectedMenu(savedMenu);
-    }
-  }, []);
+    const pathToMenuMap = {
+      "/main": "노바미션관리",
+      "/olockMission": "오락미션관리",
+      "/pointManage": "포인트관리",
+      "/agencyManage": "대행사관리",
+    };
+
+    // URL 경로에 따라 selectedMenu 설정
+    const currentMenu = pathToMenuMap[location.pathname] || "";
+    setSelectedMenu(currentMenu);
+    localStorage.setItem("selectedMenu", currentMenu);
+  }, [location.pathname]); // location.pathname이 변경될 때마다 실행
 
   const handleMenuClick = (menu, path) => {
     setSelectedMenu(menu);
-    localStorage.setItem("selectedMenu", menu); // 메뉴 선택 상태를 로컬 스토리지에 저장
+    localStorage.setItem("selectedMenu", menu);
     navigate(path);
   };
 
   // 로그아웃
-  const handleLogout = async (userMngCode) => {
+  const handleLogout = async () => {
     try {
       // 쿠키 삭제
       await api.post("/logout", {
@@ -71,7 +78,7 @@ function HomeHeader(props) {
             className={`headerMenuItem ${
               selectedMenu === "오락미션관리" ? "active" : ""
             }`}
-            onClick={() => handleMenuClick("오락미션관리", "olockMission")}
+            onClick={() => handleMenuClick("오락미션관리", "/olockMission")}
           >
             오락미션관리
           </span>
@@ -79,7 +86,7 @@ function HomeHeader(props) {
             className={`headerMenuItem ${
               selectedMenu === "포인트관리" ? "active" : ""
             }`}
-            onClick={() => handleMenuClick("포인트관리", "pointManage")}
+            onClick={() => handleMenuClick("포인트관리", "/pointManage")}
           >
             포인트관리
           </span>
@@ -88,7 +95,7 @@ function HomeHeader(props) {
               className={`headerMenuItem ${
                 selectedMenu === "대행사관리" ? "active" : ""
               }`}
-              onClick={() => handleMenuClick("대행사관리", "agencyManage")}
+              onClick={() => handleMenuClick("대행사관리", "/agencyManage")}
             >
               대행사관리
             </span>

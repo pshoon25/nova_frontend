@@ -2,12 +2,42 @@ import "../../css/Login.css";
 import { useNavigate } from "react-router-dom";
 import loginLogo from "../../images/nova_text.png";
 import { api } from "../../api/api.js";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 
 function Login() {
   const [loginId, setLoginId] = useState("");
   const [password, setPassword] = useState("");
   const navigate = useNavigate();
+  const loginInfo = JSON.parse(localStorage.getItem("loginInfo"));
+
+  useEffect(() => {
+    // 로그인 정보가 남아 있는지 확인하고, 있으면 토큰 체크 진행
+    if (loginInfo) {
+      const validateToken = async () => {
+        try {
+          const params = {
+            url: "/int/user/jwtCheck.do",
+            userMngCode: loginInfo.userMngCode,
+          };
+
+          const response = await api.post("/common/queryExecute", params);
+
+          if (response && response.result !== "Logout") {
+            // 토큰이 유효하면 메인 페이지로 리다이렉트
+            navigate("/main");
+          } else {
+            // 토큰이 만료되었거나 유효하지 않으면 로그인 정보 삭제
+            localStorage.removeItem("loginInfo");
+          }
+        } catch (error) {
+          console.error("Error:", error);
+          localStorage.removeItem("loginInfo");
+        }
+      };
+
+      validateToken();
+    }
+  }, [loginInfo, navigate]);
 
   // Validation Check
   const login_validationCheck = (e) => {
@@ -57,10 +87,13 @@ function Login() {
 
   const loginSuccess = (response) => {
     // 로그인 성공 후 정보 Local Storage에 저장
-    const loginInfo = {};
-    loginInfo.agencyCode = response.agencyCode;
-    loginInfo.agencyName = response.agencyName;
-    loginInfo.userType = response.userType;
+    const loginInfo = {
+      agencyCode: response.agencyCode,
+      agencyName: response.agencyName,
+      userType: response.userType,
+      userMngCode: response.userMngCode,
+      accessToken: response.accessToken, // 필요한 경우 액세스 토큰도 저장
+    };
 
     localStorage.setItem("loginInfo", JSON.stringify(loginInfo));
 

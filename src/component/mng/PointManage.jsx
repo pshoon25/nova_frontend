@@ -8,6 +8,11 @@ import {
   FormControl,
   InputLabel,
   TextField,
+  Dialog,
+  DialogActions,
+  DialogContent,
+  DialogTitle,
+  Button,
 } from "@mui/material";
 
 const PointManage = () => {
@@ -15,6 +20,10 @@ const PointManage = () => {
   const [rows, setRows] = useState([]);
   const [statusFilter, setstatusFilter] = useState("All");
   const [constName, setConstName] = useState("");
+  const [open, setOpen] = useState(false);
+  const [pointAmount, setPointAmount] = useState("");
+  const [depositorName, setDepositorName] = useState("");
+  const [agencyName, setAgencyName] = useState("");
   const loginInfo = JSON.parse(localStorage.getItem("loginInfo"));
   const userType = loginInfo ? loginInfo.userType : null;
 
@@ -75,6 +84,25 @@ const PointManage = () => {
     }
   };
 
+  // 팝업 열기
+  const handleClickOpen = () => {
+    setOpen(true);
+  };
+
+  // 팝업 닫기
+  const handleClose = () => {
+    setOpen(false);
+  };
+
+  // 포인트 충전 핸들러 (이 부분은 실제 로직에 따라 구현 필요)
+  const handlePointCharge = () => {
+    console.log("Point Amount:", pointAmount);
+    console.log("Depositor Name:", depositorName);
+    console.log("Agency Name:", agencyName);
+    // 여기에 실제 API 호출 등의 로직 추가
+    handleClose();
+  };
+
   // 데이터 가져오기
   useEffect(() => {
     getPointHistoryList();
@@ -127,7 +155,7 @@ const PointManage = () => {
           </div>
           <div className="actionBtns">
             {userType === "AGENCY" && (
-              <button type="button" className="addButton">
+              <button type="button" className="addButton" onClick={handleClickOpen}>
                 포인트 충전
               </button>
             )}
@@ -155,6 +183,44 @@ const PointManage = () => {
           />
         </div>
       </div>
+
+      <Dialog open={open} onClose={handleClose}>
+        <DialogTitle>포인트 충전</DialogTitle>
+        <DialogContent>
+          <TextField
+            autoFocus
+            margin="dense"
+            label="포인트 금액"
+            type="number"
+            fullWidth
+            variant="outlined"
+            value={pointAmount}
+            onChange={(e) => setPointAmount(e.target.value)}
+          />
+          <TextField
+            margin="dense"
+            label="입금자명"
+            type="text"
+            fullWidth
+            variant="outlined"
+            value={depositorName}
+            onChange={(e) => setDepositorName(e.target.value)}
+          />
+          <TextField
+            margin="dense"
+            label="대행사명"
+            type="text"
+            fullWidth
+            variant="outlined"
+            value={agencyName}
+            onChange={(e) => setAgencyName(e.target.value)}
+          />
+        </DialogContent>
+        <DialogActions>
+          <Button onClick={handlePointCharge}>충전</Button>
+          <Button onClick={handleClose}>취소</Button>
+        </DialogActions>
+      </Dialog>
     </div>
   );
 };
