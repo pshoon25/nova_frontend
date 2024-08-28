@@ -38,11 +38,7 @@ function HomeHeader(props) {
   const handleLogout = async () => {
     try {
       // 쿠키 삭제
-      await api.post("/logout", {
-        params: {
-          agencyCode: agencyCode,
-        },
-      });
+      await api.post("/logout");
 
       // 로컬 스토리지에서 로그인 정보 삭제
       localStorage.removeItem("loginInfo");
