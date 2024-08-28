@@ -17,16 +17,11 @@ const api = axios.create({
 // 요청 전 처리
 api.interceptors.request.use(
   (config) => {
-    // AccessToken과 RefreshToken을 로컬 스토리지에서 가져와 헤더에 추가
-    const accessToken = localStorage.getItem("AccessToken");
-    const refreshToken = localStorage.getItem("RefreshToken");
+    const loginInfo = JSON.parse(localStorage.getItem("loginInfo"));
+    const accessToken = loginInfo ? loginInfo.accessToken : null;
 
     if (accessToken) {
       config.headers["Access-Token"] = accessToken;
-    }
-
-    if (refreshToken) {
-      config.headers["Refresh-Token"] = refreshToken;
     }
 
     return config;

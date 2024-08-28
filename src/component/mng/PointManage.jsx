@@ -96,7 +96,7 @@ const PointManage = () => {
 
   const requestPointRecharge = async () => {
     try {
-      await api.post("/point/requestPointRecharge", {
+      const response = await api.post("/point/requestPointRecharge", {
         agencyCode: agencyCode,
         points: pointAmount,
         depositorName: depositorName,
