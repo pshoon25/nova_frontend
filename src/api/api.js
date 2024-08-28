@@ -1,7 +1,7 @@
 import axios from "axios";
 
 // const url = "http://localhost:8080";
-const url = "";
+const url = "/api";
 
 axios.defaults.withCredentials = true; // 쿠키 값을 전송한다.
 
