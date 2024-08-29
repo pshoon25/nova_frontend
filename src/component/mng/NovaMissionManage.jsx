@@ -311,7 +311,7 @@ const NovaMissionManage = () => {
                   const id = params.row.id;
                   const newRows = [...rows];
                   newRows[id - 1] = {
-                    ...newRows[id - 1],
+                    ...newRows[id - 1],  
                     missionStatus: newValue,
                   };
                   setRows(newRows);
