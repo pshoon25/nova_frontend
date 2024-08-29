@@ -95,19 +95,28 @@ const PointManage = () => {
   };
 
   const requestPointRecharge = async () => {
+    // 유효성 검사
+    if (!depositorName.trim()) {
+      alert("입금자명을 입력하세요.");
+      return;
+    }
+
+    if (!pointAmount || pointAmount <= 0) {
+      alert("포인트 금액은 0보다 커야 합니다.");
+      return;
+    }
+
     try {
       const response = await api.post("/point/requestPointRecharge", {
-        params: {
-          agencyCode: agencyCode,
-          points: pointAmount,
-          depositorName: depositorName,
-        },
+        agencyCode: agencyCode,
+        points: pointAmount,
+        depositorName: depositorName,
       });
 
       handleClose();
       getPointHistoryList();
     } catch (error) {
-      console.error("Error :", error);
+      console.error("Error:", error);
     }
   };
 
