@@ -162,7 +162,7 @@ const AddNovaMission = () => {
                   }}
                   renderInput={(params) => <TextField {...params} fullWidth />}
                   disablePast
-                  minDate={new Date().setDate(new Date().getDate())} // 오늘 날짜를 제외한 최소 날짜
+                  minDate={new Date().setDate(new Date().getDate() + 1)} // 오늘 날짜를 제외한 최소 날짜
                 />
               </LocalizationProvider>
               <LocalizationProvider dateAdapter={AdapterDateFns}>

@@ -234,10 +234,10 @@ const NovaMissionManage = () => {
         missionsToSave
       );
 
-      if (response.status === 200) {
+      if (response.data === "SUCCESS") {
         alert("미션 상태가 성공적으로 저장되었습니다.");
         getAgencyMissionList();
-      } else {
+      } else if (response.data === "FAIL") {
         alert("미션 상태 저장에 실패했습니다.");
       }
     } catch (error) {
@@ -288,6 +288,7 @@ const NovaMissionManage = () => {
             renderCell: (params) => (
               <Select
                 value={params.value || ""}
+                disabled={params.value === "CANCEL"} // Mission Status가 CANCEL이면 드롭다운 비활성화
                 onChange={(e) => {
                   const newValue = e.target.value;
                   const id = params.row.id;
