@@ -23,9 +23,9 @@ const AddNovaMission = () => {
   const [placeName, setPlaceName] = useState("");
   const [placeUrl, setPlaceUrl] = useState("");
   const [priceComparisonId, setPriceComparisonId] = useState("");
-  const [mainSearchKeywords, setMainSearchKeywords] = useState("");
-  const [rankKeywords, setRankKeywords] = useState("");
-  const [subSearchKeywords, setSubSearchKeywords] = useState("");
+  const [mainSearchKeyword, setMainSearchKeyword] = useState("");
+  const [rankKeyword, setRankKeyword] = useState("");
+  const [subSearchKeyword, setSubSearchKeyword] = useState("");
   const [dailyWorkload, setDailyWorkload] = useState("");
   const location = useLocation();
   const pointsData = location.state?.pointsData || {
@@ -46,6 +46,15 @@ const AddNovaMission = () => {
 
   const isSmartstoreSearch = itemName === "SMARTSTORE_SEARCH";
 
+  const handleDailyWorkloadChange = (e) => {
+    // 입력된 값을 숫자로 변환
+    const value = e.target.value;
+    // 숫자 또는 빈 문자열만 허용
+    if (/^\d*$/.test(value)) {
+      setDailyWorkload(value);
+    }
+  };
+
   const addMission = async () => {
     const missionData = {
       agencyCode,
@@ -57,10 +66,10 @@ const AddNovaMission = () => {
       placeName: !isSmartstoreSearch ? placeName : "",
       placeUrl: !isSmartstoreSearch ? placeUrl : "",
       priceComparisonId: isSmartstoreSearch ? priceComparisonId : "",
-      mainSearchKeywords,
-      rankKeywords,
-      subSearchKeywords: isSmartstoreSearch ? subSearchKeywords : "",
-      dailyWorkload: !isSmartstoreSearch ? dailyWorkload : 0,
+      mainSearchKeyword,
+      rankKeyword,
+      subSearchKeyword: isSmartstoreSearch ? subSearchKeyword : "",
+      dailyWorkload: dailyWorkload ? parseInt(dailyWorkload, 10) : 0, // 숫자로 변환
     };
 
     try {
@@ -134,7 +143,7 @@ const AddNovaMission = () => {
                 <MenuItem value="PLACE_SEARCH_SAVE_PREMIUM">
                   플레이스 검색 + 저장(프리미엄)
                 </MenuItem>
-                <MenuItem value="PLCAE_KEEP">플레이스 킵</MenuItem>
+                <MenuItem value="PLACE_KEEP">플레이스 킵</MenuItem>
                 <MenuItem value="SMARTSTORE_SEARCH">스마트스토어 검색</MenuItem>
               </Select>
             </FormControl>
@@ -153,7 +162,7 @@ const AddNovaMission = () => {
                   }}
                   renderInput={(params) => <TextField {...params} fullWidth />}
                   disablePast
-                  minDate={new Date().setDate(new Date().getDate() + 1)} // 오늘 날짜를 제외한 최소 날짜
+                  minDate={new Date().setDate(new Date().getDate())} // 오늘 날짜를 제외한 최소 날짜
                 />
               </LocalizationProvider>
               <LocalizationProvider dateAdapter={AdapterDateFns}>
@@ -200,33 +209,32 @@ const AddNovaMission = () => {
             )}
             <TextField
               label="순위 키워드"
-              value={rankKeywords}
-              onChange={(e) => setRankKeywords(e.target.value)}
+              value={rankKeyword}
+              onChange={(e) => setRankKeyword(e.target.value)}
               fullWidth
             />
             <TextField
               label="검색 키워드"
-              value={mainSearchKeywords}
-              onChange={(e) => setMainSearchKeywords(e.target.value)}
+              value={mainSearchKeyword}
+              onChange={(e) => setMainSearchKeyword(e.target.value)}
               fullWidth
             />
             {isSmartstoreSearch && (
               <TextField
                 label="3위이내 검색 키워드"
-                value={subSearchKeywords}
-                onChange={(e) => setSubSearchKeywords(e.target.value)}
+                value={subSearchKeyword}
+                onChange={(e) => setSubSearchKeyword(e.target.value)}
                 fullWidth
               />
             )}
-            {!isSmartstoreSearch && (
-              <TextField
-                label="1일 작업량"
-                value={dailyWorkload}
-                onChange={(e) => setDailyWorkload(e.target.value)}
-                fullWidth
-                type="number"
-              />
-            )}
+            <TextField
+              label="1일 작업량"
+              value={dailyWorkload}
+              onChange={handleDailyWorkloadChange}
+              fullWidth
+              type="number"
+              inputProps={{ min: "0", step: "1" }} // 음수 및 비정수 방지
+            />
             <button className="addButton" type="button" onClick={addMission}>
               추가
             </button>

@@ -11,7 +11,7 @@ const NovaMissionManage = () => {
   const navigate = useNavigate();
   const [activeType, setActiveType] = useState("");
   const [rows, setRows] = useState([]);
-  const [constName, setConstName] = useState("");
+  const [agencyName, setAgencyName] = useState("");
   const [placeName, setPlaceName] = useState("");
   const [pointsData, setPointsData] = useState({
     availablePoints: 0,
@@ -49,7 +49,7 @@ const NovaMissionManage = () => {
         "/mission/getAgencyMissionListByAgencyName",
         {
           params: {
-            agencyName: constName,
+            agencyName: agencyName,
             reward: "NOVA",
             itemName: activeType,
           },
@@ -58,12 +58,6 @@ const NovaMissionManage = () => {
       const data = response.data;
 
       const formattedData = data.map((el, index) => {
-        const adStartDate = new Date(el.adStartDate);
-        const adEndDate = new Date(el.adEndDate);
-        const totalWorkdays = Math.ceil(
-          (adEndDate - adStartDate) / (1000 * 60 * 60 * 24)
-        );
-
         return {
           id: index + 1,
           missionNo: el.missionNo || "",
@@ -90,7 +84,7 @@ const NovaMissionManage = () => {
           priceComparisonId: el.priceComparisonId || "",
           adStartDate: el.adStartDate || "",
           dailyWorkload: el.dailyWorkload || "",
-          totalWorkdays: totalWorkdays || "",
+          totalWorkdays: el.totalWorkdays || "",
           placeName: el.placeName || "",
           rankKeyword: el.rankKeyword || "",
           mainSearchKeyword: el.mainSearchKeyword || "",
@@ -124,13 +118,9 @@ const NovaMissionManage = () => {
       );
       const data = response.data;
 
-      const formattedData = data.map((el, index) => {
-        const adStartDate = new Date(el.adStartDate);
-        const adEndDate = new Date(el.adEndDate);
-        const totalWorkdays = Math.ceil(
-          (adEndDate - adStartDate) / (1000 * 60 * 60 * 24)
-        );
+      console.log(data);
 
+      const formattedData = data.map((el, index) => {
         return {
           id: index + 1,
           missionNo: el.missionNo || "",
@@ -156,7 +146,7 @@ const NovaMissionManage = () => {
           priceComparisonId: el.priceComparisonId || "",
           adStartDate: el.adStartDate || "",
           dailyWorkload: el.dailyWorkload || "",
-          totalWorkdays: totalWorkdays || "",
+          totalWorkdays: el.totalWorkdays || "",
           placeName: el.placeName || "",
           rankKeyword: el.rankKeyword || "",
           mainSearchKeyword: el.mainSearchKeyword || "",
@@ -196,7 +186,7 @@ const NovaMissionManage = () => {
   const getAgencyPointByAgencyName = async () => {
     try {
       const response = await api.get("/point/getAgencyPointByAgencyName", {
-        params: { agencyName: constName },
+        params: { agencyName: agencyName },
       });
 
       const data = response.data;
@@ -265,14 +255,6 @@ const NovaMissionManage = () => {
     getAgencyMissionList();
   }, [activeType]);
 
-  const handleMissionStatusChange = (id, newStatus) => {
-    setRows((prevRows) =>
-      prevRows.map((row) =>
-        row.id === id ? { ...row, missionStatus: newStatus } : row
-      )
-    );
-  };
-
   const columns = [
     { field: "id", headerName: "No", width: 30 },
     ...(userType === "ADMIN"
@@ -311,7 +293,7 @@ const NovaMissionManage = () => {
                   const id = params.row.id;
                   const newRows = [...rows];
                   newRows[id - 1] = {
-                    ...newRows[id - 1],  
+                    ...newRows[id - 1],
                     missionStatus: newValue,
                   };
                   setRows(newRows);
@@ -337,42 +319,26 @@ const NovaMissionManage = () => {
     { field: "manage", headerName: "관리", width: 70 },
   ];
 
-  const missionExcelDownload = async (agencyName, reward, itemName) => {
+  const downloadMissionExcel = async () => {
     try {
       const response = await api.get("/mission/missionExcelDownload", {
         params: {
-          agencyName: agencyName,
-          reward: "NOVA",
-          itemName: itemName,
+          agencyName: encodeURIComponent(agencyName),
+          reward: encodeURIComponent("NOVA"),
+          itemName: encodeURIComponent(activeType),
         },
         responseType: "blob",
       });
 
-      // 응답 헤더에서 파일 이름을 추출하기
-      const contentDisposition = response.headers["content-disposition"];
-      const filename = contentDisposition
-        ? contentDisposition.split("filename=")[1]
-        : "mission_list.xlsx";
-
-      // 브라우저에서 파일을 다운로드하게 만드는 Blob 생성
-      const blob = new Blob([response.data], {
-        type: "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
-      });
-      const url = window.URL.createObjectURL(blob);
-
-      // 임시 링크를 만들어서 파일 다운로드 실행
+      // 파일 다운로드 처리
+      const url = window.URL.createObjectURL(new Blob([response.data]));
       const link = document.createElement("a");
       link.href = url;
-      link.setAttribute("download", filename);
+      link.setAttribute("download", "mission_list.xlsx");
       document.body.appendChild(link);
       link.click();
-
-      // 메모리 정리
-      link.parentNode.removeChild(link);
-      window.URL.revokeObjectURL(url);
     } catch (error) {
-      console.error("Error downloading the Excel file:", error);
-      alert("Failed to download Excel file. Please try again.");
+      console.error("Error downloading Excel file:", error);
     }
   };
 
@@ -414,8 +380,8 @@ const NovaMissionManage = () => {
                   label="대행사명"
                   variant="outlined"
                   size="small"
-                  value={constName}
-                  onChange={(e) => setConstName(e.target.value)}
+                  value={agencyName}
+                  onChange={(e) => setAgencyName(e.target.value)}
                   onKeyDown={(e) => e.key === "Enter" && getAgencyMissionList()}
                 />
               )}
@@ -498,7 +464,7 @@ const NovaMissionManage = () => {
               <button
                 type="button"
                 className="downloadButton"
-                onClick={missionExcelDownload}
+                onClick={downloadMissionExcel}
               >
                 엑셀 다운로드
               </button>

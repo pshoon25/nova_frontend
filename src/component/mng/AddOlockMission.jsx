@@ -39,6 +39,14 @@ const AddOlockMission = () => {
     setItemName(event.target.value);
   };
 
+  const handleDailyWorkloadChange = (e) => {
+    const value = e.target.value;
+    // 숫자 또는 빈 문자열만 허용
+    if (/^\d*$/.test(value)) {
+      setDailyWorkload(value);
+    }
+  };
+
   const addMission = async () => {
     const missionData = {
       agencyCode,
@@ -50,8 +58,8 @@ const AddOlockMission = () => {
       placeName: placeName,
       placeUrl: placeUrl,
       mainSearchKeywords,
-      setCorrectAnswer,
-      dailyWorkload: dailyWorkload,
+      correctAnswer, // 수정된 부분
+      dailyWorkload: dailyWorkload ? parseInt(dailyWorkload, 10) : 0, // 숫자로 변환
     };
 
     try {
@@ -173,7 +181,7 @@ const AddOlockMission = () => {
               fullWidth
             />
             <TextField
-              label="주변- 명소 1번째 정답은? "
+              label="주변- 명소 1번째 정답은?"
               value={correctAnswer}
               onChange={(e) => setCorrectAnswer(e.target.value)}
               fullWidth
@@ -182,9 +190,10 @@ const AddOlockMission = () => {
             <TextField
               label="1일 작업량"
               value={dailyWorkload}
-              onChange={(e) => setDailyWorkload(e.target.value)}
+              onChange={handleDailyWorkloadChange}
               fullWidth
               type="number"
+              inputProps={{ min: "0", step: "1" }} // 음수 및 비정수 방지
             />
             <button className="addButton" type="button" onClick={addMission}>
               추가
