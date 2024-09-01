@@ -16,6 +16,7 @@ import {
 } from "@mui/material";
 import "../../css/Common.css";
 import "../../css/PointManage.css";
+import { format } from "date-fns";
 
 const PointManage = () => {
   const navigate = useNavigate();
@@ -47,7 +48,8 @@ const PointManage = () => {
         missionNo: el.missionNo || "",
         content: el.content || "",
         points: el.points || "",
-        registerDateTime: el.registerDateTime || "",
+        registerDateTime:
+          format(new Date(el.registerDateTime), "yyyy-MM-dd HH:mm") || "",
         status: formatStatus(el.status),
         depositor: el.depositor || "",
       }));
@@ -153,6 +155,28 @@ const PointManage = () => {
     }
   };
 
+  const downloadMissionExcel = async () => {
+    try {
+      const response = await api.get("/point/pointHistoryExcelDownload", {
+        params: {
+          agencyName: constName,
+          status: statusFilter !== "All" ? statusFilter : undefined,
+        },
+        responseType: "blob",
+      });
+
+      // 파일 다운로드 처리
+      const url = window.URL.createObjectURL(new Blob([response.data]));
+      const link = document.createElement("a");
+      link.href = url;
+      link.setAttribute("download", "point_history_list.xlsx");
+      document.body.appendChild(link);
+      link.click();
+    } catch (error) {
+      console.error("Error downloading Excel file:", error);
+    }
+  };
+
   useEffect(() => {
     getPointHistoryList();
   }, []);
@@ -219,6 +243,15 @@ const PointManage = () => {
                 onClick={approvalRecharge}
               >
                 충전 승인
+              </button>
+            )}
+            {userType === "ADMIN" && (
+              <button
+                type="button"
+                className="downloadButton"
+                onClick={downloadMissionExcel}
+              >
+                엑셀 다운로드
               </button>
             )}
           </div>
