@@ -233,7 +233,6 @@ const PointManage = () => {
             },
           }}
           pageSizeOptions={[5, 10]}
-          style={{ height: 600 }}
           checkboxSelection
           autoHeight
           isRowSelectable={(params) => params.row.status === "충전요청"}

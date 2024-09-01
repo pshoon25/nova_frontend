@@ -22,6 +22,7 @@
 .searchButton,
 .addButton,
 .saveButton,
+.loginBtn,
 .downloadButton {
   background: #ffffff; /* 배경 색상 없음 (뉴모피즘 스타일) */
   border: none; /* 기본 테두리 제거 */
