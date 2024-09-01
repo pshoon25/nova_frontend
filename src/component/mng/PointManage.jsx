@@ -222,33 +222,28 @@ const PointManage = () => {
             )}
           </div>
         </div>
-        <div style={{ height: 400, width: "100%" }}>
-          <DataGrid
-            rows={rows}
-            columns={columns}
-            getRowId={(row) => row.pointHistoryNo}
-            initialState={{
-              pagination: {
-                paginationModel: { page: 0, pageSize: 10 },
-              },
-            }}
-            pageSizeOptions={[5, 10]}
-            style={{ height: 600 }}
-            checkboxSelection
-            autoHeight
-            isRowSelectable={(params) => params.row.status === "충전요청"}
-            onRowSelectionModelChange={(newSelection) => {
-              const selectedIds = new Set(newSelection);
-              const selectedRows = rows.filter((row) =>
-                selectedIds.has(row.pointHistoryNo)
-              );
-              setSelectedRows(selectedRows);
-
-              // 선택된 항목 로깅
-              console.log("Selected rows: ", selectedRows);
-            }}
-          />
-        </div>
+        <DataGrid
+          rows={rows}
+          columns={columns}
+          getRowId={(row) => row.pointHistoryNo}
+          initialState={{
+            pagination: {
+              paginationModel: { page: 0, pageSize: 10 },
+            },
+          }}
+          pageSizeOptions={[5, 10]}
+          style={{ height: 600 }}
+          checkboxSelection
+          autoHeight
+          isRowSelectable={(params) => params.row.status === "충전요청"}
+          onRowSelectionModelChange={(newSelection) => {
+            const selectedIds = new Set(newSelection);
+            const selectedRows = rows.filter((row) =>
+              selectedIds.has(row.pointHistoryNo)
+            );
+            setSelectedRows(selectedRows);
+          }}
+        />
       </div>
 
       <Dialog open={open} onClose={handleClose}>
