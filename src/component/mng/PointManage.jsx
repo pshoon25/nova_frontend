@@ -146,7 +146,6 @@ const PointManage = () => {
 
       await Promise.all(approvalPromises);
 
-      console.log("All selected rows have been successfully approved.");
       getPointHistoryList();
       setSelectedRows([]);
     } catch (error) {

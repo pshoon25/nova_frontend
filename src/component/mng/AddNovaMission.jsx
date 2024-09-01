@@ -77,8 +77,6 @@ const AddNovaMission = () => {
 
       const data = response.data;
 
-      console.log(data);
-
       if (data === "SUCCESS") {
         // 성공 메시지 표시
         alert("등록에 성공하였습니다.");

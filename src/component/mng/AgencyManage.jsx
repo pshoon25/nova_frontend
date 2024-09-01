@@ -94,7 +94,6 @@ const AgencyManage = () => {
 
   const agencySaveApi = async (updatedData) => {
     try {
-      console.log(updatedData);
       await api.put("/agency/updateAgencyInfo", updatedData);
       alert("저장되었습니다.");
       getAgencyList();

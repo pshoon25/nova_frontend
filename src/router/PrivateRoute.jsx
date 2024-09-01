@@ -12,8 +12,6 @@ const PrivateRoute = ({ element }) => {
       const response = await api.get("/jwtCheck");
       const data = response.data;
 
-      console.log(data);
-
       if (data === undefined || data.result === "Logout") {
         // 토큰 만료 시 처리
         alert("토큰이 만료되었습니다. 다시 로그인해주시기 바랍니다.");

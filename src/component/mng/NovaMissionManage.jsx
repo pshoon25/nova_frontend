@@ -118,8 +118,6 @@ const NovaMissionManage = () => {
       );
       const data = response.data;
 
-      console.log(data);
-
       const formattedData = data.map((el, index) => {
         return {
           id: index + 1,
