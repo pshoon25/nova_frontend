@@ -14,7 +14,8 @@ import {
   DialogTitle,
   Button,
 } from "@mui/material";
-import "../../css/pointManage.css";
+import "../../css/Common.css";
+import "../../css/PointManage.css";
 
 const PointManage = () => {
   const navigate = useNavigate();
