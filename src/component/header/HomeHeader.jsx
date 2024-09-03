@@ -3,6 +3,8 @@ import { useNavigate, useLocation } from "react-router-dom";
 import "../../css/HomeHeader.css";
 import headerLogo from "../../images/nova_text.png";
 import { api } from "../../api/api.js";
+import Announcement from "../popup/Announcement.jsx"
+
 
 function HomeHeader(props) {
   const [selectedMenu, setSelectedMenu] = useState("");
@@ -12,6 +14,17 @@ function HomeHeader(props) {
   const agencyCode = loginInfo ? loginInfo.agencyCode : null;
   const agencyName = loginInfo ? loginInfo.agencyName : null;
   const userType = loginInfo ? loginInfo.userType : null;
+
+  // 팝업창
+  const todayDate = new Date().toLocaleDateString();
+  const [modalVisible, setModalVisible] = useState(() => {
+    const visitedBeforeDate = localStorage.getItem('VisitCookie');
+    return visitedBeforeDate !== todayDate; // 만약 오늘 방문한 기록이 없다면 true 반환
+  });
+
+  const closeModal = () => {
+    setModalVisible(false)
+  }
 
   useEffect(() => {
     const pathToMenuMap = {
@@ -54,6 +67,9 @@ function HomeHeader(props) {
 
   return (
     <div className="homeHeader">
+      {modalVisible && (
+        <Announcement visible={modalVisible} closable={true} maskClosable={true} onClose={closeModal}></Announcement>
+      )}
       <nav className="homeHeaderNav">
         <img
           src={headerLogo}
