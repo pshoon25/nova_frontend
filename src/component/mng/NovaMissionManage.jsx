@@ -5,7 +5,6 @@ import "../../css/Common.css";
 import "../../css/MissionManage.css";
 import { api } from "../../api/api.js";
 import { TextField, Select, MenuItem } from "@mui/material";
-import * as XLSX from "xlsx";
 
 const NovaMissionManage = () => {
   const navigate = useNavigate();

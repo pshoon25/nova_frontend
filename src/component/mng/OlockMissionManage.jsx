@@ -329,7 +329,7 @@ const OlockMissionManage = () => {
   return (
     <div className="mainContainerDiv">
       <div className="missionManageDiv">
-        <h2 className="menuTitle">노바 미션 관리</h2>
+        <h2 className="menuTitle">오락 미션 관리</h2>
         <div className="missionMngStatusDiv">
           <table>
             <thead>

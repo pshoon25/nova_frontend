@@ -259,10 +259,10 @@ const AgencyManage = () => {
           getRowClassName={getRowClassName} // 행 클래스 이름 설정
           initialState={{
             pagination: {
-              paginationModel: { page: 0, pageSize: 5 },
+              paginationModel: { page: 0, pageSize: 20 },
             },
           }}
-          pageSizeOptions={[5, 10]}
+          pageSizeOptions={[20, 50, 100]}
           className="dataGrid" // DataGrid의 클래스 이름 설정
           autoHeight
         />

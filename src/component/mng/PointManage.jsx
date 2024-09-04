@@ -31,14 +31,54 @@ const PointManage = () => {
   const userType = loginInfo ? loginInfo.userType : null;
   const agencyCode = loginInfo ? loginInfo.agencyCode : null;
 
-  const getPointHistoryList = async () => {
+  const getPointHistoryList = () => {
+    if (userType === "ADMIN") {
+      getPointHistoryListByAgencyName();
+    } else if (userType === "AGENCY") {
+      getPointHistoryListByAgencyCode();
+    }
+  };
+
+  const getPointHistoryListByAgencyName = async () => {
     try {
       const params = {
         agencyName: constName,
         status: statusFilter !== "All" ? statusFilter : undefined,
       };
 
-      const response = await api.get("/point/getPointHistoryList", { params });
+      const response = await api.get("/point/getPointHistoryListByAgencyName", {
+        params,
+      });
+      const data = response.data;
+
+      const formattedData = data.map((el) => ({
+        pointHistoryNo: el.pointHistoryNo || "",
+        reward: el.reward || "",
+        agencyName: el.agencyName || "",
+        missionNo: el.missionNo || "",
+        content: el.content || "",
+        points: el.points || "",
+        registerDateTime:
+          format(new Date(el.registerDateTime), "yyyy-MM-dd HH:mm") || "",
+        status: formatStatus(el.status),
+        depositor: el.depositor || "",
+      }));
+      setRows(formattedData);
+    } catch (error) {
+      console.error("Error:", error);
+    }
+  };
+
+  const getPointHistoryListByAgencyCode = async () => {
+    try {
+      const params = {
+        agencyCode: agencyCode,
+        status: statusFilter !== "All" ? statusFilter : undefined,
+      };
+
+      const response = await api.get("/point/getPointHistoryListByAgencyCode", {
+        params,
+      });
       const data = response.data;
 
       const formattedData = data.map((el) => ({
@@ -262,10 +302,10 @@ const PointManage = () => {
           getRowId={(row) => row.pointHistoryNo}
           initialState={{
             pagination: {
-              paginationModel: { page: 0, pageSize: 10 },
+              paginationModel: { page: 0, pageSize: 20 },
             },
           }}
-          pageSizeOptions={[5, 10]}
+          pageSizeOptions={[20, 50, 100]}
           checkboxSelection
           autoHeight
           isRowSelectable={(params) => params.row.status === "충전요청"}
