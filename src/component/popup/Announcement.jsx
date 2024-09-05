@@ -42,7 +42,7 @@ function Announcement({ visible, onClose }) {
                 <li>1일 50작업 이상 (51건, 52건 식으로 가능)</li>
                 <li>익일 구동</li>
                 <li>환불 요청 시 당일 차감 환불</li>
-                <li>세발 가능</li>
+                <li>세금계산서 발행 가능</li>
               </ul>
             </Content>
             <Title>오락</Title>
@@ -51,7 +51,7 @@ function Announcement({ visible, onClose }) {
                 <li>트래픽: 1일 200작업 이상</li>
                 <li>12시 이전 신청 건 익일 구동 마감</li>
                 <li>구동 기간 중 환불 불가</li>
-                <li>세발 가능</li>
+                <li>세금계산서 발행 가능</li>
               </ul>
             </Content>
             <ButtonContainer>
