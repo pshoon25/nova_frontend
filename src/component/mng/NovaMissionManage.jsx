@@ -21,7 +21,6 @@ const NovaMissionManage = () => {
     novaSmartstoreSearch: 0,
   });
   const [changedRows, setChangedRows] = useState({});
-  const [isComposing, setIsComposing] = useState(false);
 
   const loginInfo = JSON.parse(localStorage.getItem("loginInfo"));
   const agencyCode = loginInfo ? loginInfo.agencyCode : null;
@@ -275,8 +274,7 @@ const NovaMissionManage = () => {
             },
           }}
           value={params.value || ""}
-          onCompositionStart={() => setIsComposing(true)}
-          onCompositionEnd={(e) => {
+          onChange={(e) => {
             const newValue = e.target.value;
             const id = params.row.id;
             const newRows = [...rows];
@@ -318,8 +316,7 @@ const NovaMissionManage = () => {
             },
           }}
           value={params.value || ""}
-          onCompositionStart={() => setIsComposing(true)}
-          onCompositionEnd={(e) => {
+          onChange={(e) => {
             const newValue = e.target.value;
             const id = params.row.id;
             const newRows = [...rows];
@@ -364,8 +361,7 @@ const NovaMissionManage = () => {
             },
           }}
           value={params.value || ""}
-          onCompositionStart={() => setIsComposing(true)}
-          onCompositionEnd={(e) => {
+          onChange={(e) => {
             const newValue = e.target.value;
             const id = params.row.id;
             const newRows = [...rows];
@@ -407,8 +403,7 @@ const NovaMissionManage = () => {
             },
           }}
           value={params.value || ""}
-          onCompositionStart={() => setIsComposing(true)}
-          onCompositionEnd={(e) => {
+          onChange={(e) => {
             const newValue = e.target.value;
             const id = params.row.id;
             const newRows = [...rows];
@@ -450,8 +445,7 @@ const NovaMissionManage = () => {
             },
           }}
           value={params.value || ""}
-          onCompositionStart={() => setIsComposing(true)}
-          onCompositionEnd={(e) => {
+          onChange={(e) => {
             const newValue = e.target.value;
             const id = params.row.id;
             const newRows = [...rows];
@@ -493,8 +487,7 @@ const NovaMissionManage = () => {
             },
           }}
           value={params.value || ""}
-          onCompositionStart={() => setIsComposing(true)}
-          onCompositionEnd={(e) => {
+          onChange={(e) => {
             const newValue = e.target.value;
             const id = params.row.id;
             const newRows = [...rows];
@@ -537,8 +530,7 @@ const NovaMissionManage = () => {
             },
           }}
           value={params.value || ""}
-          onCompositionStart={() => setIsComposing(true)}
-          onCompositionEnd={(e) => {
+          onChange={(e) => {
             const newValue = e.target.value;
             const id = params.row.id;
             const newRows = [...rows];
