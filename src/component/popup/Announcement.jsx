@@ -38,9 +38,9 @@ function Announcement({ visible, onClose }) {
             <Title>NOVA</Title>
             <Content>
               <ul>
-                <li>트래픽, 저장</li>
-                <li>1일 50작업 이상 (51건, 52건 식으로 가능)</li>
-                <li>익일 구동</li>
+                <li>1일 50작업 이상( 51건, 52건 식으로 가능)</li>
+                <li>금일 신청시 익일 구동</li>
+                <li>매주 금요일에 주말 구동건 신청 필수</li>
                 <li>환불 요청 시 당일 차감 환불</li>
                 <li>세금계산서 발행 가능</li>
               </ul>
@@ -50,6 +50,9 @@ function Announcement({ visible, onClose }) {
               <ul>
                 <li>트래픽: 1일 200작업 이상</li>
                 <li>12시 이전 신청 건 익일 구동 마감</li>
+                <li>(금요일에 토, 일, 월 구동건 신청 필수)</li>
+                <li>매월 2주차 4주차엔 목요일까지만 접수 가능</li>
+                <li>(목요일에 금, 토, 일, 월 구동건 신청 필수)</li>
                 <li>구동 기간 중 환불 불가</li>
                 <li>세금계산서 발행 가능</li>
               </ul>
