@@ -23,10 +23,13 @@ const PointManage = () => {
   const [rows, setRows] = useState([]);
   const [statusFilter, setStatusFilter] = useState("All");
   const [constName, setConstName] = useState("");
+  const [deducationAgnecyeName, setDeducationAgnecyeName] = useState("");
   const [open, setOpen] = useState(false);
+  const [openDeduct, setOpenDeduct] = useState(false);
   const [pointAmount, setPointAmount] = useState("");
   const [depositorName, setDepositorName] = useState("");
   const [selectedRows, setSelectedRows] = useState([]);
+  const [deductReason, setDeductReason] = useState(""); // 차감 사유 상태 추가
   const loginInfo = JSON.parse(localStorage.getItem("loginInfo"));
   const userType = loginInfo ? loginInfo.userType : null;
   const agencyCode = loginInfo ? loginInfo.agencyCode : null;
@@ -195,6 +198,38 @@ const PointManage = () => {
     }
   };
 
+  const handleClickOpenDeduct = () => {
+    setOpenDeduct(true);
+  };
+
+  const handleCloseDeduct = () => {
+    setOpenDeduct(false);
+  };
+
+  const pointDeduction = async () => {
+    try {
+      const response = await api.post("/point/pointDeduction", {
+        agencyName: deducationAgnecyeName,
+        points: pointAmount,
+        reason: deductReason,
+      });
+
+      if (response.data === "SUCCESS") {
+        alert("포인트가 차감되었습니다.");
+        handleCloseDeduct();
+        getPointHistoryList();
+      } else if (response.data === "FAIL") {
+        return alert("포인트 차감에 실패했습니다.");
+      } else if (
+        response.data == "Insufficient available points for deduction"
+      ) {
+        return alert("차감할 포인트가 잔여 포인트보다 많습니다.");
+      }
+    } catch (error) {
+      console.error("Error :", error);
+    }
+  };
+
   const downloadMissionExcel = async () => {
     try {
       const response = await api.get("/point/pointHistoryExcelDownload", {
@@ -288,6 +323,15 @@ const PointManage = () => {
             {userType === "ADMIN" && (
               <button
                 type="button"
+                className="saveButton"
+                onClick={handleClickOpenDeduct}
+              >
+                포인트 차감
+              </button>
+            )}
+            {userType === "ADMIN" && (
+              <button
+                type="button"
                 className="downloadButton"
                 onClick={downloadMissionExcel}
               >
@@ -347,6 +391,50 @@ const PointManage = () => {
             충전
           </button>
           <button className="addButton" onClick={handleClose}>
+            취소
+          </button>
+        </DialogActions>
+      </Dialog>
+
+      {/* 포인트 차감 Dialog */}
+      <Dialog open={openDeduct} onClose={handleCloseDeduct}>
+        <DialogTitle>포인트 차감</DialogTitle>
+        <DialogContent>
+          <TextField
+            autoFocus
+            margin="dense"
+            label="대행사명"
+            type="text"
+            fullWidth
+            variant="outlined"
+            value={deducationAgnecyeName}
+            onChange={(e) => setDeducationAgnecyeName(e.target.value)}
+          />
+          <TextField
+            autoFocus
+            margin="dense"
+            label="포인트 금액"
+            type="number"
+            fullWidth
+            variant="outlined"
+            value={pointAmount}
+            onChange={(e) => setPointAmount(e.target.value)}
+          />
+          <TextField
+            margin="dense"
+            label="차감 사유"
+            type="text"
+            fullWidth
+            variant="outlined"
+            value={deductReason}
+            onChange={(e) => setDeductReason(e.target.value)}
+          />
+        </DialogContent>
+        <DialogActions>
+          <button className="addButton" onClick={pointDeduction}>
+            차감
+          </button>
+          <button className="addButton" onClick={handleCloseDeduct}>
             취소
           </button>
         </DialogActions>

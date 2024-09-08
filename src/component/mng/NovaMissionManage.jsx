@@ -227,7 +227,7 @@ const NovaMissionManage = () => {
 
     try {
       const response = await api.post(
-        "/mission/saveNovaMissionStatus",
+        "/mission/saveMissionInfo",
         missionsToSave
       );
 
@@ -260,21 +260,304 @@ const NovaMissionManage = () => {
     { field: "missionNo", headerName: "미션번호", width: 150 },
     { field: "itemName", headerName: "종류", width: 200 },
     { field: "type", headerName: "유형", width: 100 },
-    { field: "mid", headerName: "mid", width: 100 },
-    { field: "priceComparisonId", headerName: "가격비교 ID", width: 100 },
+    {
+      field: "mid",
+      headerName: "mid",
+      width: 100,
+      renderCell: (params) => (
+        <TextField
+          variant="standard"
+          InputProps={{
+            disableUnderline: true, // 밑줄 제거
+            style: {
+              marginTop: "10px",
+            },
+          }}
+          value={params.value || ""}
+          onChange={(e) => {
+            const newValue = e.target.value;
+            const id = params.row.id;
+            const newRows = [...rows];
+            newRows[id - 1] = {
+              ...newRows[id - 1],
+              mid: newValue,
+            };
+            setRows(newRows);
+
+            setChangedRows((prevChangedRows) => ({
+              ...prevChangedRows,
+              [id]: {
+                missionNo: newRows[id - 1].missionNo,
+                missionStatus: newRows[id - 1].missionStatus,
+                mid: newRows[id - 1].mid,
+                priceComparisonId: newRows[id - 1].priceComparisonId,
+                placeName: newRows[id - 1].placeName,
+                rankKeyword: newRows[id - 1].rankKeyword,
+                mainSearchKeyword: newRows[id - 1].mainSearchKeyword,
+                subSearchKeyword: newRows[id - 1].subSearchKeyword,
+                placeUrl: newRows[id - 1].placeUrl,
+              },
+            }));
+          }}
+        />
+      ),
+    },
+    {
+      field: "priceComparisonId",
+      headerName: "가격비교 ID",
+      width: 100,
+      renderCell: (params) => (
+        <TextField
+          variant="standard"
+          InputProps={{
+            disableUnderline: true, // 밑줄 제거
+            style: {
+              marginTop: "10px",
+            },
+          }}
+          value={params.value || ""}
+          onChange={(e) => {
+            const newValue = e.target.value;
+            const id = params.row.id;
+            const newRows = [...rows];
+            newRows[id - 1] = {
+              ...newRows[id - 1],
+              priceComparisonId: newValue,
+            };
+            setRows(newRows);
+
+            setChangedRows((prevChangedRows) => ({
+              ...prevChangedRows,
+              [id]: {
+                missionNo: newRows[id - 1].missionNo,
+                missionStatus: newRows[id - 1].missionStatus,
+                mid: newRows[id - 1].mid,
+                priceComparisonId: newRows[id - 1].priceComparisonId,
+                placeName: newRows[id - 1].placeName,
+                rankKeyword: newRows[id - 1].rankKeyword,
+                mainSearchKeyword: newRows[id - 1].mainSearchKeyword,
+                subSearchKeyword: newRows[id - 1].subSearchKeyword,
+                placeUrl: newRows[id - 1].placeUrl,
+              },
+            }));
+          }}
+        />
+      ),
+    },
     { field: "adStartDate", headerName: "광고시작일", width: 100 },
     { field: "dailyWorkload", headerName: "1일작업량", width: 100 },
     { field: "totalWorkdays", headerName: "총작업일수", width: 100 },
-    { field: "placeName", headerName: "플레이스명", width: 100 },
-    { field: "rankKeyword", headerName: "순위키워드", width: 100 },
-    { field: "mainSearchKeyword", headerName: "메인검색 키워드", width: 100 },
+    {
+      field: "placeName",
+      headerName: "플레이스명",
+      width: 100,
+      renderCell: (params) => (
+        <TextField
+          variant="standard"
+          InputProps={{
+            disableUnderline: true, // 밑줄 제거
+            style: {
+              marginTop: "10px",
+            },
+          }}
+          value={params.value || ""}
+          onChange={(e) => {
+            const newValue = e.target.value;
+            const id = params.row.id;
+            const newRows = [...rows];
+            newRows[id - 1] = {
+              ...newRows[id - 1],
+              placeName: newValue,
+            };
+            setRows(newRows);
+
+            setChangedRows((prevChangedRows) => ({
+              ...prevChangedRows,
+              [id]: {
+                missionNo: newRows[id - 1].missionNo,
+                missionStatus: newRows[id - 1].missionStatus,
+                mid: newRows[id - 1].mid,
+                priceComparisonId: newRows[id - 1].priceComparisonId,
+                placeName: newRows[id - 1].placeName,
+                rankKeyword: newRows[id - 1].rankKeyword,
+                mainSearchKeyword: newRows[id - 1].mainSearchKeyword,
+                subSearchKeyword: newRows[id - 1].subSearchKeyword,
+                placeUrl: newRows[id - 1].placeUrl,
+              },
+            }));
+          }}
+        />
+      ),
+    },
+    {
+      field: "rankKeyword",
+      headerName: "순위키워드",
+      width: 100,
+      renderCell: (params) => (
+        <TextField
+          variant="standard"
+          InputProps={{
+            disableUnderline: true, // 밑줄 제거
+            style: {
+              marginTop: "10px",
+            },
+          }}
+          value={params.value || ""}
+          onChange={(e) => {
+            const newValue = e.target.value;
+            const id = params.row.id;
+            const newRows = [...rows];
+            newRows[id - 1] = {
+              ...newRows[id - 1],
+              rankKeyword: newValue,
+            };
+            setRows(newRows);
+
+            setChangedRows((prevChangedRows) => ({
+              ...prevChangedRows,
+              [id]: {
+                missionNo: newRows[id - 1].missionNo,
+                missionStatus: newRows[id - 1].missionStatus,
+                mid: newRows[id - 1].mid,
+                priceComparisonId: newRows[id - 1].priceComparisonId,
+                placeName: newRows[id - 1].placeName,
+                rankKeyword: newRows[id - 1].rankKeyword,
+                mainSearchKeyword: newRows[id - 1].mainSearchKeyword,
+                subSearchKeyword: newRows[id - 1].subSearchKeyword,
+                placeUrl: newRows[id - 1].placeUrl,
+              },
+            }));
+          }}
+        />
+      ),
+    },
+    {
+      field: "mainSearchKeyword",
+      headerName: "메인검색 키워드",
+      width: 100,
+      renderCell: (params) => (
+        <TextField
+          variant="standard"
+          InputProps={{
+            disableUnderline: true, // 밑줄 제거
+            style: {
+              marginTop: "10px",
+            },
+          }}
+          value={params.value || ""}
+          onChange={(e) => {
+            const newValue = e.target.value;
+            const id = params.row.id;
+            const newRows = [...rows];
+            newRows[id - 1] = {
+              ...newRows[id - 1],
+              mainSearchKeyword: newValue,
+            };
+            setRows(newRows);
+
+            setChangedRows((prevChangedRows) => ({
+              ...prevChangedRows,
+              [id]: {
+                missionNo: newRows[id - 1].missionNo,
+                missionStatus: newRows[id - 1].missionStatus,
+                mid: newRows[id - 1].mid,
+                priceComparisonId: newRows[id - 1].priceComparisonId,
+                placeName: newRows[id - 1].placeName,
+                rankKeyword: newRows[id - 1].rankKeyword,
+                mainSearchKeyword: newRows[id - 1].mainSearchKeyword,
+                subSearchKeyword: newRows[id - 1].subSearchKeyword,
+                placeUrl: newRows[id - 1].placeUrl,
+              },
+            }));
+          }}
+        />
+      ),
+    },
     {
       field: "subSearchKeyword",
       headerName: "3위이내검색 키워드",
       width: 100,
+      renderCell: (params) => (
+        <TextField
+          variant="standard"
+          InputProps={{
+            disableUnderline: true, // 밑줄 제거
+            style: {
+              marginTop: "10px",
+            },
+          }}
+          value={params.value || ""}
+          onChange={(e) => {
+            const newValue = e.target.value;
+            const id = params.row.id;
+            const newRows = [...rows];
+            newRows[id - 1] = {
+              ...newRows[id - 1],
+              subSearchKeyword: newValue,
+            };
+            setRows(newRows);
+
+            setChangedRows((prevChangedRows) => ({
+              ...prevChangedRows,
+              [id]: {
+                missionNo: newRows[id - 1].missionNo,
+                missionStatus: newRows[id - 1].missionStatus,
+                mid: newRows[id - 1].mid,
+                priceComparisonId: newRows[id - 1].priceComparisonId,
+                placeName: newRows[id - 1].placeName,
+                rankKeyword: newRows[id - 1].rankKeyword,
+                mainSearchKeyword: newRows[id - 1].mainSearchKeyword,
+                subSearchKeyword: newRows[id - 1].subSearchKeyword,
+                placeUrl: newRows[id - 1].placeUrl,
+              },
+            }));
+          }}
+        />
+      ),
     },
     { field: "adEndDate", headerName: "광고종료일", width: 100 },
-    { field: "placeUrl", headerName: "플레이스주소", width: 100 },
+    {
+      field: "placeUrl",
+      headerName: "플레이스주소",
+      width: 100,
+      renderCell: (params) => (
+        <TextField
+          variant="standard"
+          InputProps={{
+            disableUnderline: true, // 밑줄 제거
+            style: {
+              marginTop: "10px",
+            },
+          }}
+          value={params.value || ""}
+          onChange={(e) => {
+            const newValue = e.target.value;
+            const id = params.row.id;
+            const newRows = [...rows];
+            newRows[id - 1] = {
+              ...newRows[id - 1],
+              placeUrl: newValue,
+            };
+            setRows(newRows);
+
+            setChangedRows((prevChangedRows) => ({
+              ...prevChangedRows,
+              [id]: {
+                missionNo: newRows[id - 1].missionNo,
+                missionStatus: newRows[id - 1].missionStatus,
+                mid: newRows[id - 1].mid,
+                priceComparisonId: newRows[id - 1].priceComparisonId,
+                placeName: newRows[id - 1].placeName,
+                rankKeyword: newRows[id - 1].rankKeyword,
+                mainSearchKeyword: newRows[id - 1].mainSearchKeyword,
+                subSearchKeyword: newRows[id - 1].subSearchKeyword,
+                placeUrl: newRows[id - 1].placeUrl,
+              },
+            }));
+          }}
+        />
+      ),
+    },
     { field: "totalRequest", headerName: "총요청량", width: 100 },
     ...(userType === "ADMIN"
       ? [
@@ -284,6 +567,15 @@ const NovaMissionManage = () => {
             width: 150,
             renderCell: (params) => (
               <Select
+                variant="standard"
+                sx={{
+                  "&:before": {
+                    borderBottom: "none",
+                  },
+                  "&:after": {
+                    borderBottom: "none",
+                  },
+                }}
                 value={params.value || ""}
                 disabled={params.value === "CANCEL"} // Mission Status가 CANCEL이면 드롭다운 비활성화
                 onChange={(e) => {
@@ -300,7 +592,14 @@ const NovaMissionManage = () => {
                     ...prevChangedRows,
                     [id]: {
                       missionNo: newRows[id - 1].missionNo,
-                      missionStatus: newValue,
+                      missionStatus: newRows[id - 1].missionStatus,
+                      mid: newRows[id - 1].mid,
+                      priceComparisonId: newRows[id - 1].priceComparisonId,
+                      placeName: newRows[id - 1].placeName,
+                      rankKeyword: newRows[id - 1].rankKeyword,
+                      mainSearchKeyword: newRows[id - 1].mainSearchKeyword,
+                      subSearchKeyword: newRows[id - 1].subSearchKeyword,
+                      placeUrl: newRows[id - 1].placeUrl,
                     },
                   }));
                 }}

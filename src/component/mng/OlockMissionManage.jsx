@@ -77,9 +77,9 @@ const OlockMissionManage = () => {
           dailyWorkload: el.dailyWorkload || "",
           totalWorkdays: el.totalWorkdays || "",
           placeName: el.placeName || "",
-          rankKeyword: el.rankKeyword || "",
+          // rankKeyword: el.rankKeyword || "",
           mainSearchKeyword: el.mainSearchKeyword || "",
-          subSearchKeyword: el.subSearchKeyword || "",
+          correctAnswer: el.correctAnswer || "",
           adEndDate: el.adEndDate || "",
           placeUrl: el.placeUrl || "",
           totalRequest: el.totalRequest || "",
@@ -131,9 +131,9 @@ const OlockMissionManage = () => {
           dailyWorkload: el.dailyWorkload || "",
           totalWorkdays: el.totalWorkdays || "",
           placeName: el.placeName || "",
-          rankKeyword: el.rankKeyword || "",
+          // rankKeyword: el.rankKeyword || "",
           mainSearchKeyword: el.mainSearchKeyword || "",
-          subSearchKeyword: el.subSearchKeyword || "",
+          correctAnswer: el.correctAnswer || "",
           adEndDate: el.adEndDate || "",
           placeUrl: el.placeUrl || "",
           totalRequest: el.totalRequest || "",
@@ -208,19 +208,19 @@ const OlockMissionManage = () => {
     }
   };
 
-  const saveolockMissionStatus = async () => {
+  const saveOlockMissionStatus = async () => {
     const missionsToSave = Object.values(changedRows);
 
     try {
       const response = await api.post(
-        "/mission/saveolockMissionStatus",
+        "/mission/saveMissionInfo",
         missionsToSave
       );
 
-      if (response.status === 200) {
+      if (response.data === "SUCCESS") {
         alert("미션 상태가 성공적으로 저장되었습니다.");
         getAgencyMissionList();
-      } else {
+      } else if (response.data === "FAIL") {
         alert("미션 상태 저장에 실패했습니다.");
       }
     } catch (error) {
@@ -246,21 +246,262 @@ const OlockMissionManage = () => {
     { field: "missionNo", headerName: "미션번호", width: 150 },
     { field: "itemName", headerName: "종류", width: 200 },
     { field: "type", headerName: "유형", width: 100 },
-    { field: "mid", headerName: "mid", width: 100 },
-    { field: "priceComparisonId", headerName: "가격비교 ID", width: 100 },
+    {
+      field: "mid",
+      headerName: "mid",
+      width: 100,
+      renderCell: (params) => (
+        <TextField
+          variant="standard"
+          InputProps={{
+            disableUnderline: true, // 밑줄 제거
+            style: {
+              marginTop: "10px",
+            },
+          }}
+          value={params.value || ""}
+          onChange={(e) => {
+            const newValue = e.target.value;
+            const id = params.row.id;
+            const newRows = [...rows];
+            newRows[id - 1] = {
+              ...newRows[id - 1],
+              mid: newValue,
+            };
+            setRows(newRows);
+
+            setChangedRows((prevChangedRows) => ({
+              ...prevChangedRows,
+              [id]: {
+                missionNo: newRows[id - 1].missionNo,
+                missionStatus: newRows[id - 1].missionStatus,
+                mid: newRows[id - 1].mid,
+                priceComparisonId: newRows[id - 1].priceComparisonId,
+                placeName: newRows[id - 1].placeName,
+                rankKeyword: newRows[id - 1].rankKeyword,
+                mainSearchKeyword: newRows[id - 1].mainSearchKeyword,
+                correctAnswer: newRows[id - 1].correctAnswer,
+                placeUrl: newRows[id - 1].placeUrl,
+              },
+            }));
+          }}
+        />
+      ),
+    },
+    {
+      field: "priceComparisonId",
+      headerName: "가격비교 ID",
+      width: 100,
+      renderCell: (params) => (
+        <TextField
+          variant="standard"
+          InputProps={{
+            disableUnderline: true, // 밑줄 제거
+            style: {
+              marginTop: "10px",
+            },
+          }}
+          value={params.value || ""}
+          onChange={(e) => {
+            const newValue = e.target.value;
+            const id = params.row.id;
+            const newRows = [...rows];
+            newRows[id - 1] = {
+              ...newRows[id - 1],
+              priceComparisonId: newValue,
+            };
+            setRows(newRows);
+
+            setChangedRows((prevChangedRows) => ({
+              ...prevChangedRows,
+              [id]: {
+                missionNo: newRows[id - 1].missionNo,
+                missionStatus: newRows[id - 1].missionStatus,
+                mid: newRows[id - 1].mid,
+                priceComparisonId: newRows[id - 1].priceComparisonId,
+                placeName: newRows[id - 1].placeName,
+                rankKeyword: newRows[id - 1].rankKeyword,
+                mainSearchKeyword: newRows[id - 1].mainSearchKeyword,
+                correctAnswer: newRows[id - 1].correctAnswer,
+                placeUrl: newRows[id - 1].placeUrl,
+              },
+            }));
+          }}
+        />
+      ),
+    },
     { field: "adStartDate", headerName: "광고시작일", width: 100 },
     { field: "dailyWorkload", headerName: "1일작업량", width: 100 },
     { field: "totalWorkdays", headerName: "총작업일수", width: 100 },
-    { field: "placeName", headerName: "플레이스명", width: 100 },
-    { field: "rankKeyword", headerName: "순위키워드", width: 100 },
-    { field: "mainSearchKeyword", headerName: "메인검색 키워드", width: 100 },
     {
-      field: "subSearchKeyword",
-      headerName: "3위이내검색 키워드",
+      field: "placeName",
+      headerName: "플레이스명",
       width: 100,
+      renderCell: (params) => (
+        <TextField
+          variant="standard"
+          InputProps={{
+            disableUnderline: true, // 밑줄 제거
+            style: {
+              marginTop: "10px",
+            },
+          }}
+          value={params.value || ""}
+          onChange={(e) => {
+            const newValue = e.target.value;
+            const id = params.row.id;
+            const newRows = [...rows];
+            newRows[id - 1] = {
+              ...newRows[id - 1],
+              placeName: newValue,
+            };
+            setRows(newRows);
+
+            setChangedRows((prevChangedRows) => ({
+              ...prevChangedRows,
+              [id]: {
+                missionNo: newRows[id - 1].missionNo,
+                missionStatus: newRows[id - 1].missionStatus,
+                mid: newRows[id - 1].mid,
+                priceComparisonId: newRows[id - 1].priceComparisonId,
+                placeName: newRows[id - 1].placeName,
+                rankKeyword: newRows[id - 1].rankKeyword,
+                mainSearchKeyword: newRows[id - 1].mainSearchKeyword,
+                correctAnswer: newRows[id - 1].correctAnswer,
+                placeUrl: newRows[id - 1].placeUrl,
+              },
+            }));
+          }}
+        />
+      ),
+    },
+    {
+      field: "mainSearchKeyword",
+      headerName: "메인검색 키워드",
+      width: 100,
+      renderCell: (params) => (
+        <TextField
+          variant="standard"
+          InputProps={{
+            disableUnderline: true, // 밑줄 제거
+            style: {
+              marginTop: "10px",
+            },
+          }}
+          value={params.value || ""}
+          onChange={(e) => {
+            const newValue = e.target.value;
+            const id = params.row.id;
+            const newRows = [...rows];
+            newRows[id - 1] = {
+              ...newRows[id - 1],
+              mainSearchKeyword: newValue,
+            };
+            setRows(newRows);
+
+            setChangedRows((prevChangedRows) => ({
+              ...prevChangedRows,
+              [id]: {
+                missionNo: newRows[id - 1].missionNo,
+                missionStatus: newRows[id - 1].missionStatus,
+                mid: newRows[id - 1].mid,
+                priceComparisonId: newRows[id - 1].priceComparisonId,
+                placeName: newRows[id - 1].placeName,
+                rankKeyword: newRows[id - 1].rankKeyword,
+                mainSearchKeyword: newRows[id - 1].mainSearchKeyword,
+                correctAnswer: newRows[id - 1].correctAnswer,
+                placeUrl: newRows[id - 1].placeUrl,
+              },
+            }));
+          }}
+        />
+      ),
+    },
+    {
+      field: "correctAnswer",
+      headerName: "정답 (주변-명소 1번째)",
+      width: 100,
+      renderCell: (params) => (
+        <TextField
+          variant="standard"
+          InputProps={{
+            disableUnderline: true, // 밑줄 제거
+            style: {
+              marginTop: "10px",
+            },
+          }}
+          value={params.value || ""}
+          onChange={(e) => {
+            const newValue = e.target.value;
+            const id = params.row.id;
+            const newRows = [...rows];
+            newRows[id - 1] = {
+              ...newRows[id - 1],
+              correctAnswer: newValue,
+            };
+            setRows(newRows);
+
+            setChangedRows((prevChangedRows) => ({
+              ...prevChangedRows,
+              [id]: {
+                missionNo: newRows[id - 1].missionNo,
+                missionStatus: newRows[id - 1].missionStatus,
+                mid: newRows[id - 1].mid,
+                priceComparisonId: newRows[id - 1].priceComparisonId,
+                placeName: newRows[id - 1].placeName,
+                rankKeyword: newRows[id - 1].rankKeyword,
+                mainSearchKeyword: newRows[id - 1].mainSearchKeyword,
+                correctAnswer: newRows[id - 1].correctAnswer,
+                placeUrl: newRows[id - 1].placeUrl,
+              },
+            }));
+          }}
+        />
+      ),
     },
     { field: "adEndDate", headerName: "광고종료일", width: 100 },
-    { field: "placeUrl", headerName: "플레이스주소", width: 100 },
+    {
+      field: "placeUrl",
+      headerName: "플레이스주소",
+      width: 100,
+      renderCell: (params) => (
+        <TextField
+          variant="standard"
+          InputProps={{
+            disableUnderline: true, // 밑줄 제거
+            style: {
+              marginTop: "10px",
+            },
+          }}
+          value={params.value || ""}
+          onChange={(e) => {
+            const newValue = e.target.value;
+            const id = params.row.id;
+            const newRows = [...rows];
+            newRows[id - 1] = {
+              ...newRows[id - 1],
+              placeUrl: newValue,
+            };
+            setRows(newRows);
+
+            setChangedRows((prevChangedRows) => ({
+              ...prevChangedRows,
+              [id]: {
+                missionNo: newRows[id - 1].missionNo,
+                missionStatus: newRows[id - 1].missionStatus,
+                mid: newRows[id - 1].mid,
+                priceComparisonId: newRows[id - 1].priceComparisonId,
+                placeName: newRows[id - 1].placeName,
+                rankKeyword: newRows[id - 1].rankKeyword,
+                mainSearchKeyword: newRows[id - 1].mainSearchKeyword,
+                correctAnswer: newRows[id - 1].correctAnswer,
+                placeUrl: newRows[id - 1].placeUrl,
+              },
+            }));
+          }}
+        />
+      ),
+    },
     { field: "totalRequest", headerName: "총요청량", width: 100 },
     ...(userType === "ADMIN"
       ? [
@@ -286,7 +527,14 @@ const OlockMissionManage = () => {
                     ...prevChangedRows,
                     [id]: {
                       missionNo: newRows[id - 1].missionNo,
-                      missionStatus: newValue,
+                      missionStatus: newRows[id - 1].missionStatus,
+                      mid: newRows[id - 1].mid,
+                      priceComparisonId: newRows[id - 1].priceComparisonId,
+                      placeName: newRows[id - 1].placeName,
+                      rankKeyword: newRows[id - 1].rankKeyword,
+                      mainSearchKeyword: newRows[id - 1].mainSearchKeyword,
+                      correctAnswer: newRows[id - 1].correctAnswer,
+                      placeUrl: newRows[id - 1].placeUrl,
                     },
                   }));
                 }}
@@ -424,7 +672,7 @@ const OlockMissionManage = () => {
               <button
                 type="button"
                 className="saveButton"
-                onClick={saveolockMissionStatus}
+                onClick={saveOlockMissionStatus}
               >
                 저장
               </button>
