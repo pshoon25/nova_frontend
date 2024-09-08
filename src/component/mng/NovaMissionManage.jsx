@@ -21,6 +21,7 @@ const NovaMissionManage = () => {
     novaSmartstoreSearch: 0,
   });
   const [changedRows, setChangedRows] = useState({});
+  const [isComposing, setIsComposing] = useState(false);
 
   const loginInfo = JSON.parse(localStorage.getItem("loginInfo"));
   const agencyCode = loginInfo ? loginInfo.agencyCode : null;
