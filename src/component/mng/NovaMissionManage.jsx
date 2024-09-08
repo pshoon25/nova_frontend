@@ -274,7 +274,8 @@ const NovaMissionManage = () => {
             },
           }}
           value={params.value || ""}
-          onBlur={(e) => {
+          onCompositionStart={() => setIsComposing(true)}
+          onCompositionEnd={(e) => {
             const newValue = e.target.value;
             const id = params.row.id;
             const newRows = [...rows];
@@ -316,7 +317,8 @@ const NovaMissionManage = () => {
             },
           }}
           value={params.value || ""}
-          onBlur={(e) => {
+          onCompositionStart={() => setIsComposing(true)}
+          onCompositionEnd={(e) => {
             const newValue = e.target.value;
             const id = params.row.id;
             const newRows = [...rows];
@@ -361,7 +363,8 @@ const NovaMissionManage = () => {
             },
           }}
           value={params.value || ""}
-          onBlur={(e) => {
+          onCompositionStart={() => setIsComposing(true)}
+          onCompositionEnd={(e) => {
             const newValue = e.target.value;
             const id = params.row.id;
             const newRows = [...rows];
@@ -403,7 +406,8 @@ const NovaMissionManage = () => {
             },
           }}
           value={params.value || ""}
-          onBlur={(e) => {
+          onCompositionStart={() => setIsComposing(true)}
+          onCompositionEnd={(e) => {
             const newValue = e.target.value;
             const id = params.row.id;
             const newRows = [...rows];
@@ -445,7 +449,8 @@ const NovaMissionManage = () => {
             },
           }}
           value={params.value || ""}
-          onBlur={(e) => {
+          onCompositionStart={() => setIsComposing(true)}
+          onCompositionEnd={(e) => {
             const newValue = e.target.value;
             const id = params.row.id;
             const newRows = [...rows];
@@ -487,7 +492,8 @@ const NovaMissionManage = () => {
             },
           }}
           value={params.value || ""}
-          onBlur={(e) => {
+          onCompositionStart={() => setIsComposing(true)}
+          onCompositionEnd={(e) => {
             const newValue = e.target.value;
             const id = params.row.id;
             const newRows = [...rows];
@@ -530,7 +536,8 @@ const NovaMissionManage = () => {
             },
           }}
           value={params.value || ""}
-          onBlur={(e) => {
+          onCompositionStart={() => setIsComposing(true)}
+          onCompositionEnd={(e) => {
             const newValue = e.target.value;
             const id = params.row.id;
             const newRows = [...rows];
@@ -578,7 +585,7 @@ const NovaMissionManage = () => {
                 }}
                 value={params.value || ""}
                 disabled={params.value === "CANCEL"} // Mission Status가 CANCEL이면 드롭다운 비활성화
-                onBlur={(e) => {
+                onChange={(e) => {
                   const newValue = e.target.value;
                   const id = params.row.id;
                   const newRows = [...rows];
