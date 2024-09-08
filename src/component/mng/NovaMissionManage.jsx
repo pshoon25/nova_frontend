@@ -274,7 +274,7 @@ const NovaMissionManage = () => {
             },
           }}
           value={params.value || ""}
-          onChange={(e) => {
+          onBlur={(e) => {
             const newValue = e.target.value;
             const id = params.row.id;
             const newRows = [...rows];
@@ -316,7 +316,7 @@ const NovaMissionManage = () => {
             },
           }}
           value={params.value || ""}
-          onChange={(e) => {
+          onBlur={(e) => {
             const newValue = e.target.value;
             const id = params.row.id;
             const newRows = [...rows];
@@ -361,7 +361,7 @@ const NovaMissionManage = () => {
             },
           }}
           value={params.value || ""}
-          onChange={(e) => {
+          onBlur={(e) => {
             const newValue = e.target.value;
             const id = params.row.id;
             const newRows = [...rows];
@@ -403,7 +403,7 @@ const NovaMissionManage = () => {
             },
           }}
           value={params.value || ""}
-          onChange={(e) => {
+          onBlur={(e) => {
             const newValue = e.target.value;
             const id = params.row.id;
             const newRows = [...rows];
@@ -445,7 +445,7 @@ const NovaMissionManage = () => {
             },
           }}
           value={params.value || ""}
-          onChange={(e) => {
+          onBlur={(e) => {
             const newValue = e.target.value;
             const id = params.row.id;
             const newRows = [...rows];
@@ -487,7 +487,7 @@ const NovaMissionManage = () => {
             },
           }}
           value={params.value || ""}
-          onChange={(e) => {
+          onBlur={(e) => {
             const newValue = e.target.value;
             const id = params.row.id;
             const newRows = [...rows];
@@ -530,7 +530,7 @@ const NovaMissionManage = () => {
             },
           }}
           value={params.value || ""}
-          onChange={(e) => {
+          onBlur={(e) => {
             const newValue = e.target.value;
             const id = params.row.id;
             const newRows = [...rows];
@@ -578,7 +578,7 @@ const NovaMissionManage = () => {
                 }}
                 value={params.value || ""}
                 disabled={params.value === "CANCEL"} // Mission Status가 CANCEL이면 드롭다운 비활성화
-                onChange={(e) => {
+                onBlur={(e) => {
                   const newValue = e.target.value;
                   const id = params.row.id;
                   const newRows = [...rows];
