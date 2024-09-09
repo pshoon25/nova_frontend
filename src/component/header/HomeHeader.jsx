@@ -4,6 +4,7 @@ import "../../css/HomeHeader.css";
 import headerLogo from "../../images/nova_text.png";
 import { api } from "../../api/api.js";
 import Announcement from "../popup/Announcement.jsx";
+import Announcement2 from "../popup/Announcement2.jsx";
 
 function HomeHeader(props) {
   const [selectedMenu, setSelectedMenu] = useState("");
@@ -23,6 +24,16 @@ function HomeHeader(props) {
 
   const closeModal = () => {
     setModalVisible(false);
+  };
+
+  // 팝업창2
+  const [modalVisible2, setModalVisible2] = useState(() => {
+    const visitedBeforeDate = localStorage.getItem("VisitCookie2");
+    return visitedBeforeDate !== todayDate; // 만약 오늘 방문한 기록이 없다면 true 반환
+  });
+
+  const closeModal2 = () => {
+    setModalVisible2(false);
   };
 
   useEffect(() => {
@@ -73,6 +84,15 @@ function HomeHeader(props) {
           maskClosable={true}
           onClose={closeModal}
         ></Announcement>
+      )}
+
+      {modalVisible2 && (
+        <Announcement2
+          visible={modalVisible2}
+          closable={true}
+          maskClosable={true}
+          onClose={closeModal2}
+        ></Announcement2>
       )}
       <nav className="homeHeaderNav">
         <img
