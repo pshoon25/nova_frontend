@@ -1,7 +1,7 @@
 import axios from "axios";
 
-// const url = "http://localhost:8080";
-const url = "/api";
+const url = "http://localhost:8080";
+// const url = "/api";
 
 const loginInfo = JSON.parse(localStorage.getItem("loginInfo"));
 const accessToken = loginInfo ? loginInfo.accessToken : null;
