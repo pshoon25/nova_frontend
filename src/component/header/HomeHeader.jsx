@@ -86,14 +86,14 @@ function HomeHeader(props) {
         ></Announcement>
       )}
 
-      {/* {modalVisible2 && (
+      {modalVisible2 && (
         <Announcement2
           visible={modalVisible2}
           closable={true}
           maskClosable={true}
           onClose={closeModal2}
         ></Announcement2>
-      )} */}
+      )}
       <nav className="homeHeaderNav">
         <img
           src={headerLogo}
