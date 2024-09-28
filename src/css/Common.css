@@ -160,3 +160,7 @@
 .actionBtns .typeButtons .typeButton b {
   margin-right: 5px; /* 버튼과 문구 간의 간격 */
 }
+
+.noticeSpan {
+  color: red;
+}

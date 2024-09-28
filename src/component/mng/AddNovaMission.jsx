@@ -56,6 +56,12 @@ const AddNovaMission = () => {
   };
 
   const addMission = async () => {
+    // 1일 작업량이 50개 미만일 경우 등록 불가
+    if (dailyWorkload < 50) {
+      alert("1일 작업량은 최소 50개 이상부터 등록이 가능합니다.");
+      return;
+    }
+
     const formatDate = (date) => {
       if (!date) return "";
       const year = date.getFullYear();
@@ -240,6 +246,9 @@ const AddNovaMission = () => {
               type="number"
               inputProps={{ min: "0", step: "1" }} // 음수 및 비정수 방지
             />
+            <span className="noticeSpan">
+              * 1일 작업량은 최소 50개 이상부터 등록이 가능합니다.
+            </span>
             <button className="addButton" type="button" onClick={addMission}>
               추가
             </button>
